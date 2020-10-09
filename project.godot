@@ -1,0 +1,41 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "GraphNode",
+"class": "VisualFSMState",
+"language": "GDScript",
+"path": "res://addons/VisualFSM/editor/VisualFSMState.gd"
+}, {
+"base": "Resource",
+"class": "VisualFiniteStateMachine",
+"language": "GDScript",
+"path": "res://addons/VisualFSM/fsm/resources/VisualFiniteStateMachine.gd"
+} ]
+_global_script_class_icons={
+"VisualFSMState": "",
+"VisualFiniteStateMachine": ""
+}
+
+[application]
+
+config/name="VisualFSM"
+config/icon="res://icon.png"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "VisualFSM" )
+
+[rendering]
+
+quality/driver/driver_name="GLES2"
+vram_compression/import_etc=true
+vram_compression/import_etc2=false
+environment/default_environment="res://default_env.tres"
