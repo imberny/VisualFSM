@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
+[ext_resource path="res://addons/VisualFSM/fsm/resources/VisualFiniteStateMachine.gd" type="Script" id=1]
 [ext_resource path="res://addons/VisualFSM/fsm/VisualFSM.gd" type="Script" id=2]
 [ext_resource path="res://new_animationnodestatemachine.tres" type="AnimationNodeStateMachine" id=3]
 [ext_resource path="res://addons/VisualFSM/test/test.gd" type="Script" id=4]
@@ -35,6 +36,10 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 15 ), Vector3( 0, 0, 0 ) ]
 }
 
+[sub_resource type="Resource" id=4]
+script = ExtResource( 1 )
+transitions = [  ]
+
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 4 )
 
@@ -49,3 +54,4 @@ anims/stop = SubResource( 3 )
 
 [node name="VisualFSM" type="Node" parent="."]
 script = ExtResource( 2 )
+FiniteStateMachine = SubResource( 4 )
