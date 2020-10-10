@@ -10,9 +10,14 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "GraphNode",
-"class": "VisualFSMState",
+"class": "VisualFSMStateNode",
 "language": "GDScript",
-"path": "res://addons/VisualFSM/editor/VisualFSMState.gd"
+"path": "res://addons/VisualFSM/editor/VisualFSMStateNode.gd"
+}, {
+"base": "GraphNode",
+"class": "VisualFSMTransitionNode",
+"language": "GDScript",
+"path": "res://addons/VisualFSM/editor/VisualFSMTransitionNode.gd"
 }, {
 "base": "Resource",
 "class": "VisualFiniteStateMachine",
@@ -30,7 +35,8 @@ _global_script_classes=[ {
 "path": "res://addons/VisualFSM/fsm/resources/VisualFiniteStateMachineTransition.gd"
 } ]
 _global_script_class_icons={
-"VisualFSMState": "",
+"VisualFSMStateNode": "",
+"VisualFSMTransitionNode": "",
 "VisualFiniteStateMachine": "",
 "VisualFiniteStateMachineState": "",
 "VisualFiniteStateMachineTransition": ""
@@ -40,6 +46,10 @@ _global_script_class_icons={
 
 config/name="VisualFSM"
 config/icon="res://icon.png"
+
+[autoload]
+
+VisualFSMSingleton="*res://addons/VisualFSM/editor/VisualFSMSingleton.gd"
 
 [editor_plugins]
 

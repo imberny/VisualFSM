@@ -6,10 +6,10 @@ var _transitions: Array
 
 
 class State:
-	var node: VisualFiniteStateMachineState
 	var position: Vector2
+	var node: VisualFiniteStateMachineState
 	
-	func _init(node_: VisualFiniteStateMachineState, position_: Vector2) -> void:
+	func _init(position_: Vector2, node_: VisualFiniteStateMachineState) -> void:
 		node = node_
 		position = position_
 
@@ -25,15 +25,36 @@ class Transition:
 		node = node_
 
 
-func _init(val1, val2):
-	print("adding states: " + val1 + " " + val2)
-	_states = {}
-	_states[val1] = State.new(VisualFiniteStateMachineState.new(val1), Vector2(0, 0))
-	_states[val2] = State.new(VisualFiniteStateMachineState.new(val2), Vector2(-100, 100))
-	_transitions = []
-	_transitions.push_back(Transition.new(val1, val2, VisualFiniteStateMachineTransition.new()))
-	_transitions.push_back(Transition.new(val2, val2, VisualFiniteStateMachineTransition.new()))
-	_transitions[1].node.transition_type = VisualFiniteStateMachineTransition.TransitionType.TYPE_B
+#func _init(val1, val2):
+#	print("adding states: " + val1 + " " + val2)
+#	_states = {}
+#	_states[val1] = State.new(Vector2(0, 0), VisualFiniteStateMachineState.new())
+#	_states[val2] = State.new(Vector2(-100, 100), VisualFiniteStateMachineState.new())
+#	_transitions = []
+#	_transitions.push_back(Transition.new(val1, val2, VisualFiniteStateMachineTransition.new()))
+#	_transitions.push_back(Transition.new(val2, val2, VisualFiniteStateMachineTransition.new()))
+#	_transitions[1].node.transition_type = VisualFiniteStateMachineTransition.TransitionType.TYPE_B
+
+
+func has_state(name: String):
+	return _states.has(name)
+
+
+func get_node(name: String) -> VisualFiniteStateMachineState:
+	return _states[name].node
+
+
+func get_node_position(name: String) -> Vector2:
+	return _states[name].position
+
+
+func get_node_list() -> Array:
+	return _states.keys()
+
+
+func add_node(name: String, position: Vector2, node: VisualFiniteStateMachineState):
+	_states[name] = State.new(position, node)
+	emit_signal("changed")
 
 
 func _get_multipart(parts: Array):
@@ -45,6 +66,7 @@ func _get_multipart(parts: Array):
 		"states":
 			match what:
 				"node":
+					print("Getting node for state: " + name)
 					return _states[name].node
 				"position":
 					return _states[name].position
@@ -81,6 +103,7 @@ func _set_multipart(parts: Array, value) -> bool:
 		"states":
 			match what:
 				"node":
+					print("Setting node for state: " + name)
 					_states[name].node = value
 					# TODO: add node
 					return true

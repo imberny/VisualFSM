@@ -1,11 +1,9 @@
 extends Resource
 class_name VisualFiniteStateMachineState
 
-var name: String
-var position: Vector2
+#export(String) var name
+#export(Vector2) var position
 
-func _init(name_):
-	name = name_
 
 #func _get(property):
 #	match property:

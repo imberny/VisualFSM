@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://addons/VisualFSM/editor/FiniteStateMachineGraphEdit.gd" type="Script" id=1]
+[ext_resource path="res://addons/VisualFSM/editor/VisualFSMGraphEdit.gd" type="Script" id=1]
 [ext_resource path="res://addons/VisualFSM/editor/VisualFSMEditor.gd" type="Script" id=2]
 
 [node name="VisualFSMEditor" type="MarginContainer"]
@@ -12,7 +12,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FiniteStateMachineGraphEdit" type="GraphEdit" parent="."]
+[node name="VisualFSMGraphEdit" type="GraphEdit" parent="."]
 margin_right = 1024.0
 margin_bottom = 600.0
 script = ExtResource( 1 )
