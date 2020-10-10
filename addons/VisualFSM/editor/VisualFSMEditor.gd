@@ -2,4 +2,4 @@ extends MarginContainer
 
 
 func edit(fsm: VisualFiniteStateMachine):
-	pass
+	$FiniteStateMachineGraphEdit.edit(fsm)

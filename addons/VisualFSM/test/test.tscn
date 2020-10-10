@@ -1,18 +1,29 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/VisualFSM/fsm/resources/VisualFiniteStateMachine.gd" type="Script" id=1]
 [ext_resource path="res://addons/VisualFSM/fsm/VisualFSM.gd" type="Script" id=2]
+[ext_resource path="res://addons/VisualFSM/test/new_animationnodestatemachine.tres" type="AnimationNodeStateMachine" id=3]
+[ext_resource path="res://addons/VisualFSM/test/test.gd" type="Script" id=4]
 
-[sub_resource type="Resource" id=1]
+[sub_resource type="Resource" id=4]
 script = ExtResource( 1 )
 
-[sub_resource type="AnimationNodeAnimation" id=2]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=5]
+
+[sub_resource type="Animation" id=3]
 
 [node name="Spatial" type="Spatial"]
+script = ExtResource( 4 )
 
 [node name="VisualFSM" type="Node" parent="."]
 script = ExtResource( 2 )
-FiniteStateMachine = SubResource( 1 )
+FiniteStateMachine = SubResource( 4 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 2 )
+tree_root = ExtResource( 3 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Start = SubResource( 3 )

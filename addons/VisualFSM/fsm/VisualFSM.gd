@@ -10,11 +10,12 @@ func _set_fsm(fsm: Resource) -> void:
 		FiniteStateMachine = null
 		return
 	
-	if fsm is VisualFiniteStateMachine:
-		FiniteStateMachine = fsm
-	else:
-		print("ERROR: This node only supports resources of type VisualFiniteStateMachine")
-		FiniteStateMachine = null
+	FiniteStateMachine = VisualFiniteStateMachine.new("Start", "End")
+#	if fsm is VisualFiniteStateMachine:
+#		FiniteStateMachine = VisualFiniteStateMachine.new(10)
+#	else:
+#		print("ERROR: This node only supports resources of type VisualFiniteStateMachine")
+#		FiniteStateMachine = null
 
 
 func _get_fsm() -> VisualFiniteStateMachine:

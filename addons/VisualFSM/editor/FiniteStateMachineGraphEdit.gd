@@ -9,6 +9,11 @@ var _popup: PopupMenu
 
 func edit(fsm: VisualFiniteStateMachine) -> void:
 	fsm = fsm
+	# open resource
+	# for each node:
+		# create node at position
+	# for each connection:
+		# add connection between nodes
 
 
 func _ready() -> void:
@@ -47,4 +52,4 @@ func _on_popup_index_pressed(index: int) -> void:
 			new_state.offset = new_pos
 		1:
 			print("new transition...")
-			
+
