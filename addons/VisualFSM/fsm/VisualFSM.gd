@@ -2,7 +2,7 @@ tool
 extends Node
 
 
-export(Resource) var FiniteStateMachine setget _set_fsm, _get_fsm
+export(AnimationRootNode) var FiniteStateMachine setget _set_fsm, _get_fsm
 
 
 func _set_fsm(fsm: Resource) -> void:

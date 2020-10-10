@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "VisualFiniteStateMachineState",
 "language": "GDScript",
 "path": "res://addons/VisualFSM/fsm/resources/VisualFiniteStateMachineState.gd"
+}, {
+"base": "Resource",
+"class": "VisualFiniteStateMachineTransition",
+"language": "GDScript",
+"path": "res://addons/VisualFSM/fsm/resources/VisualFiniteStateMachineTransition.gd"
 } ]
 _global_script_class_icons={
 "VisualFSMState": "",
 "VisualFiniteStateMachine": "",
-"VisualFiniteStateMachineState": ""
+"VisualFiniteStateMachineState": "",
+"VisualFiniteStateMachineTransition": ""
 }
 
 [application]

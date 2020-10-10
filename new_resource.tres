@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/VisualFSM/fsm/resources/VisualFiniteStateMachine.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
