@@ -18,10 +18,14 @@ switch_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id=6]
 
 [resource]
-states/Start/node = SubResource( 2 )
-states/Start/position = Vector2( 276, 32 )
-"states/Start 2/node" = SubResource( 1 )
-"states/Start 2/position" = Vector2( 323, 149 )
+states/Testing/node = SubResource( 2 )
+states/Testing/position = Vector2( 276, 32 )
+"states/Testing 2/node" = SubResource( 1 )
+"states/Testing 2/position" = Vector2( 323, 149 )
+states/Testing/node = SubResource( 2 )
+states/Testing/position = Vector2( 276, 32 )
+"states/Testing 2/node" = SubResource( 1 )
+"states/Testing 2/position" = Vector2( 323, 149 )
 states/stop/node = SubResource( 3 )
 states/stop/position = Vector2( 467, 74 )
-transitions = [ "Start", "stop", SubResource( 4 ), "stop", "Start 2", SubResource( 5 ), "Start 2", "stop", SubResource( 6 ) ]
+transitions = [ "Testing", "stop", SubResource( 4 ), "stop", "Testing 2", SubResource( 5 ), "Testing 2", "stop", SubResource( 6 ), "Testing", "stop", SubResource( 4 ), "stop", "Testing 2", SubResource( 5 ), "Testing 2", "stop", SubResource( 6 ) ]

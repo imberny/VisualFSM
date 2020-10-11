@@ -1,4 +1,4 @@
-[gd_resource type="VisualFiniteStateMachine" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://addons/VisualFSM/fsm/resources/VisualFiniteStateMachineState.gd" type="Script" id=1]
 [ext_resource path="res://addons/VisualFSM/fsm/resources/VisualFiniteStateMachine.gd" type="Script" id=2]
@@ -12,7 +12,7 @@ script = ExtResource( 1 )
 [resource]
 script = ExtResource( 2 )
 states/test/node = SubResource( 1 )
-states/test/position = Vector2( 480, 222 )
+states/test/position = Vector2( 458, 162 )
 states/test1/node = SubResource( 2 )
-states/test1/position = Vector2( 484, 183 )
+states/test1/position = Vector2( 635, 205 )
 transitions = [  ]

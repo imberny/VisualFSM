@@ -1,0 +1,31 @@
+[gd_resource type="AnimationNodeStateMachine" load_steps=7 format=2]
+
+[sub_resource type="AnimationNodeAnimation" id=1]
+animation = "Start"
+
+[sub_resource type="AnimationNodeAnimation" id=2]
+animation = "Start"
+
+[sub_resource type="AnimationNodeAnimation" id=3]
+animation = "stop"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=4]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=5]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=6]
+
+[resource]
+states/Wakawaka/node = SubResource( 2 )
+states/Wakawaka/position = Vector2( 276, 32 )
+"states/Wakawaka 2/node" = SubResource( 1 )
+"states/Wakawaka 2/position" = Vector2( 323, 149 )
+states/Wakawaka/node = SubResource( 2 )
+states/Wakawaka/position = Vector2( 276, 32 )
+"states/Wakawaka 2/node" = SubResource( 1 )
+"states/Wakawaka 2/position" = Vector2( 323, 149 )
+states/stop/node = SubResource( 3 )
+states/stop/position = Vector2( 467, 74 )
+transitions = [ "Wakawaka", "stop", SubResource( 4 ), "stop", "Wakawaka 2", SubResource( 5 ), "Wakawaka 2", "stop", SubResource( 6 ), "Wakawaka", "stop", SubResource( 4 ), "stop", "Wakawaka 2", SubResource( 5 ), "Wakawaka 2", "stop", SubResource( 6 ) ]

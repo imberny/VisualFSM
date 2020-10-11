@@ -3,7 +3,7 @@ extends GraphEdit
 
 
 var _fsm: VisualFiniteStateMachine
-var _popup_options: = ["New state", "New transition"]
+var _popup_options: = ["New state", "New transition", "save", "load"]
 var _popup: PopupMenu
 
 
@@ -56,13 +56,6 @@ func _redraw_graph():
 	pass
 
 
-#func _gui_input(event: InputEvent) -> void:
-#	if event is InputEventMouseButton:
-#		var new_state := FSMGraphState.new()
-#		print("adding new state")
-#		add_child(new_state)
-
-
 func _on_popup_request(position: Vector2) -> void:
 	_popup.set_position(position)
 	_popup.show()
@@ -87,4 +80,12 @@ func _on_popup_index_pressed(index: int) -> void:
 #			new_state.offset = new_pos
 		1:
 			print("adding new transition...")
+		2:
+			ResourceSaver.save("res://TestResource2.tres", _fsm)
+		3:
+			_fsm = load("res://TestResource2.tres") as VisualFiniteStateMachine
+			
+			print("loaded resource: ")
+			for node_name in _fsm.get_node_list():
+				print(node_name)
 

@@ -1,31 +1,23 @@
+tool
 extends Resource
 class_name VisualFiniteStateMachine
 
-var _states: Dictionary
+var _states := {}
 var _transitions: Array
 
 
 class State:
 	var position: Vector2
 	var node: VisualFiniteStateMachineState
-	
-	func _init(position_: Vector2, node_: VisualFiniteStateMachineState) -> void:
-		node = node_
-		position = position_
 
 
 class Transition:
 	var from: String
 	var to: String
 	var node: VisualFiniteStateMachineTransition
-	
-	func _init(from_: String, to_: String, node_: VisualFiniteStateMachineTransition) -> void:
-		from = from_
-		to = to_
-		node = node_
 
 
-#func _init(val1, val2):
+#func _init():
 #	print("adding states: " + val1 + " " + val2)
 #	_states = {}
 #	_states[val1] = State.new(Vector2(0, 0), VisualFiniteStateMachineState.new())
@@ -53,7 +45,10 @@ func get_node_list() -> Array:
 
 
 func add_node(name: String, position: Vector2, node: VisualFiniteStateMachineState):
-	_states[name] = State.new(position, node)
+	var state := State.new()
+	state.position = position
+	state.node = node
+	_states[name] = state
 	emit_signal("changed")
 
 
@@ -101,6 +96,8 @@ func _set_multipart(parts: Array, value) -> bool:
 	
 	match kind:
 		"states":
+			if not _states.has(name):
+				_states[name] = State.new()
 			match what:
 				"node":
 					print("Setting node for state: " + name)
@@ -122,10 +119,11 @@ func _set(property: String, value) -> bool:
 		"transitions":
 			var num_transitions := (value as Array).size() % 2#3
 			for i in range(num_transitions):
-				var from: String = value[i]
-				var to: String = value[i + 1]
-				var node: VisualFiniteStateMachineTransition = VisualFiniteStateMachineTransition.new()#value[i + 2]
-				_transitions.push_back(Transition.new(from, to, node))
+				var transition := Transition.new()
+				transition.from = value[i]
+				transition.to = value[i + 1]
+				transition.node = value[i + 2]
+				_transitions.push_back(transition)
 			return true
 		"test":
 			return true
