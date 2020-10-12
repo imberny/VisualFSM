@@ -4,7 +4,6 @@ class_name VisualFiniteStateMachineState
 #export(String) var name
 #export(Vector2) var position
 
-
 #func _get(property):
 #	match property:
 #		"name":

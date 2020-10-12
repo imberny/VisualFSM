@@ -15,4 +15,3 @@ func edit(fsm: VisualFiniteStateMachine):
 	if not is_inside_tree():
 		yield(self, "tree_entered")
 	$VisualFSMGraphEdit.edit(fsm as VisualFiniteStateMachine)
-	

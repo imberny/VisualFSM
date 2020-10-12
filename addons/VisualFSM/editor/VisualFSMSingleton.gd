@@ -1,16 +1,13 @@
 extends Node
 
-
 signal fsm_changed(fsm)
 
+var _finite_state_machine: VisualFiniteStateMachine
 
-var FSM: VisualFiniteStateMachine setget _set_fsm
 
-
-func _set_fsm(fsm_: VisualFiniteStateMachine):
-	FSM = fsm_
+func set_fsm(fsm: VisualFiniteStateMachine):
+	_finite_state_machine = fsm
 	print("fsm_changed signal emitted")
-	emit_signal("fsm_changed", fsm_)
+	emit_signal("fsm_changed", _finite_state_machine)
 	for connection in get_signal_connection_list("fsm_changed"):
 		print("Connection to fsm_changed:" + str(connection))
-	

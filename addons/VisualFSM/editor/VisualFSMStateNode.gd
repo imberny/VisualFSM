@@ -1,3 +1,2 @@
-extends GraphNode
 class_name VisualFSMStateNode
-
+extends GraphNode
