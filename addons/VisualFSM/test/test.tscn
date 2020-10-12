@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/VisualFSM/test/test.gd" type="Script" id=1]
-[ext_resource path="res://addons/VisualFSM/fsm/resources/VisualFiniteStateMachine.gd" type="Script" id=2]
 [ext_resource path="res://addons/VisualFSM/fsm/VisualFSM.gd" type="Script" id=3]
 
 [sub_resource type="Animation" id=1]
@@ -13,11 +12,7 @@ resource_name = "Testing"
 [sub_resource type="Animation" id=3]
 resource_name = "stop"
 
-[sub_resource type="Resource" id=4]
-script = ExtResource( 2 )
-transitions = [  ]
-
-[sub_resource type="AnimationNodeBlendSpace1D" id=5]
+[sub_resource type="AnimationNodeBlendSpace1D" id=4]
 
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 1 )
@@ -29,8 +24,7 @@ anims/stop = SubResource( 3 )
 
 [node name="VisualFSM" type="Node" parent="."]
 script = ExtResource( 3 )
-FiniteStateMachine = SubResource( 4 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 5 )
+tree_root = SubResource( 4 )
 parameters/blend_position = 0

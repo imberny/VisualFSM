@@ -9,21 +9,17 @@ func _set_fsm(fsm: Resource) -> void:
 	if not is_inside_tree():
 		yield(self, "tree_entered")
 	
-	if not fsm:
-		FiniteStateMachine = null
-		return
-	
 	if not $"/root/VisualFSMSingleton":
-		printerr("ERROR: VisualFSM plugin not installed.")
+		printerr("ERROR: VisualFSM plugin is not installed.")
 		return
 	
-	FiniteStateMachine = VisualFiniteStateMachine.new()
+	if fsm is VisualFiniteStateMachine:
+		FiniteStateMachine = fsm
+		$"/root/VisualFSMSingleton".FSM = FiniteStateMachine
+	
+	printerr("ERROR: This node only supports resources of type VisualFiniteStateMachine.")
+	FiniteStateMachine = null
 	$"/root/VisualFSMSingleton".FSM = FiniteStateMachine
-#	if fsm is VisualFiniteStateMachine:
-#		FiniteStateMachine = VisualFiniteStateMachine.new(10)
-#	else:
-#		print("ERROR: This node only supports resources of type VisualFiniteStateMachine")
-#		FiniteStateMachine = null
 
 
 func _get_fsm() -> VisualFiniteStateMachine:

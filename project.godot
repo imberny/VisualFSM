@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Resource",
-"class": "CustomResource",
-"language": "GDScript",
-"path": "res://addons/CustomResourceEditor/CustomResource.gd"
-}, {
 "base": "GraphNode",
 "class": "VisualFSMStateNode",
 "language": "GDScript",
@@ -40,7 +35,6 @@ _global_script_classes=[ {
 "path": "res://addons/VisualFSM/fsm/resources/VisualFiniteStateMachineTransition.gd"
 } ]
 _global_script_class_icons={
-"CustomResource": "",
 "VisualFSMStateNode": "",
 "VisualFSMTransitionNode": "",
 "VisualFiniteStateMachine": "",
@@ -59,7 +53,7 @@ VisualFSMSingleton="*res://addons/VisualFSM/editor/VisualFSMSingleton.gd"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "CustomResourceEditor", "VisualFSM" )
+enabled=PoolStringArray( "VisualFSM" )
 
 [rendering]
 
