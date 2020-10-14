@@ -23,11 +23,6 @@ func edit(fsm: VisualFiniteStateMachine) -> void:
 	_fsm = fsm
 	_fsm.connect("changed", self, "_on_fsm_changed")
 	_redraw_graph()
-	# open resource
-	# for each node:
-	# create node at position
-	# for each transition:
-	# add connection between nodes
 
 
 func _on_fsm_changed():
@@ -38,22 +33,22 @@ func _redraw_graph():
 	print("Redrawing fsm graph.............")
 	# clear graph elements
 	for child in get_children():
-		if child is VisualFSMStateNode or child is VisualFSMTransitionNode:
+		if child is VisualFSMStateNode:
 			remove_child(child)
 			child.queue_free()
 
 	# add state nodes
-	for state_name in _fsm.get_node_list():
-		print("VisualFSMGraphEdit: adding state node: " + state_name)
-		var node: VisualFiniteStateMachineState = _fsm.get_node(state_name)
-		var position: Vector2 = _fsm.get_node_position(state_name)
-		var state_graph_node = VisualFSMStateNode.new()
-		state_graph_node.name = state_name
-		state_graph_node.offset = position
-		add_child(state_graph_node)
+	for state in _fsm.get_states():
+		print("VisualFSMGraphEdit: adding state node: " + state.name)
+		var state_node = VisualFSMStateNode.new()
+		state_node.name = state.name
+		# center node on position
+		state_node.offset = state.position - state_node.rect_size / 2
+		add_child(state_node)
 
 	# add transition nodes
-
+	# for transition in _fsm.get_transition():
+		# add_connection .... 
 
 func _on_popup_request(position: Vector2) -> void:
 	_popup.set_position(position)
@@ -71,11 +66,7 @@ func _on_popup_index_pressed(index: int) -> void:
 			while _fsm.has_state(state_name):
 				state_name = base_name + str(suffix)
 				suffix += 1
-			_fsm.add_node(state_name, mouse_pos, VisualFiniteStateMachineState.new())
-#			var new_state := VisualFSMStateNode.new()
-#			add_child(new_state)
-		# center state on mouse
-#			new_state.offset = new_pos
+			_fsm.add_state(state_name, mouse_pos)
 		1:
 			print("adding new transition...")
 		2:
