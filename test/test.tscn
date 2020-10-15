@@ -47,8 +47,6 @@ func _ready():
 	add_valid_right_disconnect_type(0)
 
 
-
-
 func _on_GraphEdit_connection_request(from, from_slot, to, to_slot):
 	if from != to:
 		connect_node(from, from_slot, to, to_slot)

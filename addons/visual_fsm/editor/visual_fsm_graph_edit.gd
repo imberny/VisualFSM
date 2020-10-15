@@ -1,7 +1,7 @@
 tool
 extends GraphEdit
 
-var _fsm_state_scene: PackedScene = preload("visual_fsm_state_node2.tscn")
+var _fsm_state_scene: PackedScene = preload("visual_fsm_state_node.tscn")
 var _fsm: VisualFiniteStateMachine
 var _popup_options := ["New state", "New transition", "save", "load"]
 var _popup: PopupMenu

@@ -3,8 +3,7 @@ class_name VisualFSMStateNode
 extends GraphNode
 
 var _transition_slot_scene: PackedScene = preload("transition_slot.tscn")
-var state_name: String setget _set_state_name
-var _state_line_edit: LineEdit
+var state_name: String setget _set_state_name, _get_state_name
 
 const COLORS := [
 	Color.coral,
@@ -18,12 +17,16 @@ const COLORS := [
 ]
 
 
-func _init():
+func _init() -> void:
 	set_slot(0, true, 0, COLORS[0], false, 0, Color.white)
 
 
-func _set_state_name(value):
-	_state_line_edit.text = value
+func _set_state_name(value) -> void:
+	$StateName.text = value
+
+
+func _get_state_name() -> String:
+	return $StateName.text
 
 
 func _on_AddTransitionButton_pressed():
