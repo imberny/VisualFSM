@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_transition_slot.gd" type="Script" id=1]
+[ext_resource path="res://addons/visual_fsm/editor/x_icon.png" type="Texture" id=2]
+
+[node name="TransitionSlot" type="HBoxContainer"]
+margin_right = 172.0
+margin_bottom = 32.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TransitionLineEdit" type="LineEdit" parent="."]
+margin_right = 136.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+expand_to_text_length = true
+placeholder_text = "transition name..."
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_left = 140.0
+margin_right = 172.0
+margin_bottom = 32.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="CloseButton" type="Button" parent="CenterContainer"]
+margin_right = 32.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = ExtResource( 2 )
+flat = true
+expand_icon = true
+[connection signal="pressed" from="CenterContainer/CloseButton" to="." method="_on_CloseButton_pressed"]

@@ -2,7 +2,7 @@ tool
 class_name VisualFSMStateNode
 extends GraphNode
 
-var _transition_slot_scene: PackedScene = preload("transition_slot.tscn")
+var _transition_slot_scene: PackedScene = preload("visual_fsm_transition_slot.tscn")
 var state_name: String setget _set_state_name, _get_state_name
 
 const COLORS := [
@@ -17,7 +17,7 @@ const COLORS := [
 ]
 
 
-func _init() -> void:
+func _ready() -> void:
 	set_slot(0, true, 0, COLORS[0], false, 0, Color.white)
 
 

@@ -8,12 +8,12 @@
 [sub_resource type="Resource" id=1]
 script = ExtResource( 3 )
 name = "test"
-position = Vector2( 407, 155 )
+position = Vector2( 345, 127 )
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 3 )
 name = "test1"
-position = Vector2( 899, 169 )
+position = Vector2( 711, 170 )
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 4 )

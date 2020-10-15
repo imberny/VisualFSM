@@ -17,6 +17,8 @@ func _ready() -> void:
 	for opt in _popup_options:
 		_popup.add_item(opt)
 	add_child(_popup)
+	
+	edit(VisualFiniteStateMachine.new())
 
 
 func edit(fsm: VisualFiniteStateMachine) -> void:
