@@ -17,11 +17,6 @@ func _ready() -> void:
 	add_child(_popup)
 
 
-func _exit_tree():
-	_popup.queue_free()
-	_fsm = null
-
-
 func edit(fsm: VisualFiniteStateMachine) -> void:
 	if _fsm:
 		_fsm.disconnect("changed", self, "_on_fsm_changed")
