@@ -9,22 +9,22 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "GraphNode",
+"base": "Reference",
 "class": "VisualFSMStateNode",
 "language": "GDScript",
 "path": "res://addons/visual_fsm/editor/visual_fsm_state_node.gd"
 }, {
-"base": "Reference",
+"base": "Resource",
 "class": "VisualFiniteStateMachine",
 "language": "GDScript",
 "path": "res://addons/visual_fsm/resources/visual_finite_state_machine.gd"
 }, {
-"base": "Reference",
+"base": "Resource",
 "class": "VisualFiniteStateMachineState",
 "language": "GDScript",
 "path": "res://addons/visual_fsm/resources/visual_finite_state_machine_state.gd"
 }, {
-"base": "Resource",
+"base": "Reference",
 "class": "VisualFiniteStateMachineTransition",
 "language": "GDScript",
 "path": "res://addons/visual_fsm/resources/visual_finite_state_machine_transition.gd"
@@ -43,7 +43,7 @@ config/icon="res://icon.png"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "VisualFSM" )
+enabled=PoolStringArray(  )
 
 [rendering]
 
