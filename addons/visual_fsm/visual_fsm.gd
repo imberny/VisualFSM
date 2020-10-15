@@ -10,6 +10,7 @@ func _set_fsm(fsm: Resource) -> void:
 
 	if fsm and not fsm is VisualFiniteStateMachine:
 		printerr("ERROR: This node only supports resources of type VisualFiniteStateMachine.")
+		fsm = VisualFiniteStateMachine.new()
 		return
 
 	finite_state_machine = fsm

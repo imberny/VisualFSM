@@ -42,6 +42,7 @@ func _redraw_graph():
 		print("VisualFSMGraphEdit: adding state node: " + state.name)
 		var state_node = VisualFSMStateNode.new()
 		state_node.name = state.name
+		state_node.title = state.name
 		# center node on position
 		state_node.offset = state.position - state_node.rect_size / 2
 		add_child(state_node)
@@ -53,6 +54,7 @@ func _redraw_graph():
 func _on_popup_request(position: Vector2) -> void:
 	_popup.set_position(position)
 	_popup.show()
+	_popup.grab_focus()
 
 
 func _on_popup_index_pressed(index: int) -> void:
