@@ -17,6 +17,11 @@ func _ready() -> void:
 	add_child(_popup)
 
 
+func _exit_tree():
+	_popup.queue_free()
+	_fsm = null
+
+
 func edit(fsm: VisualFiniteStateMachine) -> void:
 	if _fsm:
 		_fsm.disconnect("changed", self, "_on_fsm_changed")
@@ -69,11 +74,3 @@ func _on_popup_index_pressed(index: int) -> void:
 			_fsm.add_state(state_name, mouse_pos)
 		1:
 			print("adding new transition...")
-		2:
-			ResourceSaver.save("res://TestResource2.tres", _fsm)
-		3:
-			_fsm = load("res://TestResource2.tres") as VisualFiniteStateMachine
-
-			print("loaded resource: ")
-			for node_name in _fsm.get_node_list():
-				print(node_name)

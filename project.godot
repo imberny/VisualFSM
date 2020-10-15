@@ -41,10 +41,6 @@ _global_script_class_icons={
 config/name="VisualFSM"
 config/icon="res://icon.png"
 
-[autoload]
-
-VisualFSMSingleton="*res://addons/VisualFSM/editor/VisualFSMSingleton.gd"
-
 [editor_plugins]
 
 enabled=PoolStringArray( "VisualFSM" )
