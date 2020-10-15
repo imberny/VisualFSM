@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_state_node.gd" type="Script" id=1]
+
+[node name="StateGraphNode" type="GraphNode"]
+margin_right = 32.0
+margin_bottom = 30.0
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 0.5, 0.31, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color( 1, 1, 1, 1 )
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color( 1, 1, 1, 1 )
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color( 1, 1, 1, 1 )
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StateName" type="LineEdit" parent="."]
+margin_left = 16.0
+margin_top = 49.0
+margin_right = 148.0
+margin_bottom = 73.0
+placeholder_text = "State name..."
+
+[node name="AddTransitionButton" type="Button" parent="."]
+margin_left = 16.0
+margin_top = 74.0
+margin_right = 148.0
+margin_bottom = 94.0
+text = "Add new transition"
+[connection signal="pressed" from="AddTransitionButton" to="." method="_on_AddTransitionButton_pressed"]

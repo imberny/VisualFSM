@@ -1,14 +1,16 @@
 tool
 extends GraphEdit
 
+var _fsm_state_scene: PackedScene = preload("visual_fsm_state_node2.tscn")
 var _fsm: VisualFiniteStateMachine
 var _popup_options := ["New state", "New transition", "save", "load"]
 var _popup: PopupMenu
 
 
 func _ready() -> void:
-	connect("popup_request", self, "_on_popup_request")
+	add_valid_left_disconnect_type(0)
 
+	connect("popup_request", self, "_on_popup_request")
 	_popup = PopupMenu.new()
 	_popup.connect("index_pressed", self, "_on_popup_index_pressed")
 	_popup.connect("focus_exited", _popup, "hide")
@@ -40,9 +42,8 @@ func _redraw_graph():
 	# add state nodes
 	for state in _fsm.get_states():
 		print("VisualFSMGraphEdit: adding state node: " + state.name)
-		var state_node = VisualFSMStateNode.new()
-		state_node.name = state.name
-		state_node.title = state.name
+		var state_node: VisualFSMStateNode = _fsm_state_scene.instance()
+		state_node.state_name = state.name
 		# center node on position
 		state_node.offset = state.position - state_node.rect_size / 2
 		add_child(state_node)
@@ -71,3 +72,13 @@ func _on_popup_index_pressed(index: int) -> void:
 			_fsm.add_state(state_name, mouse_pos)
 		1:
 			print("adding new transition...")
+
+
+func _on_VisualFSMGraphEdit_connection_request(from, from_slot, to, to_slot):
+	if from != to:
+		connect_node(from, from_slot, to, to_slot)
+
+
+func _on_VisualFSMGraphEdit_disconnection_request(from, from_slot, to, to_slot):
+	if from != to:
+		disconnect_node(from, from_slot, to, to_slot)

@@ -3,9 +3,6 @@
 [ext_resource path="res://addons/visual_fsm/editor/visual_fsm_graph_edit.gd" type="Script" id=1]
 [ext_resource path="res://addons/visual_fsm/editor/visual_fsm_editor.gd" type="Script" id=2]
 
-
-
-
 [node name="VisualFSMEditor" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -18,4 +15,7 @@ __meta__ = {
 [node name="VisualFSMGraphEdit" type="GraphEdit" parent="."]
 margin_right = 1024.0
 margin_bottom = 600.0
+right_disconnects = true
 script = ExtResource( 1 )
+[connection signal="connection_request" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_VisualFSMGraphEdit_connection_request"]
+[connection signal="disconnection_request" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_VisualFSMGraphEdit_disconnection_request"]

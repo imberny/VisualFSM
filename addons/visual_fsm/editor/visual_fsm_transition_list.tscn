@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_transition_list.gd" type="Script" id=1]
+
+[node name="TransitionListContainer" type="VBoxContainer"]
+margin_right = 132.0
+margin_bottom = 26.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TransitionList" type="VBoxContainer" parent="."]
+margin_right = 132.0
+
+[node name="AddTransitionButton" type="Button" parent="."]
+margin_top = 4.0
+margin_right = 132.0
+margin_bottom = 24.0
+text = "Add new transition"
+[connection signal="pressed" from="AddTransitionButton" to="." method="_on_AddTransitionButton_pressed"]

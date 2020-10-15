@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_state_node.gd" type="Script" id=1]
+[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_transition_list.gd" type="Script" id=2]
+
+[node name="StateGraphNode" type="GraphNode"]
+margin_right = 32.0
+margin_bottom = 30.0
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 0.5, 0.31, 1 )
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color( 0.56, 0.93, 0.56, 1 )
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color( 1, 1, 1, 1 )
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TransitionListContainer" type="VBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 49.0
+margin_right = 148.0
+margin_bottom = 73.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TransitionList" type="VBoxContainer" parent="TransitionListContainer"]
+margin_right = 132.0
+
+[node name="AddTransitionButton" type="Button" parent="TransitionListContainer"]
+margin_top = 4.0
+margin_right = 132.0
+margin_bottom = 24.0
+text = "Add new transition"
+[connection signal="pressed" from="TransitionListContainer/AddTransitionButton" to="TransitionListContainer" method="_on_AddTransitionButton_pressed"]
