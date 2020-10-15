@@ -1,8 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://addons/visual_fsm/editor/visual_fsm_state_node.gd" type="Script" id=1]
-
-[sub_resource type="StyleBoxFlat" id=2]
 
 [node name="StateGraphNode" type="GraphNode"]
 margin_right = 128.0
@@ -10,9 +8,7 @@ margin_bottom = 52.0
 rect_min_size = Vector2( 128, 0 )
 size_flags_horizontal = 9
 size_flags_vertical = 9
-custom_styles/defaultframe = SubResource( 2 )
-custom_constants/port_offset = -14
-custom_constants/close_offset = 0
+custom_constants/port_offset = 0
 custom_constants/separation = 8
 show_close = true
 resizable = true
@@ -45,4 +41,7 @@ margin_top = 56.0
 margin_right = 121.0
 margin_bottom = 76.0
 text = "New transition"
+[connection signal="close_request" from="." to="." method="_on_StateGraphNode_close_request"]
+[connection signal="resize_request" from="." to="." method="_on_StateGraphNode_resize_request"]
+[connection signal="text_changed" from="StateName" to="." method="_on_StateName_text_changed"]
 [connection signal="pressed" from="AddTransitionButton" to="." method="_on_AddTransitionButton_pressed"]

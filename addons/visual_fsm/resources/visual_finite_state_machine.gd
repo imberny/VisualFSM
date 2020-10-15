@@ -3,7 +3,7 @@ class_name VisualFiniteStateMachine
 extends Resource
 
 var _states := {}
-var _transitions: Array
+var _transitions := []
 
 
 func has_state(name: String):
@@ -26,34 +26,56 @@ func add_state(name: String, position: Vector2):
 	emit_signal("changed")
 
 
+func rename_state(name: String, new_name: String) -> void:
+	var state = _states[name]
+	_states.erase(name)
+	_states[new_name] = state
+	for transition in _transitions:
+		if name == transition.from_state:
+			transition.from_state = new_name
+		if name == transition.to_state:
+			transition.to_state = new_name
+#
+#
+#func add_transition(from_state: String, to_state: String) -> void:
+#	var transition := VisualFiniteStateMachineTransition.new()
+#	transition.from_state = from_state
+#	transition.to_state = to_state
+#	_transitions.push_back(transition)
+#	emit_signal("changed")
+#
+#func remove_transition(from_state: String, to_state: String) -> void:
+#	var transition_to_remove: VisualFiniteStateMachineTransition
+#	for transition in _transitions:
+#		if transition.from_state == from_state and transition.to_state == to_state:
+#			transition_to_remove = transition
+#
+#	if transition_to_remove:
+#		_transitions.erase(transition_to_remove)
+#		emit_signal("changed")
+
+
 func _get(property: String):
-	print("FSM: getting property: " + property)
 	var parts = property.split("/")
 
 	match parts[0]:
 		"states":
 			var name: String = parts[1]
 			return _states[name]
-		"transitions":
-			return _transitions
 	return null
 
 
 func _set(property: String, value) -> bool:
-	print("FSM: setting property: " + property)
 	var parts = property.split("/")
 
 	match parts[0]:
 		"states":
 			add_state(value.name, value.position)
-		"transitions":
-			_transitions = value
 			return true
 	return false
 
 
 func _get_property_list() -> Array:
-	print("Returning FSM property list...")
 	var property_list := []
 	for state in _states.values():
 		property_list += [
@@ -65,13 +87,5 @@ func _get_property_list() -> Array:
 				"usage": PROPERTY_USAGE_NOEDITOR
 			}
 		]
-	property_list += [
-		{
-			"name": "transitions",
-			"type": TYPE_ARRAY,
-			"hint": PROPERTY_HINT_NONE,
-			"hint_string": "",
-			"usage": PROPERTY_USAGE_NOEDITOR
-		}
-	]
+
 	return property_list

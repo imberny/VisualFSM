@@ -25,21 +25,21 @@ _global_script_classes=[ {
 "path": "res://addons/visual_fsm/resources/visual_finite_state_machine.gd"
 }, {
 "base": "Resource",
+"class": "VisualFiniteStateMachineEvent",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/resources/visual_finite_state_machine_event.gd"
+}, {
+"base": "Resource",
 "class": "VisualFiniteStateMachineState",
 "language": "GDScript",
 "path": "res://addons/visual_fsm/resources/visual_finite_state_machine_state.gd"
-}, {
-"base": "Reference",
-"class": "VisualFiniteStateMachineTransition",
-"language": "GDScript",
-"path": "res://addons/visual_fsm/resources/visual_finite_state_machine_transition.gd"
 } ]
 _global_script_class_icons={
 "VisualFSMStateNode": "",
 "VisualFSMTransitionSlot": "",
 "VisualFiniteStateMachine": "",
-"VisualFiniteStateMachineState": "",
-"VisualFiniteStateMachineTransition": ""
+"VisualFiniteStateMachineEvent": "",
+"VisualFiniteStateMachineState": ""
 }
 
 [application]
