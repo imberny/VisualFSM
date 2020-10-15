@@ -1,7 +1,10 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://addons/VisualFSM/editor/VisualFSMGraphEdit.gd" type="Script" id=1]
-[ext_resource path="res://addons/VisualFSM/editor/VisualFSMEditor.gd" type="Script" id=2]
+[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_graph_edit.gd" type="Script" id=1]
+[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_editor.gd" type="Script" id=2]
+
+
+
 
 [node name="VisualFSMEditor" type="MarginContainer"]
 anchor_right = 1.0
