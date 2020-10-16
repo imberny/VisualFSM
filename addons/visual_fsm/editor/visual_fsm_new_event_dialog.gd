@@ -25,6 +25,7 @@ func _ready() -> void:
 		"index_pressed", self, "_on_EventType_pressed")
 	_validate()
 	show()
+	$EventProperties/EventName.grab_focus()
 
 
 func _set_event_name(value) -> void:
@@ -54,7 +55,7 @@ func _validate():
 
 func _on_VisualFSMNewEventDialog_confirmed() -> void:
 	var event = VisualFiniteStateMachineEvent.new()
-	event.event_name = self.event_name
+	event.name = self.event_name
 #	event.event_type = 
 	emit_signal("new_event_created", event)
 	self.event_name = ""

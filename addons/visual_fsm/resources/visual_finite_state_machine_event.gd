@@ -8,6 +8,5 @@ enum EventTypes {
 	SCRIPT
 }
 
-export(String) var event_name
-export(String) var target_state
+export(String) var name
 

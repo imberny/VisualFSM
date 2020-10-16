@@ -8,6 +8,7 @@ signal new_event_request(state_node)
 
 var _event_slot_scene: PackedScene = preload("visual_fsm_event_slot.tscn")
 var state_name: String setget _set_state_name, _get_state_name
+var fsm: VisualFiniteStateMachine
 
 const COLORS := [
 	Color.coral,
@@ -52,7 +53,7 @@ func _get_state_name() -> String:
 func _on_AddEvent_about_to_show() -> void:
 	var popup: PopupMenu = $AddEventDropdown.get_popup()
 	popup.clear()
-	for event in get_parent()._events.keys():
+	for event in fsm.get_event_names():
 		popup.add_item(event)
 	if 0 < popup.items.size():
 		popup.add_separator()
@@ -76,4 +77,4 @@ func _on_StateGraphNode_resize_request(new_minsize):
 
 
 func _on_StateName_text_changed(new_text):
-	emit_signal("name_change_request", self, new_text)
+	emit_signal("state_rename_request", self, new_text)

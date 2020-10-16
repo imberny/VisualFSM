@@ -61,14 +61,20 @@ func _redraw_graph():
 			"state_rename_request", self, "_on_StateNode_rename_request")
 		node.connect(
 			"new_event_request", self, "_on_StateNode_new_event_request")
+		node.fsm = _fsm
 		node.state_name = state.name
 		# center node on position
 		node.offset = state.position - node.rect_size / 2
 		add_child(node)
+	
+	for transition in _fsm.get_transitions():
+		var event_index := 0
+		var state_events: Array = _fsm.get_state_event_names(transition.from)
+		while state_events[0] != transition.event:
+			event_index += 1
+		if not transition.to.empty():
+			connect_node(transition.from, event_index + 1, transition.to, 0)
 
-	# add transition nodes
-	# for transition in _fsm.get_transition():
-		# add_connection .... 
 
 func _on_popup_request(position: Vector2) -> void:
 	_popup.set_position(position)
@@ -87,7 +93,10 @@ func _on_popup_index_pressed(index: int) -> void:
 			while _fsm.has_state(state_name):
 				state_name = base_name + str(suffix)
 				suffix += 1
-			_fsm.add_state(state_name, mouse_pos)
+			var state := VisualFiniteStateMachineState.new()
+			state.name = state_name
+			state.position = mouse_pos
+			_fsm.add_state(state)
 		1:
 			print("adding new transition...")
 
@@ -98,31 +107,30 @@ func _on_VisualFSMGraphEdit_connection_request(
 	if from.empty() or to.empty():
 		printerr("ERROR: States must have names.")
 		return
-	if from != to:
-#		_fsm.add_transition(from, from_slot, to, to_slot)
-		connect_node(from, from_slot, to, to_slot)
+	
+	var from_node: VisualFSMStateNode = find_node(from, false)
+	var to_node: VisualFSMStateNode = find_node(to, false)
+	var event_names := _fsm.get_state_event_names(from_node.state_name)
+	var event: String = event_names[from_slot - 1]
+	_fsm.add_transition(from_node.state_name, event, to_node.state_name)
 
 
 func _on_VisualFSMGraphEdit_disconnection_request(from, from_slot, to, to_slot):
-	if from != to:
-		disconnect_node(from, from_slot, to, to_slot)
+	var from_node: VisualFSMStateNode = find_node(from, false)
+	var event_names := _fsm.get_state_event_names(from_node.state_name)
+	var event: String = event_names[from_slot - 1]
+	# TODO: get event with from_slot
+	_fsm.remove_transition(from, event)
+#	if from != to:
+#		disconnect_node(from, from_slot, to, to_slot)
+
 
 func _on_StateNode_state_removed(state_node: VisualFSMStateNode) -> void:
-	for connection in get_connection_list():
-		var from: String = connection.from
-		var from_port: int = connection.from_port
-		var to: String = connection.to
-		var to_port: int = connection.to_port
-		if from == state_node.name or to == state_node.name:
-			disconnect_node(from, from_port, to, to_port)
-			var from_node: VisualFSMStateNode = find_node(from, false)
-			var to_node: VisualFSMStateNode = find_node(to, false)
-			_fsm.remove_transition(from_node, to_node.state_name)
-
+	_fsm.remove_state(state_node.state_name)
 	emit_signal("draw")
 
 
-func _on_StateNode_name_change(state_node: VisualFSMStateNode, new_name: String) -> void:
+func _on_StateNode_rename_request(state_node: VisualFSMStateNode, new_name: String) -> void:
 	if new_name.empty():
 		printerr("ERROR: States must have names.")
 		return
@@ -131,7 +139,6 @@ func _on_StateNode_name_change(state_node: VisualFSMStateNode, new_name: String)
 		return
 
 	_fsm.rename_state(state_node.state_name, new_name)
-	state_node.state_name = new_name
 
 
 func _on_StateNode_new_event_request(node: VisualFSMStateNode) -> void:
@@ -140,7 +147,7 @@ func _on_StateNode_new_event_request(node: VisualFSMStateNode) -> void:
 
 
 func _on_Dialog_event_name_request(event_name: String) -> void:
-	if not _events.has(event_name):
+	if not _fsm.has_event(event_name):
 		_new_event_dialog.event_name = event_name
 	else:
 		printerr("ERROR: An event named \"" + event_name + "\" already exists.")
@@ -148,7 +155,7 @@ func _on_Dialog_event_name_request(event_name: String) -> void:
 
 
 func _on_Dialog_new_event_created(event: VisualFiniteStateMachineEvent) -> void:
-	_events[event.event_name] = event
-	_state_node_creating_event.add_event(event)
+	_fsm.add_event(event)
+	_fsm.add_transition(_state_node_creating_event.state_name, event.name)
 	_state_node_creating_event = null
 	_new_event_dialog.hide()
