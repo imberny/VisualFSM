@@ -114,9 +114,7 @@ func remove_transition(from: String, event_name: String):
 
 
 func _get(property: String):
-	print("FSM: Getting property: %s" % property)
-#	var parts = property.split("/")
-
+#	print("FSM: Getting property: %s" % property)
 	match property:
 		"states":
 #			var name: String = parts[1]
@@ -141,8 +139,6 @@ func _get(property: String):
 
 
 func _set(property: String, value) -> bool:
-#	var parts = property.split("/")
-
 	match property:
 		"states":
 			for state in value:

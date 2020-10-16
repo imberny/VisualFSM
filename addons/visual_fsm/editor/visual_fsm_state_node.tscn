@@ -42,6 +42,7 @@ margin_top = 56.0
 margin_right = 165.0
 margin_bottom = 76.0
 text = "Add event"
+flat = false
 switch_on_hover = true
 [connection signal="close_request" from="." to="." method="_on_StateGraphNode_close_request"]
 [connection signal="resize_request" from="." to="." method="_on_StateGraphNode_resize_request"]

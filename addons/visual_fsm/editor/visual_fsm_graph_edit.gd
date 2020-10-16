@@ -65,7 +65,7 @@ func _redraw_graph():
 		node.fsm = _fsm
 		node.state_name = state.name
 		# center node on position
-		node.offset = state.position - node.rect_size / 2
+		node.offset = state.position
 		add_child(node)
 
 	# add event slots
@@ -108,7 +108,7 @@ func _on_popup_index_pressed(index: int) -> void:
 				suffix += 1
 			var state := VisualFiniteStateMachineState.new()
 			state.name = state_name
-			state.position = mouse_pos
+			state.position = mouse_pos - Vector2(115, 40)
 			_fsm.add_state(state)
 		1:
 			print("adding new transition...")
@@ -140,9 +140,11 @@ func _on_StateNode_state_removed(state_node: VisualFSMStateNode) -> void:
 	emit_signal("draw")
 
 
-func _on_StateNode_rename_request(old_name: String, new_name: String) -> void:
+func _on_StateNode_rename_request(
+	state_node: VisualFSMStateNode, old_name: String, new_name: String) -> void:
 	if new_name.empty():
 		printerr("ERROR: States must have names.")
+		state_node.state_name = old_name
 		return
 
 	print("Renaming from %s to %s" % [old_name, new_name])
@@ -173,5 +175,4 @@ func _on_end_node_move():
 	for child in get_children():
 		if child is VisualFSMStateNode:
 			var state := _fsm.get_state(child.state_name)
-			# save top right corner position
-			state.position = child.offset + child.rect_size / 2
+			state.position = child.offset

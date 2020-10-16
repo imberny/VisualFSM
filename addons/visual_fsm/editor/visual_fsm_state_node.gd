@@ -2,7 +2,7 @@ tool
 class_name VisualFSMStateNode
 extends GraphNode
 
-signal state_rename_request(old_name, new_name)
+signal state_rename_request(state_node, old_name, new_name)
 signal state_removed(state_node)
 signal new_event_request(state_node)
 
@@ -31,6 +31,7 @@ func _ready() -> void:
 	add_event_menu.connect(
 		"index_pressed", self, "_on_AddEvent_index_pressed")
 	add_event_menu.connect("focus_exited", add_event_menu, "hide")
+	$StateName.connect("focus_exited", self, "_on_StateName_focus_exited")
 
 
 func add_event(event: VisualFiniteStateMachineEvent):
@@ -54,6 +55,7 @@ func _get_state_name() -> String:
 func _on_AddEvent_about_to_show() -> void:
 	var popup: PopupMenu = $AddEventDropdown.get_popup()
 	popup.clear()
+	popup.grab_focus()
 	var event_names = fsm.get_event_names()
 	for state_event_name in fsm.get_state_event_names(self.state_name):
 		var idx = event_names.find(state_event_name)
@@ -85,4 +87,8 @@ func _on_StateGraphNode_resize_request(new_minsize):
 
 
 func _on_StateName_text_entered(new_text):
-	emit_signal("state_rename_request", _old_state_name, new_text)
+	emit_signal("state_rename_request", self, _old_state_name, new_text)
+
+
+func _on_StateName_focus_exited():
+	_on_StateName_text_entered(self.state_name)
