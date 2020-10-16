@@ -60,8 +60,8 @@ func _on_AddEvent_about_to_show() -> void:
 
 
 func _on_AddEvent_index_pressed(index: int) -> void:
-	# popup menu stores 9 more items wtf?
-	var num_items = $AddEventDropdown.get_popup().items.size() / 10
+	var popup: PopupMenu = $AddEventDropdown.get_popup()
+	var num_items = popup.get_item_count()
 	if num_items - 1 == index: # new item option is last
 		emit_signal("new_event_request", self)
 
