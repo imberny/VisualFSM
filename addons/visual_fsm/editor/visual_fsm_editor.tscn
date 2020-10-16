@@ -19,6 +19,7 @@ custom_constants/port_grab_distance_vertical = 24
 custom_constants/port_grab_distance_horizontal = 32
 right_disconnects = true
 script = ExtResource( 1 )
-[connection signal="connection_request" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_VisualFSMGraphEdit_connection_request"]
-[connection signal="disconnection_request" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_VisualFSMGraphEdit_disconnection_request"]
-[connection signal="confirmed" from="VisualFSMGraphEdit/VisualFSMNewEventDialog" to="VisualFSMGraphEdit/VisualFSMNewEventDialog" method="_on_VisualFSMNewEventDialog_confirmed"]
+[connection signal="_end_node_move" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_end_node_move"]
+[connection signal="connection_request" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_connection_request"]
+[connection signal="disconnection_request" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_disconnection_request"]
+[connection signal="confirmed" from="VisualFSMGraphEdit/VisualFSMNewEventDialog" to="VisualFSMGraphEdit/VisualFSMNewEventDialog" method="_on_confirmed"]

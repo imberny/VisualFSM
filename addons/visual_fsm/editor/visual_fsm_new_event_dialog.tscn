@@ -2,14 +2,11 @@
 
 [ext_resource path="res://addons/visual_fsm/editor/visual_fsm_new_event_dialog.gd" type="Script" id=1]
 
-[node name="VisualFSMNewEventDialog" type="AcceptDialog"]
+[node name="VisualFSMNewEventDialog" type="ConfirmationDialog"]
 margin_right = 213.0
 margin_bottom = 92.0
 window_title = "New event"
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="EventProperties" type="VBoxContainer" parent="."]
 margin_left = 8.0
@@ -26,6 +23,8 @@ __meta__ = {
 margin_right = 197.0
 margin_bottom = 24.0
 placeholder_text = "Event name"
+caret_blink = true
+caret_blink_speed = 0.5
 
 [node name="EventType" type="MenuButton" parent="EventProperties"]
 margin_top = 28.0
@@ -33,4 +32,5 @@ margin_right = 197.0
 margin_bottom = 48.0
 text = "Event type"
 flat = false
-[connection signal="confirmed" from="." to="." method="_on_VisualFSMNewEventDialog_confirmed"]
+items = [ "Input action", null, 0, false, false, 0, 0, null, "", false, "Timeout", null, 0, false, false, 1, 0, null, "", false, "Script", null, 0, false, false, 2, 0, null, "", false, "Input action", null, 0, false, false, 3, 0, null, "", false, "Timeout", null, 0, false, false, 4, 0, null, "", false, "Script", null, 0, false, false, 5, 0, null, "", false, "Input action", null, 0, false, false, 6, 0, null, "", false, "Timeout", null, 0, false, false, 7, 0, null, "", false, "Script", null, 0, false, false, 8, 0, null, "", false ]
+[connection signal="confirmed" from="." to="." method="_on_confirmed"]

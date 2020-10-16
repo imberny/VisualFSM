@@ -2,12 +2,13 @@ tool
 class_name VisualFSMStateNode
 extends GraphNode
 
-signal state_rename_request(state_node, new_name)
+signal state_rename_request(old_name, new_name)
 signal state_removed(state_node)
 signal new_event_request(state_node)
 
 var _event_slot_scene: PackedScene = preload("visual_fsm_event_slot.tscn")
 var state_name: String setget _set_state_name, _get_state_name
+var _old_state_name: String
 var fsm: VisualFiniteStateMachine
 
 const COLORS := [
@@ -30,7 +31,6 @@ func _ready() -> void:
 	add_event_menu.connect(
 		"index_pressed", self, "_on_AddEvent_index_pressed")
 	add_event_menu.connect("focus_exited", add_event_menu, "hide")
-	$StateName.grab_focus()
 
 
 func add_event(event: VisualFiniteStateMachineEvent):
@@ -44,6 +44,7 @@ func add_event(event: VisualFiniteStateMachineEvent):
 
 func _set_state_name(value) -> void:
 	$StateName.text = value
+	_old_state_name = value
 
 
 func _get_state_name() -> String:
@@ -53,9 +54,14 @@ func _get_state_name() -> String:
 func _on_AddEvent_about_to_show() -> void:
 	var popup: PopupMenu = $AddEventDropdown.get_popup()
 	popup.clear()
-	for event in fsm.get_event_names():
+	var event_names = fsm.get_event_names()
+	for state_event_name in fsm.get_state_event_names(self.state_name):
+		var idx = event_names.find(state_event_name)
+		if 0 <= idx:
+			event_names.remove(idx)
+	for event in event_names:
 		popup.add_item(event)
-	if 0 < popup.items.size():
+	if 0 < popup.get_item_count():
 		popup.add_separator()
 	popup.add_item("New event")
 
@@ -65,6 +71,8 @@ func _on_AddEvent_index_pressed(index: int) -> void:
 	var num_items = popup.get_item_count()
 	if num_items - 1 == index: # new item option is last
 		emit_signal("new_event_request", self)
+	else:
+		fsm.add_transition(self.state_name, popup.get_item_text(index))
 
 
 func _on_StateGraphNode_close_request():
@@ -76,5 +84,5 @@ func _on_StateGraphNode_resize_request(new_minsize):
 	rect_size = new_minsize
 
 
-func _on_StateName_text_changed(new_text):
-	emit_signal("state_rename_request", self, new_text)
+func _on_StateName_text_entered(new_text):
+	emit_signal("state_rename_request", _old_state_name, new_text)

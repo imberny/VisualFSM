@@ -1,5 +1,5 @@
 tool
-extends AcceptDialog
+extends ConfirmationDialog
 
 signal new_event_created(event)
 signal event_name_request(name)
@@ -16,16 +16,16 @@ var event_type: String setget _set_event_type, _get_event_type
 
 
 func _ready() -> void:
+	connect("about_to_show", self, "_on_about_to_show")
 	$EventProperties/EventName.connect(
 		"text_entered", self, "_on_EventName_text_entered")
 	$EventProperties/EventType.text = EVENT_TYPE_TITLE
+	$EventProperties/EventType.get_popup().clear()
 	for event_type in EVENT_TYPES:
 		$EventProperties/EventType.get_popup().add_item(event_type)
 	$EventProperties/EventType.get_popup().connect(
 		"index_pressed", self, "_on_EventType_pressed")
 	_validate()
-	show()
-	$EventProperties/EventName.grab_focus()
 
 
 func _set_event_name(value) -> void:
@@ -53,7 +53,12 @@ func _validate():
 	ok_button.disabled = invalid_event_name or invalid_event_type
 
 
-func _on_VisualFSMNewEventDialog_confirmed() -> void:
+func _on_about_to_show() -> void:
+	self.grab_focus()
+	$EventProperties/EventName.grab_focus()
+
+
+func _on_confirmed() -> void:
 	var event = VisualFiniteStateMachineEvent.new()
 	event.name = self.event_name
 #	event.event_type = 

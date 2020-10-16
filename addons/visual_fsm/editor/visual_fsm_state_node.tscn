@@ -3,8 +3,8 @@
 [ext_resource path="res://addons/visual_fsm/editor/visual_fsm_state_node.gd" type="Script" id=1]
 
 [node name="StateGraphNode" type="GraphNode"]
-margin_right = 128.0
-margin_bottom = 52.0
+margin_right = 181.0
+margin_bottom = 82.0
 rect_min_size = Vector2( 128, 0 )
 size_flags_horizontal = 9
 size_flags_vertical = 9
@@ -32,17 +32,17 @@ __meta__ = {
 [node name="StateName" type="LineEdit" parent="."]
 margin_left = 16.0
 margin_top = 24.0
-margin_right = 112.0
+margin_right = 165.0
 margin_bottom = 48.0
 expand_to_text_length = true
 
 [node name="AddEventDropdown" type="MenuButton" parent="."]
 margin_left = 16.0
 margin_top = 56.0
-margin_right = 112.0
+margin_right = 165.0
 margin_bottom = 76.0
 text = "Add event"
 switch_on_hover = true
 [connection signal="close_request" from="." to="." method="_on_StateGraphNode_close_request"]
 [connection signal="resize_request" from="." to="." method="_on_StateGraphNode_resize_request"]
-[connection signal="text_changed" from="StateName" to="." method="_on_StateName_text_changed"]
+[connection signal="text_entered" from="StateName" to="." method="_on_StateName_text_entered"]

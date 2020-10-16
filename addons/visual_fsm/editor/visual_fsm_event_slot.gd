@@ -13,7 +13,7 @@ func _ready() -> void:
 
 
 func _set_event(event: VisualFiniteStateMachineEvent) -> void:
-	$EventLabel.text = event.event_name
+	$EventLabel.text = event.name
 
 
 func _on_CloseButton_pressed() -> void:

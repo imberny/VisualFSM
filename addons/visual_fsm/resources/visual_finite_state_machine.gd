@@ -26,6 +26,7 @@ func get_state(name: String) -> VisualFiniteStateMachineState:
 
 
 func get_state_event_names(name: String) -> Array:
+	assert(_transitions.has(name), "Missing state: %s" % name)
 	return _transitions[name].keys()
 
 
@@ -35,6 +36,7 @@ func get_states() -> Array:
 
 func add_state(state: VisualFiniteStateMachineState) -> void:
 	if not _transitions.has(state.name):
+		print("Added transition for state %s" % state.name)
 		_transitions[state.name] = {}
 	_states[state.name] = state
 	emit_signal("changed")
@@ -44,6 +46,10 @@ func remove_state(state_name: String) -> void:
 	assert(_states.has(state_name), "Missing state: %s" % state_name)
 	_states.erase(state_name)
 	_transitions.erase(state_name)
+	for from in _transitions.keys():
+		for event in _transitions[from].keys():
+			if state_name == _transitions[from][event]:
+				_transitions[from][event] = ""
 	emit_signal("changed")
 
 
@@ -60,6 +66,10 @@ func rename_state(name: String, new_name: String) -> void:
 
 func has_event(name: String) -> bool:
 	return _events.has(name)
+
+
+func get_event(name: String) -> VisualFiniteStateMachineEvent:
+	return _events[name]
 
 
 func get_event_names() -> Array:
@@ -104,6 +114,7 @@ func remove_transition(from: String, event_name: String):
 
 
 func _get(property: String):
+	print("FSM: Getting property: %s" % property)
 #	var parts = property.split("/")
 
 	match property:
@@ -116,6 +127,8 @@ func _get(property: String):
 		"transitions":
 			var transitions := []
 			for from in _transitions.keys():
+				if 0 == _transitions[from].keys().size():
+					transitions += [from, "", ""]
 				for event in _transitions[from].keys():
 					var to = _transitions[from][event]
 					transitions += [
@@ -140,8 +153,15 @@ func _set(property: String, value) -> bool:
 				add_event(value)
 			return true
 		"transitions":
-			for transition in value:
-				add_transition(transition.from, transition.event, transition.to)
+			var num_transitions = value.size() / 3
+			for idx in range(num_transitions):
+				var from = value[idx]
+				var event = value[idx + 1]
+				var to = value[idx + 2]
+				if event.empty():
+					_transitions[from] = {}
+				else:
+					add_transition(from, event, to)
 			return true
 	return false
 
