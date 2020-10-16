@@ -32,16 +32,17 @@ __meta__ = {
 [node name="StateName" type="LineEdit" parent="."]
 margin_left = 16.0
 margin_top = 24.0
-margin_right = 121.0
+margin_right = 112.0
 margin_bottom = 48.0
+expand_to_text_length = true
 
-[node name="AddTransitionButton" type="Button" parent="."]
+[node name="AddEventDropdown" type="MenuButton" parent="."]
 margin_left = 16.0
 margin_top = 56.0
-margin_right = 121.0
+margin_right = 112.0
 margin_bottom = 76.0
-text = "New transition"
+text = "Add event"
+switch_on_hover = true
 [connection signal="close_request" from="." to="." method="_on_StateGraphNode_close_request"]
 [connection signal="resize_request" from="." to="." method="_on_StateGraphNode_resize_request"]
 [connection signal="text_changed" from="StateName" to="." method="_on_StateName_text_changed"]
-[connection signal="pressed" from="AddTransitionButton" to="." method="_on_AddTransitionButton_pressed"]

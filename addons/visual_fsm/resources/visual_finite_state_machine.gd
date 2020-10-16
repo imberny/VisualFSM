@@ -3,7 +3,6 @@ class_name VisualFiniteStateMachine
 extends Resource
 
 var _states := {}
-var _transitions := []
 
 
 func has_state(name: String):
@@ -30,11 +29,11 @@ func rename_state(name: String, new_name: String) -> void:
 	var state = _states[name]
 	_states.erase(name)
 	_states[new_name] = state
-	for transition in _transitions:
-		if name == transition.from_state:
-			transition.from_state = new_name
-		if name == transition.to_state:
-			transition.to_state = new_name
+#	for transition in _transitions:
+#		if name == transition.from_state:
+#			transition.from_state = new_name
+#		if name == transition.to_state:
+#			transition.to_state = new_name
 #
 #
 #func add_transition(from_state: String, to_state: String) -> void:

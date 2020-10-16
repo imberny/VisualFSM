@@ -2,10 +2,12 @@ tool
 extends GraphEdit
 
 var _fsm_state_scene: PackedScene = preload("visual_fsm_state_node.tscn")
+var _new_event_dialog: AcceptDialog = preload("visual_fsm_new_event_dialog.tscn").instance()
 var _fsm: VisualFiniteStateMachine
-var _state_nodes := {} # node name to node, used to handle connections
 var _popup_options := ["New state", "New transition", "save", "load"]
 var _popup: PopupMenu
+var _events := {}
+var _state_node_creating_event: VisualFSMStateNode
 
 
 func _ready() -> void:
@@ -18,7 +20,15 @@ func _ready() -> void:
 	for opt in _popup_options:
 		_popup.add_item(opt)
 	add_child(_popup)
-	
+
+	_new_event_dialog.connect(
+		"event_name_request", self, "_on_Dialog_event_name_request")
+	_new_event_dialog.connect(
+		"new_event_created", self, "_on_Dialog_new_event_created")
+	_new_event_dialog.rect_position = get_viewport_rect().size / 2 - _new_event_dialog.rect_size / 2
+	add_child(_new_event_dialog)
+	_new_event_dialog.hide()
+
 	edit(VisualFiniteStateMachine.new())
 
 
@@ -47,12 +57,14 @@ func _redraw_graph():
 		print("VisualFSMGraphEdit: adding state node: " + state.name)
 		var node: VisualFSMStateNode = _fsm_state_scene.instance()
 		node.connect("state_removed", self, "_on_StateNode_state_removed")
-		node.connect("name_change_request", self, "_on_StateNode_name_change")
+		node.connect(
+			"state_rename_request", self, "_on_StateNode_rename_request")
+		node.connect(
+			"new_event_request", self, "_on_StateNode_new_event_request")
 		node.state_name = state.name
 		# center node on position
 		node.offset = state.position - node.rect_size / 2
 		add_child(node)
-		_state_nodes[node.name] = node
 
 	# add transition nodes
 	# for transition in _fsm.get_transition():
@@ -96,18 +108,17 @@ func _on_VisualFSMGraphEdit_disconnection_request(from, from_slot, to, to_slot):
 		disconnect_node(from, from_slot, to, to_slot)
 
 func _on_StateNode_state_removed(state_node: VisualFSMStateNode) -> void:
-	var state_name = state_node.state_name
 	for connection in get_connection_list():
-		var from: VisualFSMStateNode = _state_nodes[connection.from]
+		var from: String = connection.from
 		var from_port: int = connection.from_port
-		var to: VisualFSMStateNode = _state_nodes[connection.to]
+		var to: String = connection.to
 		var to_port: int = connection.to_port
-		if from.state_name == state_name or to.state_name == state_name:
-			print("Disconnecting " + from.state_name + " from " + to.state_name)
-			disconnect_node(from.name, from_port, to.name, to_port)
-			_fsm.remove_transition(from.state_name, to.state_name)
+		if from == state_node.name or to == state_node.name:
+			disconnect_node(from, from_port, to, to_port)
+			var from_node: VisualFSMStateNode = find_node(from, false)
+			var to_node: VisualFSMStateNode = find_node(to, false)
+			_fsm.remove_transition(from_node, to_node.state_name)
 
-	_state_nodes.erase(state_node.name)
 	emit_signal("draw")
 
 
@@ -121,3 +132,23 @@ func _on_StateNode_name_change(state_node: VisualFSMStateNode, new_name: String)
 
 	_fsm.rename_state(state_node.state_name, new_name)
 	state_node.state_name = new_name
+
+
+func _on_StateNode_new_event_request(node: VisualFSMStateNode) -> void:
+	_state_node_creating_event = node
+	_new_event_dialog.show()
+
+
+func _on_Dialog_event_name_request(event_name: String) -> void:
+	if not _events.has(event_name):
+		_new_event_dialog.event_name = event_name
+	else:
+		printerr("ERROR: An event named \"" + event_name + "\" already exists.")
+		_new_event_dialog.event_name = ""
+
+
+func _on_Dialog_new_event_created(event: VisualFiniteStateMachineEvent) -> void:
+	_events[event.event_name] = event
+	_state_node_creating_event.add_event(event)
+	_state_node_creating_event = null
+	_new_event_dialog.hide()

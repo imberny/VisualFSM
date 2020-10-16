@@ -9,15 +9,15 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "HBoxContainer",
+"class": "VisualFSMEventSlot",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/editor/visual_fsm_event_slot.gd"
+}, {
 "base": "GraphNode",
 "class": "VisualFSMStateNode",
 "language": "GDScript",
 "path": "res://addons/visual_fsm/editor/visual_fsm_state_node.gd"
-}, {
-"base": "HBoxContainer",
-"class": "VisualFSMTransitionSlot",
-"language": "GDScript",
-"path": "res://addons/visual_fsm/editor/visual_fsm_transition_slot.gd"
 }, {
 "base": "Resource",
 "class": "VisualFiniteStateMachine",
@@ -35,8 +35,8 @@ _global_script_classes=[ {
 "path": "res://addons/visual_fsm/resources/visual_finite_state_machine_state.gd"
 } ]
 _global_script_class_icons={
+"VisualFSMEventSlot": "",
 "VisualFSMStateNode": "",
-"VisualFSMTransitionSlot": "",
 "VisualFiniteStateMachine": "",
 "VisualFiniteStateMachineEvent": "",
 "VisualFiniteStateMachineState": ""

@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_new_event_dialog.gd" type="Script" id=1]
+
+[node name="VisualFSMNewEventDialog" type="AcceptDialog"]
+margin_right = 213.0
+margin_bottom = 92.0
+window_title = "New event"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EventProperties" type="VBoxContainer" parent="."]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 205.0
+margin_bottom = 56.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EventName" type="LineEdit" parent="EventProperties"]
+margin_right = 197.0
+margin_bottom = 24.0
+placeholder_text = "Event name"
+
+[node name="EventType" type="MenuButton" parent="EventProperties"]
+margin_top = 28.0
+margin_right = 197.0
+margin_bottom = 48.0
+text = "Event type"
+flat = false
+[connection signal="confirmed" from="." to="." method="_on_VisualFSMNewEventDialog_confirmed"]

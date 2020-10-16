@@ -21,3 +21,4 @@ right_disconnects = true
 script = ExtResource( 1 )
 [connection signal="connection_request" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_VisualFSMGraphEdit_connection_request"]
 [connection signal="disconnection_request" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_VisualFSMGraphEdit_disconnection_request"]
+[connection signal="confirmed" from="VisualFSMGraphEdit/VisualFSMNewEventDialog" to="VisualFSMGraphEdit/VisualFSMNewEventDialog" method="_on_VisualFSMNewEventDialog_confirmed"]
