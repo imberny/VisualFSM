@@ -6,43 +6,42 @@
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 1 )
-name = "event2"
+name = "to1"
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 1 )
-name = "event1"
+name = "to2"
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 1 )
-name = "event3"
+name = "to3"
 
 [sub_resource type="Resource" id=4]
-script = ExtResource( 2 )
-name = "State"
-position = Vector2( 160, 180 )
+script = ExtResource( 1 )
+name = "to0"
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 2 )
-name = "State1"
-position = Vector2( 520, 40 )
+name = "State"
+position = Vector2( 161, 32 )
 
 [sub_resource type="Resource" id=6]
 script = ExtResource( 2 )
-name = "State2"
-position = Vector2( 520, 260 )
+name = "State1"
+position = Vector2( 529, 25 )
 
 [sub_resource type="Resource" id=7]
 script = ExtResource( 2 )
-name = "State3"
-position = Vector2( 964, 87 )
+name = "State2"
+position = Vector2( 539, 230 )
 
 [sub_resource type="Resource" id=8]
 script = ExtResource( 2 )
-name = "State4"
-position = Vector2( 740, 220 )
+name = "State3"
+position = Vector2( 201, 282 )
 
 [resource]
 script = ExtResource( 3 )
-states = [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ]
-events = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ]
-transitions = [ "State", "event2", "State2", "State", "event1", "State3", "State", "event3", "State1", "State1", "", "", "State2", "event3", "State4", "State3", "", "", "State4", "event1", "State3" ]
+states = [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ]
+events = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ]
+transitions = [ "State", "to1", "State1", "State1", "to2", "State2", "State2", "", "", "State3", "", "" ]

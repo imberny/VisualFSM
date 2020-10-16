@@ -55,6 +55,8 @@ func _get_state_name() -> String:
 
 func _on_AddEvent_about_to_show() -> void:
 	var popup: PopupMenu = $AddEventDropdown.get_popup()
+	if not popup.is_inside_tree():
+		yield(popup, "tree_entered")
 	popup.clear()
 	# important: this steals focus from state name and triggers validation
 	popup.grab_focus()

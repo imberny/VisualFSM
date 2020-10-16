@@ -36,7 +36,7 @@ func get_states() -> Array:
 
 func add_state(state: VisualFiniteStateMachineState) -> void:
 	if not _transitions.has(state.name):
-		print("Added transition for state %s" % state.name)
+#		print("Added transition for state %s" % state.name)
 		_transitions[state.name] = {}
 	_states[state.name] = state
 	emit_signal("changed")
@@ -145,14 +145,15 @@ func _get(property: String):
 
 
 func _set(property: String, value) -> bool:
+#	print("FSM: setting property %s with value %s" % [property, str(value)])
 	match property:
 		"states":
 			for state in value:
-				add_state(value)
+				add_state(state)
 			return true
 		"events":
 			for event in value:
-				add_event(value)
+				add_event(event)
 			return true
 		"transitions":
 			var num_transitions = value.size() / 3
@@ -170,26 +171,7 @@ func _set(property: String, value) -> bool:
 
 func _get_property_list() -> Array:
 	var property_list := []
-#	for state in _states.values():
-#		property_list += [
-#			{
-#				"name": "states/%s" % state.name,
-#				"type": TYPE_OBJECT,
-#				"hint": PROPERTY_HINT_RESOURCE_TYPE,
-#				"hint_string": "VisualFiniteStateMachineState",
-#				"usage": PROPERTY_USAGE_NOEDITOR
-#			}
-#		]
-#	for event in _events.values():
-#		property_list += [
-#			{
-#				"name": "events/%s" % event.event_name,
-#				"type": TYPE_OBJECT,
-#				"hint": PROPERTY_HINT_RESOURCE_TYPE,
-#				"hint_string": "VisualFiniteStateMachineEvent",
-#				"usage": PROPERTY_USAGE_NOEDITOR
-#			}
-#		]
+#	for stat
 	property_list += [
 			{
 				"name": "states",
