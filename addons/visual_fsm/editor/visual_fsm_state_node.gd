@@ -55,6 +55,7 @@ func _get_state_name() -> String:
 func _on_AddEvent_about_to_show() -> void:
 	var popup: PopupMenu = $AddEventDropdown.get_popup()
 	popup.clear()
+	# important: this steals focus from state name and triggers validation
 	popup.grab_focus()
 	var event_names = fsm.get_event_names()
 	for state_event_name in fsm.get_state_event_names(self.state_name):
