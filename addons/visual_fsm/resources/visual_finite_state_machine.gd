@@ -88,6 +88,12 @@ func remove_event(event: VisualFiniteStateMachineEvent) -> void:
 	emit_signal("changed")
 
 
+func remove_state_event(state_name: String, event_name: String) -> void:
+	assert(_transitions.has(state_name))
+	_transitions[state_name].erase(event_name)
+	emit_signal("changed")
+
+
 func get_transitions() -> Array:
 	var transitions := []
 	for from in _transitions.keys():

@@ -12,8 +12,9 @@ func _ready() -> void:
 	$EventLabel.grab_focus()
 
 
-func _set_event(event: VisualFiniteStateMachineEvent) -> void:
-	$EventLabel.text = event.name
+func _set_event(value: VisualFiniteStateMachineEvent) -> void:
+	$EventLabel.text = value.name
+	event = value
 
 
 func _on_CloseButton_pressed() -> void:

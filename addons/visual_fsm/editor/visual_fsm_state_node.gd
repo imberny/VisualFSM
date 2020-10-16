@@ -34,10 +34,11 @@ func _ready() -> void:
 	$StateName.connect("focus_exited", self, "_on_StateName_focus_exited")
 
 
-func add_event(event: VisualFiniteStateMachineEvent):
+func add_event(event: VisualFiniteStateMachineEvent) -> void:
 	var slot_idx = get_child_count() - 1
 	var next_to_last = get_child(slot_idx - 1)
 	var event_slot: VisualFSMEventSlot = _event_slot_scene.instance()
+	event_slot.connect("close_request", self, "_on_EventSlot_close_request")
 	event_slot.event = event
 	add_child_below_node(next_to_last, event_slot)
 	set_slot(slot_idx, false, 0, Color.white, true, 0, COLORS[slot_idx])
@@ -78,18 +79,22 @@ func _on_AddEvent_index_pressed(index: int) -> void:
 		fsm.add_transition(self.state_name, popup.get_item_text(index))
 
 
-func _on_StateGraphNode_close_request():
+func _on_StateGraphNode_close_request() -> void:
 	emit_signal("state_removed", self)
 	queue_free()
 
 
-func _on_StateGraphNode_resize_request(new_minsize):
+func _on_StateGraphNode_resize_request(new_minsize) -> void:
 	rect_size = new_minsize
 
 
-func _on_StateName_text_entered(new_text):
+func _on_StateName_text_entered(new_text) -> void:
 	emit_signal("state_rename_request", self, _old_state_name, new_text)
 
 
-func _on_StateName_focus_exited():
+func _on_StateName_focus_exited() -> void:
 	_on_StateName_text_entered(self.state_name)
+
+
+func _on_EventSlot_close_request(event_slot: VisualFSMEventSlot) -> void:
+	fsm.remove_state_event(self.state_name, event_slot.event.name)
