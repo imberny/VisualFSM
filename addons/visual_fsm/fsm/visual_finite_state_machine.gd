@@ -2,6 +2,8 @@ tool
 class_name VisualFiniteStateMachine
 extends Resource
 
+export(Vector2) var start_position: Vector2 setget _set_start_position
+export(String) var start_target: String setget _set_start_target
 var _states := {} # name to VisualFiniteStateMachineState
 var _events := {} # name to VisualFiniteStateMachineEvent
 var _transitions := {
@@ -15,6 +17,9 @@ var _transitions := {
 #	},
 #	etc...
 }
+
+func _init():
+	start_position = Vector2(100, 100)
 
 
 func has_state(name: String) -> bool:
@@ -39,7 +44,7 @@ func add_state(state: VisualFiniteStateMachineState) -> void:
 #		print_debug("Added transition for state %s" % state.name)
 		_transitions[state.name] = {}
 	_states[state.name] = state
-	emit_signal("changed")
+	_changed()
 
 
 func remove_state(state_name: String) -> void:
@@ -50,18 +55,22 @@ func remove_state(state_name: String) -> void:
 		for event in _transitions[from].keys():
 			if state_name == _transitions[from][event]:
 				_transitions[from][event] = ""
-	emit_signal("changed")
+	_changed()
 
 
 func rename_state(name: String, new_name: String) -> void:
 	var state: VisualFiniteStateMachineState = _states[name]
 	state.name = new_name
-	_states.erase(name)
 	_states[new_name] = state
+	if start_target == name:
+		start_target = new_name
 	var transitions: Dictionary = _transitions[name]
-	_transitions.erase(name)
 	_transitions[new_name] = transitions
-	emit_signal("changed")
+	for from in _transitions.keys():
+		for event in _transitions[from].keys():
+			if name == _transitions[from][event]:
+				_transitions[from][event] = new_name
+	remove_state(name)
 
 
 func has_event(name: String) -> bool:
@@ -78,20 +87,20 @@ func get_event_names() -> Array:
 
 func add_event(event: VisualFiniteStateMachineEvent) -> void:
 	_events[event.name] = event
-	emit_signal("changed")
+	_changed()
 
 
 func remove_event(event: VisualFiniteStateMachineEvent) -> void:
 	_events[event.name] = null
 	for state_name in _states.keys():
 		_states[state_name].erase(event.name)
-	emit_signal("changed")
+	_changed()
 
 
 func remove_state_event(state_name: String, event_name: String) -> void:
 	assert(_transitions.has(state_name))
 	_transitions[state_name].erase(event_name)
-	emit_signal("changed")
+	_changed()
 
 
 func get_transitions() -> Array:
@@ -112,19 +121,32 @@ func add_transition(from: String, event_name: String, to: String = ""):
 	assert(_events.has(event_name), "Missing event: %s" % event_name)
 
 	_transitions[from][event_name] = to
-	emit_signal("changed")
+	_changed()
 
 
 func remove_transition(from: String, event_name: String):
 	add_transition(from, event_name)
 
 
+func _changed() -> void:
+	call_deferred("emit_signal", "changed")
+
+
+func _set_start_position(value: Vector2) -> void:
+	start_position = value
+
+
+func _set_start_target(value: String) -> void:
+	if not value.empty():
+		assert(_states.has(value), "Missing state: %s" % value)
+	start_target = value
+	_changed()
+
+
 func _get(property: String):
 #	print_debug("FSM: Getting property: %s" % property)
 	match property:
 		"states":
-#			var name: String = parts[1]
-#			return _states[name]
 			return _states.values()
 		"events":
 			return _events.values()
@@ -170,7 +192,6 @@ func _set(property: String, value) -> bool:
 
 func _get_property_list() -> Array:
 	var property_list := []
-#	for stat
 	property_list += [
 			{
 				"name": "states",

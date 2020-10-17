@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://test/test.gd" type="Script" id=1]
-[ext_resource path="res://test/new_resource.tres" type="Resource" id=2]
-[ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=3]
+[ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=2]
+[ext_resource path="res://test/new_resource.tres" type="Resource" id=3]
 
 [sub_resource type="Animation" id=1]
 
@@ -139,8 +139,8 @@ margin_bottom = 38.0
 text = "Hello!!!"
 
 [node name="VisualFSM" type="Node" parent="."]
-script = ExtResource( 3 )
-finite_state_machine = ExtResource( 2 )
+script = ExtResource( 2 )
+finite_state_machine = ExtResource( 3 )
 [connection signal="connection_request" from="GraphEdit" to="GraphEdit" method="_on_GraphEdit_connection_request"]
 [connection signal="connection_to_empty" from="GraphEdit" to="GraphEdit" method="_on_GraphEdit_connection_to_empty"]
 [connection signal="disconnection_request" from="GraphEdit" to="GraphEdit" method="_on_GraphEdit_disconnection_request"]

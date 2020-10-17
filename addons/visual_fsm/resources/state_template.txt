@@ -1,0 +1,10 @@
+extends VisualFSMStateBase
+
+func enter():
+	pass
+
+func update(delta: float, object, params):
+    pass
+
+func exit():
+	pass

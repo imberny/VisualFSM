@@ -99,11 +99,12 @@ func _on_StateGraphNode_resize_request(new_minsize) -> void:
 	rect_size = new_minsize
 
 
-func _on_StateName_text_entered(new_text) -> void:
-	emit_signal("state_rename_request", self, _old_state_name, new_text)
+func _on_StateName_text_entered(new_name: String) -> void:
+	if new_name != _old_state_name:
+		emit_signal("state_rename_request", self, _old_state_name, new_name)
 
 
-func _on_StateName_focus_exited() -> void:
+func _on_StateName_focus_exited() -> void:	
 	_on_StateName_text_entered(self.state_name)
 
 

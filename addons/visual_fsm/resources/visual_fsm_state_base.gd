@@ -1,10 +1,12 @@
 class_name VisualFSMStateBase
 extends Object
 
+signal internal_event(params)
+
 func enter():
 	pass
 
-func update(object, params):
+func update(delta: float, object, params):
 	pass
 
 func exit():

@@ -8,8 +8,8 @@ signal rename_request(event_slot)
 var event: VisualFiniteStateMachineEvent setget _set_event
 
 
-func _ready() -> void:
-	$Content/EventLabel.grab_focus()
+#func _ready() -> void:
+#	$Content/EventLabel.grab_focus()
 
 
 func _set_event(value: VisualFiniteStateMachineEvent) -> void:

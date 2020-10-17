@@ -17,7 +17,7 @@ _global_script_classes=[ {
 "base": "Object",
 "class": "VisualFSMStateBase",
 "language": "GDScript",
-"path": "res://addons/visual_fsm/fsm/visual_fsm_state_base.gd"
+"path": "res://addons/visual_fsm/resources/visual_fsm_state_base.gd"
 }, {
 "base": "GraphNode",
 "class": "VisualFSMStateNode",
@@ -69,7 +69,7 @@ _global_script_class_icons={
 [application]
 
 config/name="VisualFSM"
-run/main_scene="res://test/test.tscn"
+run/main_scene="res://addons/visual_fsm/editor/visual_fsm_editor.tscn"
 config/icon="res://icon.png"
 
 [editor_plugins]
