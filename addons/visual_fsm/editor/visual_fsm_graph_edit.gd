@@ -2,12 +2,13 @@ tool
 extends GraphEdit
 
 var _fsm_state_scene: PackedScene = preload("visual_fsm_state_node.tscn")
-var _new_event_dialog: AcceptDialog = preload("visual_fsm_new_event_dialog.tscn").instance()
 var _fsm: VisualFiniteStateMachine
 var _popup_options := ["New state", "New transition", "save", "load"]
 var _popup: PopupMenu
 var _events := {}
 var _state_node_creating_event: VisualFSMStateNode
+
+onready var _new_event_dialog: ConfirmationDialog = $"../DialogLayer/Dialog"
 
 
 func _ready() -> void:
@@ -21,12 +22,11 @@ func _ready() -> void:
 		_popup.add_item(opt)
 	add_child(_popup)
 
-	_new_event_dialog.connect(
-		"event_name_request", self, "_on_Dialog_event_name_request")
-	_new_event_dialog.connect(
-		"new_event_created", self, "_on_Dialog_new_event_created")
-	_new_event_dialog.rect_position = get_viewport_rect().size / 2 - _new_event_dialog.rect_size / 2
-	add_child(_new_event_dialog)
+#	_new_event_dialog.connect(
+#		"event_name_request", self, "_on_Dialog_event_name_request")
+#	_new_event_dialog.connect(
+#		"new_event_created", self, "_on_Dialog_new_event_created")
+#	_new_event_dialog.rect_position = get_viewport_rect().size / 2 - _new_event_dialog.rect_size / 2
 #	_new_event_dialog.hide()
 
 	edit(VisualFiniteStateMachine.new())
@@ -160,8 +160,8 @@ func _on_Dialog_event_name_request(event_name: String) -> void:
 	if not _fsm.has_event(event_name):
 		_new_event_dialog.event_name = event_name
 	else:
-		printerr("ERROR: An event named \"" + event_name + "\" already exists.")
 		_new_event_dialog.event_name = ""
+		_new_event_dialog.name_request_denied(event_name)
 
 
 func _on_Dialog_new_event_created(event: VisualFiniteStateMachineEvent) -> void:
