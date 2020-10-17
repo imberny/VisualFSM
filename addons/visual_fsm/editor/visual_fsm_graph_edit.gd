@@ -126,7 +126,7 @@ func _on_connection_request(
 func _on_disconnection_request(from, from_slot, to, to_slot):
 	var from_node: VisualFSMStateNode = get_node(from)
 	var event_names := _fsm.get_state_event_names(from_node.state_name)
-	var event: String = event_names[from_slot - 1]
+	var event: String = event_names[from_slot]
 	_fsm.remove_transition(from_node.state_name, event)
 
 

@@ -1,8 +1,10 @@
-[gd_resource type="Resource" load_steps=12 format=2]
+[gd_resource type="Resource" load_steps=16 format=2]
 
 [ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_event.gd" type="Script" id=1]
 [ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd" type="Script" id=2]
 [ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine.gd" type="Script" id=3]
+[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_event_action.gd" type="Script" id=4]
+[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_event_script.gd" type="Script" id=5]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 1 )
@@ -17,32 +19,41 @@ script = ExtResource( 1 )
 name = "event3"
 
 [sub_resource type="Resource" id=4]
-script = ExtResource( 2 )
-name = "State"
-position = Vector2( 160, 180 )
+script = ExtResource( 5 )
+name = "ScriptEvent1"
 
 [sub_resource type="Resource" id=5]
+script = ExtResource( 4 )
+name = "ActionEvent1"
+action_name = ""
+
+[sub_resource type="Resource" id=6]
+script = ExtResource( 2 )
+name = "State"
+position = Vector2( 60, 160 )
+
+[sub_resource type="Resource" id=7]
 script = ExtResource( 2 )
 name = "State1"
 position = Vector2( 520, 40 )
 
-[sub_resource type="Resource" id=6]
+[sub_resource type="Resource" id=8]
 script = ExtResource( 2 )
 name = "State2"
 position = Vector2( 520, 260 )
 
-[sub_resource type="Resource" id=7]
+[sub_resource type="Resource" id=9]
 script = ExtResource( 2 )
 name = "State3"
 position = Vector2( 964, 87 )
 
-[sub_resource type="Resource" id=8]
+[sub_resource type="Resource" id=10]
 script = ExtResource( 2 )
 name = "State4"
 position = Vector2( 740, 220 )
 
 [resource]
 script = ExtResource( 3 )
-states = [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ]
-events = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ]
-transitions = [ "State", "event2", "State2", "State", "event1", "State3", "State", "event3", "State1", "State1", "", "", "State2", "event3", "State4", "State3", "", "", "State4", "event1", "State3" ]
+states = [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ]
+events = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ]
+transitions = [ "State", "event2", "State3", "State", "event1", "State3", "State", "event3", "State1", "State", "ActionEvent1", "State2", "State1", "", "", "State2", "event3", "State4", "State2", "ScriptEvent1", "", "State3", "", "", "State4", "event1", "State3" ]
