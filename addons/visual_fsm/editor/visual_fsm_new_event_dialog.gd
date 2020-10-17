@@ -4,16 +4,14 @@ extends ConfirmationDialog
 signal new_event_created(event)
 signal event_name_request(name)
 
-const EVENT_TYPE_TITLE = "Event type"
-const EVENT_TYPES = [
-	"Input action",
-	"Timeout",
-	"Script"
-]
-
 export(Texture) var timer_icon
 export(Texture) var action_icon
 export(Texture) var script_icon
+
+const EVENT_TYPE_TITLE = "Event type"
+const EVENT_TYPE_ACTION = "Input action"
+const EVENT_TYPE_TIMEOUT = "Timer timeout"
+const EVENT_TYPE_SCRIPT = "Custom script"
 
 var event_name: String setget _set_event_name, _get_event_name
 var event_type: String setget _set_event_type, _get_event_type
@@ -26,13 +24,12 @@ onready var _type_status := $Margins/Content/Prompt/Margin/VBox/Type
 
 func _ready() -> void:
 	connect("about_to_show", self, "_on_about_to_show")
-	_event_name.connect(
-		"text_entered", self, "_on_EventName_text_entered")
+	_event_name.connect("text_changed", self, "_on_EventName_text_changed")
 	_event_type.text = EVENT_TYPE_TITLE
 	_event_type.get_popup().clear()
-	_event_type.get_popup().add_icon_item(timer_icon, EVENT_TYPES[0])
-	_event_type.get_popup().add_icon_item(action_icon, EVENT_TYPES[1])
-	_event_type.get_popup().add_icon_item(script_icon, EVENT_TYPES[2])
+	_event_type.get_popup().add_icon_item(action_icon, EVENT_TYPE_ACTION)
+	_event_type.get_popup().add_icon_item(timer_icon, EVENT_TYPE_TIMEOUT)
+	_event_type.get_popup().add_icon_item(script_icon, EVENT_TYPE_SCRIPT)
 	_event_type.get_popup().connect(
 		"index_pressed", self, "_on_EventType_pressed")
 	get_ok().text = "Create event"
@@ -40,8 +37,10 @@ func _ready() -> void:
 	_validate()
 
 
-func _set_event_name(value) -> void:
+func _set_event_name(value: String) -> void:
+	var caret_pos = _event_name.caret_position
 	_event_name.text = value
+	_event_name.caret_position = caret_pos
 	_validate()
 
 
@@ -97,17 +96,29 @@ func _on_about_to_show() -> void:
 
 
 func _on_confirmed() -> void:
-	var event = VisualFiniteStateMachineEvent.new()
+	var event: VisualFiniteStateMachineEvent
+	match _event_type.text:
+		EVENT_TYPE_ACTION:
+			event = VisualFiniteStateMachineEventAction.new()
+		EVENT_TYPE_TIMEOUT:
+			event = VisualFiniteStateMachineEventTimer.new()
+		EVENT_TYPE_SCRIPT:
+			event = VisualFiniteStateMachineEventScript.new()
 	event.name = self.event_name
-#	event.event_type = 
 	emit_signal("new_event_created", event)
 	close()
 
 
-func _on_EventName_text_entered(text: String) -> void:
+func _on_EventName_text_changed(text: String) -> void:
 	emit_signal("event_name_request", text)
 
 
 func _on_EventType_pressed(index: int) -> void:
-	self.event_type = EVENT_TYPES[index]
+	match index:
+		0:
+			self.event_type = EVENT_TYPE_ACTION
+		1:
+			self.event_type = EVENT_TYPE_TIMEOUT
+		2:
+			self.event_type = EVENT_TYPE_SCRIPT
 

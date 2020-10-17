@@ -22,12 +22,7 @@ func _ready() -> void:
 		_popup.add_item(opt)
 	add_child(_popup)
 
-#	_new_event_dialog.connect(
-#		"event_name_request", self, "_on_Dialog_event_name_request")
-#	_new_event_dialog.connect(
-#		"new_event_created", self, "_on_Dialog_new_event_created")
-#	_new_event_dialog.rect_position = get_viewport_rect().size / 2 - _new_event_dialog.rect_size / 2
-#	_new_event_dialog.hide()
+	_new_event_dialog.rect_position = get_viewport_rect().size / 2 - _new_event_dialog.rect_size / 2
 
 	edit(VisualFiniteStateMachine.new())
 

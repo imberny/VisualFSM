@@ -86,7 +86,7 @@ margin_right = 316.0
 margin_bottom = 54.0
 text = "Event type"
 flat = false
-items = [ "Input action", null, 0, false, false, 0, 0, null, "", false, "Timeout", null, 0, false, false, 1, 0, null, "", false, "Script", null, 0, false, false, 2, 0, null, "", false ]
+items = [ "Input action", ExtResource( 5 ), 0, false, false, 0, 0, null, "", false, "Timeout", ExtResource( 6 ), 0, false, false, 1, 0, null, "", false, "Script", ExtResource( 4 ), 0, false, false, 2, 0, null, "", false ]
 
 [node name="Prompt" type="PanelContainer" parent="DialogLayer/Dialog/Margins/Content"]
 margin_top = 64.0
