@@ -20,8 +20,10 @@ const COLORS := [
 	Color.beige,
 	Color.orchid,
 	Color.brown,
+	Color.magenta,
 	Color.gold,
-	Color.magenta
+	Color.pink,
+	Color.limegreen
 ]
 
 
@@ -37,6 +39,11 @@ func _ready() -> void:
 
 
 func add_event(event: VisualFiniteStateMachineEvent) -> void:
+	if get_child_count() == COLORS.size() - 2:
+		printerr("VisualFSM: Maximum number of events in state %s reached!" 
+			% self.state_name)
+		return
+
 	var slot_idx = get_child_count() - 1
 	var next_to_last = get_child(slot_idx - 1)
 	var event_slot: VisualFSMEventSlot = _event_slot_scene.instance()

@@ -9,7 +9,8 @@ func _set_fsm(fsm: Resource) -> void:
 		yield(self, "tree_entered")
 
 	if fsm and not fsm is VisualFiniteStateMachine:
-		printerr("ERROR: This node only supports resources of type VisualFiniteStateMachine.")
+		printerr("VisualFSM: This node only supports resources of type VisualFiniteStateMachine.")
+		printerr("VisualFSM: But since Godot's custom resources support is lacking, I'll just create a VisualFiniteStateMachine for you :)")
 		finite_state_machine = VisualFiniteStateMachine.new()
 	else:
 		finite_state_machine = fsm

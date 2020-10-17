@@ -36,7 +36,7 @@ func get_states() -> Array:
 
 func add_state(state: VisualFiniteStateMachineState) -> void:
 	if not _transitions.has(state.name):
-#		print("Added transition for state %s" % state.name)
+#		print_debug("Added transition for state %s" % state.name)
 		_transitions[state.name] = {}
 	_states[state.name] = state
 	emit_signal("changed")
@@ -120,7 +120,7 @@ func remove_transition(from: String, event_name: String):
 
 
 func _get(property: String):
-#	print("FSM: Getting property: %s" % property)
+#	print_debug("FSM: Getting property: %s" % property)
 	match property:
 		"states":
 #			var name: String = parts[1]
