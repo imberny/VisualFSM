@@ -1,0 +1,4 @@
+class_name VisualFiniteStateMachineEventScript
+extends VisualFiniteStateMachineEvent
+
+export(Script) var custom_script: Script

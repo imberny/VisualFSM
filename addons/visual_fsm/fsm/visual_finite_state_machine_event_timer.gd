@@ -1,0 +1,4 @@
+class_name VisualFiniteStateMachineEventTimer
+extends VisualFiniteStateMachineEvent
+
+export(float, 0) var timer_length

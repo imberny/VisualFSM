@@ -1,0 +1,4 @@
+class_name VisualFiniteStateMachineEventAction
+extends VisualFiniteStateMachineEvent
+
+export(String) var action_name: String
