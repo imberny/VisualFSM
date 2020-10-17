@@ -145,7 +145,6 @@ func _get(property: String):
 
 
 func _set(property: String, value) -> bool:
-#	print("FSM: setting property %s with value %s" % [property, str(value)])
 	match property:
 		"states":
 			for state in value:
@@ -158,9 +157,9 @@ func _set(property: String, value) -> bool:
 		"transitions":
 			var num_transitions = value.size() / 3
 			for idx in range(num_transitions):
-				var from = value[idx]
-				var event = value[idx + 1]
-				var to = value[idx + 2]
+				var from = value[3 * idx]
+				var event = value[3 * idx + 1]
+				var to = value[3 * idx + 2]
 				if event.empty():
 					_transitions[from] = {}
 				else:

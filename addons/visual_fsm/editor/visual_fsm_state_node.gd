@@ -31,7 +31,7 @@ func _ready() -> void:
 	add_event_menu.connect(
 		"index_pressed", self, "_on_AddEvent_index_pressed")
 	add_event_menu.connect("focus_exited", add_event_menu, "hide")
-	$StateName.connect("focus_exited", self, "_on_StateName_focus_exited")
+	$Title/Name.connect("focus_exited", self, "_on_StateName_focus_exited")
 
 
 func add_event(event: VisualFiniteStateMachineEvent) -> void:
@@ -45,12 +45,12 @@ func add_event(event: VisualFiniteStateMachineEvent) -> void:
 
 
 func _set_state_name(value) -> void:
-	$StateName.text = value
+	$Title/Name.text = value
 	_old_state_name = value
 
 
 func _get_state_name() -> String:
-	return $StateName.text
+	return $Title/Name.text
 
 
 func _on_AddEvent_about_to_show() -> void:
@@ -100,3 +100,7 @@ func _on_StateName_focus_exited() -> void:
 
 func _on_EventSlot_close_request(event_slot: VisualFSMEventSlot) -> void:
 	fsm.remove_state_event(self.state_name, event_slot.event.name)
+
+
+func _on_Script_pressed():
+	pass # Replace with function body.

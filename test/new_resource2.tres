@@ -44,4 +44,4 @@ position = Vector2( 201, 282 )
 script = ExtResource( 3 )
 states = [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ]
 events = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ]
-transitions = [ "State", "to1", "State1", "State1", "to2", "State2", "State2", "", "", "State3", "", "" ]
+transitions = [ "State", "to1", "State1", "State1", "to2", "State2", "State2", "to3", "State3", "State2", "to1", "State", "State3", "to0", "State" ]

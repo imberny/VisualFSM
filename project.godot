@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/visual_fsm/editor/visual_fsm_event_slot.gd"
 }, {
+"base": "Object",
+"class": "VisualFSMStateBase",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/resources/visual_fsm_state_base.gd"
+}, {
 "base": "GraphNode",
 "class": "VisualFSMStateNode",
 "language": "GDScript",
@@ -36,6 +41,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "VisualFSMEventSlot": "",
+"VisualFSMStateBase": "",
 "VisualFSMStateNode": "",
 "VisualFiniteStateMachine": "",
 "VisualFiniteStateMachineEvent": "",

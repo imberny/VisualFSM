@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://test/test.gd" type="Script" id=1]
-[ext_resource path="res://test/new_resource2.tres" type="Resource" id=2]
+[ext_resource path="res://test/new_resource.tres" type="Resource" id=2]
 [ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=3]
 
 [sub_resource type="Animation" id=1]

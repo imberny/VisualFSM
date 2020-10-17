@@ -1,11 +1,12 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/visual_fsm/editor/visual_fsm_state_node.gd" type="Script" id=1]
+[ext_resource path="res://addons/visual_fsm/resources/icons/icon_script.svg" type="Texture" id=2]
 
 [node name="StateGraphNode" type="GraphNode"]
-margin_right = 181.0
+margin_right = 180.0
 margin_bottom = 82.0
-rect_min_size = Vector2( 128, 0 )
+rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 9
 size_flags_vertical = 9
 custom_constants/port_offset = 0
@@ -29,21 +30,36 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StateName" type="LineEdit" parent="."]
+[node name="Title" type="HBoxContainer" parent="."]
 margin_left = 16.0
 margin_top = 24.0
-margin_right = 165.0
+margin_right = 184.0
 margin_bottom = 48.0
+
+[node name="Name" type="LineEdit" parent="Title"]
+margin_right = 136.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
 expand_to_text_length = true
+
+[node name="Script" type="Button" parent="Title"]
+margin_left = 140.0
+margin_right = 168.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+icon = ExtResource( 2 )
 
 [node name="AddEventDropdown" type="MenuButton" parent="."]
 margin_left = 16.0
 margin_top = 56.0
-margin_right = 165.0
+margin_right = 184.0
 margin_bottom = 76.0
 text = "Add event"
 flat = false
+expand_icon = true
 switch_on_hover = true
 [connection signal="close_request" from="." to="." method="_on_StateGraphNode_close_request"]
 [connection signal="resize_request" from="." to="." method="_on_StateGraphNode_resize_request"]
-[connection signal="text_entered" from="StateName" to="." method="_on_StateName_text_entered"]
+[connection signal="text_entered" from="Title/Name" to="." method="_on_StateName_text_entered"]
+[connection signal="pressed" from="Title/Script" to="." method="_on_Script_pressed"]

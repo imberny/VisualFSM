@@ -11,7 +11,7 @@ var fsm_type_name := "VisualFSM"
 
 func _enter_tree():
 	print("Installing VisualFSM plugin")
-	add_custom_type(fsm_type_name, "Node", fsm_script, preload("icon.png"))
+	add_custom_type(fsm_type_name, "Node", fsm_script, preload("resources/icons/flow-chart.png"))
 	yield(get_tree(), "idle_frame")
 	fsm_control = preload("editor/visual_fsm_editor.tscn").instance()
 	tool_button = add_control_to_bottom_panel(fsm_control, CONTROL_LABEL)
