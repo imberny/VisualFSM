@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/visual_fsm/resources/icons/close-cross-symbol-in-a-circle.svg" type="Texture" id=1]
 [ext_resource path="res://addons/visual_fsm/editor/visual_fsm_event_slot.gd" type="Script" id=2]
@@ -6,15 +6,23 @@
 [ext_resource path="res://addons/visual_fsm/resources/icons/icon_timer.svg" type="Texture" id=4]
 [ext_resource path="res://addons/visual_fsm/resources/icons/icon_joypad.svg" type="Texture" id=5]
 
-[node name="EventSlot" type="HBoxContainer"]
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.0941176, 0.0941176, 0.0941176, 1 )
+
+[node name="EventSlot" type="PanelContainer"]
 margin_right = 172.0
 margin_bottom = 32.0
+custom_styles/panel = SubResource( 1 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EventLabel" type="Label" parent="."]
+[node name="Content" type="HBoxContainer" parent="."]
+margin_right = 172.0
+margin_bottom = 32.0
+
+[node name="EventLabel" type="Label" parent="Content"]
 margin_right = 108.0
 margin_bottom = 32.0
 focus_mode = 2
@@ -23,13 +31,14 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 valign = 1
 
-[node name="Option" type="CenterContainer" parent="."]
+[node name="Buttons" type="CenterContainer" parent="Content"]
 margin_left = 112.0
 margin_right = 140.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 28, 32 )
 
-[node name="Input" type="Button" parent="Option"]
+[node name="Action" type="Button" parent="Content/Buttons"]
+visible = false
 margin_right = 28.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
@@ -37,7 +46,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 icon = ExtResource( 5 )
 
-[node name="Timer" type="Button" parent="Option"]
+[node name="Timer" type="Button" parent="Content/Buttons"]
 visible = false
 margin_right = 28.0
 margin_bottom = 32.0
@@ -46,7 +55,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 icon = ExtResource( 4 )
 
-[node name="Script" type="Button" parent="Option"]
+[node name="Script" type="Button" parent="Content/Buttons"]
 visible = false
 margin_right = 28.0
 margin_bottom = 32.0
@@ -55,14 +64,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 icon = ExtResource( 3 )
 
-[node name="Close" type="CenterContainer" parent="."]
+[node name="Close" type="CenterContainer" parent="Content"]
 margin_left = 144.0
 margin_right = 172.0
 margin_bottom = 32.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="Button" type="Button" parent="Close"]
+[node name="Button" type="Button" parent="Content/Close"]
 margin_right = 28.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 28, 32 )
@@ -70,4 +79,4 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 icon = ExtResource( 1 )
 expand_icon = true
-[connection signal="pressed" from="Close/Button" to="." method="_on_CloseButton_pressed"]
+[connection signal="pressed" from="Content/Close/Button" to="." method="_on_CloseButton_pressed"]

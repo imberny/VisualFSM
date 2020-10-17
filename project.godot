@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "HBoxContainer",
+"base": "PanelContainer",
 "class": "VisualFSMEventSlot",
 "language": "GDScript",
 "path": "res://addons/visual_fsm/editor/visual_fsm_event_slot.gd"

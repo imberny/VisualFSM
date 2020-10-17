@@ -6,6 +6,8 @@ signal state_rename_request(state_node, old_name, new_name)
 signal state_removed(state_node)
 signal new_event_request(state_node)
 
+onready var _add_event_dropdown := $BottomPanel/AddEventDropdown
+
 var _event_slot_scene: PackedScene = preload("visual_fsm_event_slot.tscn")
 var state_name: String setget _set_state_name, _get_state_name
 var _old_state_name: String
@@ -25,7 +27,7 @@ const COLORS := [
 
 func _ready() -> void:
 	set_slot(0, true, 0, COLORS[0], false, 0, Color.white)
-	var add_event_menu: PopupMenu = $AddEventDropdown.get_popup()
+	var add_event_menu: PopupMenu = _add_event_dropdown.get_popup()
 	add_event_menu.connect(
 		"about_to_show", self, "_on_AddEvent_about_to_show")
 	add_event_menu.connect(
@@ -54,7 +56,7 @@ func _get_state_name() -> String:
 
 
 func _on_AddEvent_about_to_show() -> void:
-	var popup: PopupMenu = $AddEventDropdown.get_popup()
+	var popup: PopupMenu = _add_event_dropdown.get_popup()
 	if not popup.is_inside_tree():
 		yield(popup, "tree_entered")
 	popup.clear()
@@ -73,7 +75,7 @@ func _on_AddEvent_about_to_show() -> void:
 
 
 func _on_AddEvent_index_pressed(index: int) -> void:
-	var popup: PopupMenu = $AddEventDropdown.get_popup()
+	var popup: PopupMenu = _add_event_dropdown.get_popup()
 	var num_items = popup.get_item_count()
 	if num_items - 1 == index: # new item option is last
 		emit_signal("new_event_request", self)
