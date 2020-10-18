@@ -2,9 +2,9 @@ tool
 extends MarginContainer
 
 
-func edit(fsm: VisualFiniteStateMachine):
+func edit(visual_fsm):
 	print_debug("---------------------------- editing fsm resource ---------------")
 	if not is_inside_tree():
 		yield(self, "tree_entered")
-	$VisualFSMGraphEdit.edit(fsm as VisualFiniteStateMachine)
+	$VisualFSMGraphEdit.edit(visual_fsm.finite_state_machine)
 

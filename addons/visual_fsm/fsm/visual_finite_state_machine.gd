@@ -2,8 +2,8 @@ tool
 class_name VisualFiniteStateMachine
 extends Resource
 
-export(Vector2) var start_position: Vector2 setget _set_start_position
-export(String) var start_target: String setget _set_start_target
+export(Vector2) var start_position: Vector2
+var start_target: String setget _set_start_target
 var _states := {} # name to VisualFiniteStateMachineState
 var _events := {} # name to VisualFiniteStateMachineEvent
 var _transitions := {
@@ -132,10 +132,6 @@ func _changed() -> void:
 	call_deferred("emit_signal", "changed")
 
 
-func _set_start_position(value: Vector2) -> void:
-	start_position = value
-
-
 func _set_start_target(value: String) -> void:
 	if not value.empty():
 		assert(_states.has(value), "Missing state: %s" % value)
@@ -163,6 +159,8 @@ func _get(property: String):
 						to
 					]
 			return transitions
+		"start":
+			return self.start_target
 	return null
 
 
@@ -187,6 +185,9 @@ func _set(property: String, value) -> bool:
 				else:
 					add_transition(from, event, to)
 			return true
+		"start":
+			self.start_target = value
+			return true
 	return false
 
 
@@ -210,6 +211,13 @@ func _get_property_list() -> Array:
 			{
 				"name": "transitions",
 				"type": TYPE_ARRAY,
+				"hint": PROPERTY_HINT_NONE,
+				"hint_string": "",
+				"usage": PROPERTY_USAGE_NOEDITOR
+			},
+			{
+				"name": "start",
+				"type": TYPE_STRING,
 				"hint": PROPERTY_HINT_NONE,
 				"hint_string": "",
 				"usage": PROPERTY_USAGE_NOEDITOR

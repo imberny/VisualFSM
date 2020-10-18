@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=21 format=2]
 
-[ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=1]
-[ext_resource path="res://test/new_resource.tres" type="Resource" id=2]
+[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine.gd" type="Script" id=1]
+[ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=2]
+[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd" type="Script" id=3]
+[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_event_action.gd" type="Script" id=4]
 
 [sub_resource type="Animation" id=1]
 
@@ -43,6 +45,107 @@ func _on_GraphEdit_disconnection_request(from, from_slot, to, to_slot):
 	if from != to:
 		disconnect_node(from, from_slot, to, to_slot)
 "
+
+[sub_resource type="Resource" id=9]
+script = ExtResource( 4 )
+name = "Test"
+action_name = ""
+
+[sub_resource type="GDScript" id=6]
+script/source = "
+extends VisualFSMStateBase
+
+func enter():
+	pass
+
+func update(delta: float, object, params):
+	pass
+
+func exit():
+	pass
+"
+
+[sub_resource type="Resource" id=7]
+script = ExtResource( 3 )
+name = "State"
+position = Vector2( 380, 100 )
+custom_script = SubResource( 6 )
+
+[sub_resource type="GDScript" id=10]
+script/source = "
+extends VisualFSMStateBase
+
+func enter():
+	pass
+
+func update(delta: float, object, params):
+	pass
+
+func exit():
+	pass
+"
+
+[sub_resource type="Resource" id=11]
+script = ExtResource( 3 )
+name = "State1"
+position = Vector2( 660, 180 )
+custom_script = SubResource( 10 )
+
+[sub_resource type="Resource" id=8]
+script = ExtResource( 1 )
+start_position = Vector2( 100, 100 )
+states = [ SubResource( 7 ), SubResource( 11 ) ]
+events = [ SubResource( 9 ) ]
+transitions = [ "State", "Test", "State1", "State1", "", "" ]
+start = "State"
+
+[sub_resource type="GDScript" id=12]
+script/source = "
+extends VisualFSMStateBase
+
+func enter():
+	pass
+
+func update(delta: float, object, params):
+	pass
+
+func exit():
+	pass
+"
+
+[sub_resource type="Resource" id=13]
+script = ExtResource( 3 )
+name = "Test"
+position = Vector2( 338, 129 )
+custom_script = SubResource( 12 )
+
+[sub_resource type="GDScript" id=14]
+script/source = "
+extends VisualFSMStateBase
+
+func enter():
+	pass
+
+func update(delta: float, object, params):
+	pass
+
+func exit():
+	pass
+"
+
+[sub_resource type="Resource" id=15]
+script = ExtResource( 3 )
+name = "State"
+position = Vector2( 260, 240 )
+custom_script = SubResource( 14 )
+
+[sub_resource type="Resource" id=16]
+script = ExtResource( 1 )
+start_position = Vector2( 100, 100 )
+states = [ SubResource( 13 ), SubResource( 15 ) ]
+events = [  ]
+transitions = [ "Test", "", "", "State", "", "" ]
+start = "State"
 
 [node name="Spatial" type="Spatial"]
 
@@ -137,8 +240,12 @@ margin_bottom = 38.0
 text = "Hello!!!"
 
 [node name="VisualFSM" type="Node" parent="."]
-script = ExtResource( 1 )
-finite_state_machine = ExtResource( 2 )
+script = ExtResource( 2 )
+finite_state_machine = SubResource( 8 )
+
+[node name="VisualFSM2" type="Node" parent="."]
+script = ExtResource( 2 )
+finite_state_machine = SubResource( 16 )
 [connection signal="connection_request" from="GraphEdit" to="GraphEdit" method="_on_GraphEdit_connection_request"]
 [connection signal="connection_to_empty" from="GraphEdit" to="GraphEdit" method="_on_GraphEdit_connection_to_empty"]
 [connection signal="disconnection_request" from="GraphEdit" to="GraphEdit" method="_on_GraphEdit_disconnection_request"]

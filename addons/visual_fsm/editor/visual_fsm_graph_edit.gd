@@ -43,7 +43,8 @@ func edit(fsm: VisualFiniteStateMachine) -> void:
 	if _fsm:
 		_fsm.disconnect("changed", self, "_on_fsm_changed")
 	_fsm = fsm
-	_fsm.connect("changed", self, "_on_fsm_changed")
+	if _fsm:
+		_fsm.connect("changed", self, "_on_fsm_changed")
 	_redraw_graph()
 
 
@@ -59,6 +60,9 @@ func _redraw_graph():
 		if child is GraphNode:
 			remove_child(child)
 			child.queue_free()
+
+	if not _fsm:
+		return
 
 	# add state nodes
 	for state in _fsm.get_states():
