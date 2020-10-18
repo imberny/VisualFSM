@@ -2,12 +2,14 @@
 
 [sub_resource type="GDScript" id=1]
 script/source = "
+tool
 extends Resource
 
 var my_var = 0
 
 func say_hello():
 	print(\"Hello! this is my value: %s \" % my_var)
+	print(\"Salut Jessika!\")
 "
 
 [resource]

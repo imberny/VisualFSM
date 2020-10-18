@@ -2,16 +2,17 @@ tool
 class_name VisualFSMStateNode
 extends GraphNode
 
-signal state_rename_request(state_node, old_name, new_name)
+signal state_rename_request(state_node, new_name)
 signal state_removed(state_node)
 signal new_event_request(state_node)
 
 onready var _add_event_dropdown := $BottomPanel/AddEventDropdown
 
-var _event_slot_scene: PackedScene = preload("visual_fsm_event_slot.tscn")
-var state_name: String setget _set_state_name, _get_state_name
-var _old_state_name: String
+var state: VisualFiniteStateMachineState setget _set_state
 var fsm: VisualFiniteStateMachine
+var _event_slot_scene: PackedScene = preload("visual_fsm_event_slot.tscn")
+#var state_name: String setget _set_state_name, _get_state_name
+var _old_state_name: String
 
 const COLORS := [
 	Color.coral,
@@ -41,7 +42,7 @@ func _ready() -> void:
 func add_event(event: VisualFiniteStateMachineEvent) -> void:
 	if get_child_count() == COLORS.size() - 2:
 		printerr("VisualFSM: Maximum number of events in state %s reached!" 
-			% self.state_name)
+			% self.state.name)
 		return
 
 	var slot_idx = get_child_count() - 1
@@ -53,13 +54,10 @@ func add_event(event: VisualFiniteStateMachineEvent) -> void:
 	set_slot(slot_idx, false, 0, Color.white, true, 0, COLORS[slot_idx])
 
 
-func _set_state_name(value) -> void:
-	$Title/Name.text = value
-	_old_state_name = value
-
-
-func _get_state_name() -> String:
-	return $Title/Name.text
+func _set_state(value: VisualFiniteStateMachineState) -> void:
+	$Title/Name.text = value.name
+	offset = value.position
+	state = value
 
 
 func _on_AddEvent_about_to_show() -> void:
@@ -70,7 +68,7 @@ func _on_AddEvent_about_to_show() -> void:
 	# important: this steals focus from state name and triggers validation
 	popup.grab_focus()
 	var event_names = fsm.get_event_names()
-	for state_event_name in fsm.get_state_event_names(self.state_name):
+	for state_event_name in fsm.get_state_event_names(self.state.name):
 		var idx = event_names.find(state_event_name)
 		if 0 <= idx:
 			event_names.remove(idx)
@@ -87,7 +85,7 @@ func _on_AddEvent_index_pressed(index: int) -> void:
 	if num_items - 1 == index: # new item option is last
 		emit_signal("new_event_request", self)
 	else:
-		fsm.add_transition(self.state_name, popup.get_item_text(index))
+		fsm.add_transition(self.state.name, popup.get_item_text(index))
 
 
 func _on_StateGraphNode_close_request() -> void:
@@ -100,17 +98,19 @@ func _on_StateGraphNode_resize_request(new_minsize) -> void:
 
 
 func _on_StateName_text_entered(new_name: String) -> void:
-	if new_name != _old_state_name:
-		emit_signal("state_rename_request", self, _old_state_name, new_name)
+	if new_name != self.state.name:
+		emit_signal("state_rename_request", self, new_name)
 
 
 func _on_StateName_focus_exited() -> void:	
-	_on_StateName_text_entered(self.state_name)
+	_on_StateName_text_entered(self.state.name)
 
 
 func _on_EventSlot_close_request(event_slot: VisualFSMEventSlot) -> void:
-	fsm.remove_state_event(self.state_name, event_slot.event.name)
+	fsm.remove_state_event(self.state.name, event_slot.event.name)
 
 
-func _on_Script_pressed():
-	pass # Replace with function body.
+func _on_Script_pressed() -> void:
+	$"/root/VisualFSMSingleton".emit_signal(
+		"edit_custom_script", self.fsm, self.state.custom_script
+	)

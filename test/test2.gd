@@ -39,9 +39,9 @@ func _ready():
 	my_script.reload()
 	my_resource.set_script(my_script)
 #	var my_script_instance = my_script.new()
-	my_resource.say_hello()
 	my_resource.my_var = 1
+	my_resource.say_hello()
 	ResourceSaver.save("res://test/saved_resource.tres", my_resource)
 	var my_loaded_resource = load("res://test/saved_resource.tres")
 	my_loaded_resource.say_hello()
-	EditorScript
+#	EditorScript

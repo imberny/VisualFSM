@@ -2,43 +2,52 @@ tool
 extends EditorPlugin
 
 const CONTROL_LABEL := "Finite State Machine"
+const FSM_TYPE_NAME := "VisualFSM"
 
-var fsm_control: Control
-var tool_button: ToolButton
-var fsm_script := preload("visual_fsm.gd")
-var fsm_type_name := "VisualFSM"
+var _fsm_control: Control
+var _tool_button: ToolButton
+var _fsm_script := preload("visual_fsm.gd")
+var _fsm_singleton: VisualFSMSingleton = preload("editor/visual_fsm_singleton.gd").new()
 
 
-func _enter_tree():
+func _enter_tree() -> void:
 	print("Installing VisualFSM plugin")
-	add_custom_type(fsm_type_name, "Node", fsm_script, preload("resources/icons/flow-chart.png"))
+	add_custom_type(FSM_TYPE_NAME, "Node", _fsm_script, preload("resources/icons/flow-chart.png"))
+
 	yield(get_tree(), "idle_frame")
-	fsm_control = preload("editor/visual_fsm_editor.tscn").instance()
-	tool_button = add_control_to_bottom_panel(fsm_control, CONTROL_LABEL)
-	tool_button.hide()
+	_fsm_singleton.name = "VisualFSMSingleton"
+	_fsm_singleton.connect("edit_custom_script", self, "_on_edit_custom_script")
+	get_tree().root.add_child(_fsm_singleton)
+
+	_fsm_control = preload("editor/visual_fsm_editor.tscn").instance()
+	_tool_button = add_control_to_bottom_panel(_fsm_control, CONTROL_LABEL)
+	_tool_button.hide()
 	var selected_nodes := get_editor_interface().get_selection().get_selected_nodes()
 	if selected_nodes.size() > 0:
 		make_visible(handles(selected_nodes[0]))
 
 
-func _exit_tree():
+func _exit_tree() -> void:
 	print("Uninstalling VisualFSM plugin")
-	remove_custom_type(fsm_type_name)
-	remove_control_from_bottom_panel(fsm_control)
+	remove_custom_type(FSM_TYPE_NAME)
+	_fsm_singleton.disconnect("edit_custom_script", self, "_on_edit_custom_script")
+	remove_control_from_bottom_panel(_fsm_control)
+
+	get_tree().root.call_deferred("remove_child", _fsm_singleton)
 	# using queue_free causes memory leaks. Bug?
-	fsm_control.free()
+	_fsm_control.free()
 
 
-func make_visible(visible):
+func make_visible(visible) -> void:
 	if visible:
-		tool_button.show()
-		make_bottom_panel_item_visible(fsm_control)
-		fsm_control.set_process(true)
+		_tool_button.show()
+		make_bottom_panel_item_visible(_fsm_control)
+		_fsm_control.set_process(true)
 	else:
-		if fsm_control.visible:
+		if _fsm_control.visible:
 			hide_bottom_panel()
-		tool_button.hide()
-		fsm_control.set_process(false)
+		_tool_button.hide()
+		_fsm_control.set_process(false)
 
 
 func handles(object) -> bool:
@@ -46,4 +55,10 @@ func handles(object) -> bool:
 
 
 func edit(object) -> void:
-	fsm_control.edit(object)
+	_fsm_control.edit(object)
+
+
+func _on_edit_custom_script(fsm: VisualFiniteStateMachine, custom_script: GDScript) -> void:
+	get_editor_interface().edit_resource(custom_script)
+	# edit current fsm, otherwise we lose the fsm panel
+	get_editor_interface().edit_resource(fsm)

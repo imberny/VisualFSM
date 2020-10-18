@@ -1,7 +1,7 @@
 tool
 extends GraphEdit
 
-onready var _state_base_script: Script = preload("../resources/visual_fsm_state_base.gd")
+#onready var _state_base_script: Script = preload("../resources/visual_fsm_state_base.gd")
 onready var _new_event_dialog: ConfirmationDialog = $"../DialogLayer/Dialog"
 
 var _fsm_start_scene: PackedScene = preload("visual_fsm_start_node.tscn")
@@ -70,9 +70,8 @@ func _redraw_graph():
 		node.connect(
 			"new_event_request", self, "_on_StateNode_new_event_request")
 		node.fsm = _fsm
-		node.state_name = state.name
-		# center node on position
-		node.offset = state.position
+		node.state = state
+		state.custom_script.reload()
 		add_child(node)
 
 	# add event slots
@@ -81,9 +80,9 @@ func _redraw_graph():
 		var to_node: VisualFSMStateNode
 		for child in get_children():
 			if child is VisualFSMStateNode:
-				if child.state_name == transition.from:
+				if child.state.name == transition.from:
 					from_node = child
-				if child.state_name == transition.to:
+				if child.state.name == transition.to:
 					to_node = child
 		var state_event_names: Array = _fsm.get_state_event_names(transition.from)
 #		for event_name in state_event_names:
@@ -105,7 +104,7 @@ func _redraw_graph():
 	if not _fsm.start_target.empty():
 		for child in get_children():
 			if child is VisualFSMStateNode:
-				if _fsm.start_target == child.state_name:
+				if _fsm.start_target == child.state.name:
 					connect_node(start_node.name, 0, child.name, 0)
 
 
@@ -130,10 +129,24 @@ func _on_popup_index_pressed(index: int) -> void:
 			state.name = state_name
 			state.position = mouse_pos - Vector2(115, 40)
 			
-#			var custom_script: VisualFSMStateBase = _state_base_script.new()
-			_state_base_script.source_code = _state_custom_script_template
-			state.custom_script = _state_base_script
-			state.custom_script.reload()
+##			var custom_script: VisualFSMStateBase = _state_base_script.new()
+#			_state_base_script.source_code = _state_custom_script_template
+			var my_script = GDScript.new()
+			my_script.source_code = """
+extends VisualFSMStateBase
+
+func enter():
+	pass
+
+func update(delta: float, object, params):
+	pass
+
+func exit():
+	pass
+"""
+			my_script.reload()
+			state.custom_script = my_script
+#			state.custom_script.reload()
 			_fsm.add_state(state)
 		1:
 			print_debug("adding new transition...")
@@ -149,11 +162,11 @@ func _on_connection_request(
 	var from_node: GraphNode = get_node(from)
 	var to_node: VisualFSMStateNode = get_node(to)
 	if from_node is VisualFSMStateNode:
-		var event_names := _fsm.get_state_event_names(from_node.state_name)
+		var event_names := _fsm.get_state_event_names(from_node.state.name)
 		var event: String = event_names[from_slot]
-		_fsm.add_transition(from_node.state_name, event, to_node.state_name)
+		_fsm.add_transition(from_node.state.name, event, to_node.state.name)
 	else: # start node connection
-		_fsm.start_target = to_node.state_name
+		_fsm.start_target = to_node.state.name
 
 
 func _on_disconnection_request(from, from_slot, to, to_slot):
@@ -168,22 +181,23 @@ func _on_disconnection_request(from, from_slot, to, to_slot):
 	var to_node: VisualFSMStateNode = get_node(to)
 	
 	if from_node is VisualFSMStateNode:
-		var event_names := _fsm.get_state_event_names(from_node.state_name)
+		var event_names := _fsm.get_state_event_names(from_node.state.name)
 		var event: String = event_names[from_slot]
-		_fsm.remove_transition(from_node.state_name, event)
+		_fsm.remove_transition(from_node.state.name, event)
 	else: # start node connection
 		# start_target may have been reconnected during yield
-		if _fsm.start_target == to_node.state_name:
+		if _fsm.start_target == to_node.state.name:
 			_fsm.start_target = ""
 
 
 func _on_StateNode_state_removed(state_node: VisualFSMStateNode) -> void:
-	_fsm.remove_state(state_node.state_name)
+	_fsm.remove_state(state_node.state.name)
 #	emit_signal("draw")
 
 
 func _on_StateNode_rename_request(
-	state_node: VisualFSMStateNode, old_name: String, new_name: String) -> void:
+	state_node: VisualFSMStateNode, new_name: String) -> void:
+	var old_name := state_node.state.name
 	var request_denied = false
 	if new_name.empty():
 		printerr("VisualFSM: States must have names.")
@@ -196,7 +210,6 @@ func _on_StateNode_rename_request(
 		request_denied = true
 
 	if request_denied:
-		state_node.state_name = old_name
 		return
 
 	print_debug("Renaming from %s to %s" % [old_name, new_name])
@@ -218,7 +231,7 @@ func _on_Dialog_event_name_request(event_name: String) -> void:
 
 func _on_Dialog_new_event_created(event: VisualFiniteStateMachineEvent) -> void:
 	_fsm.add_event(event)
-	_fsm.add_transition(_state_node_creating_event.state_name, event.name)
+	_fsm.add_transition(_state_node_creating_event.state.name, event.name)
 	_state_node_creating_event = null
 	_new_event_dialog.hide()
 
@@ -226,7 +239,7 @@ func _on_Dialog_new_event_created(event: VisualFiniteStateMachineEvent) -> void:
 func _on_end_node_move():
 	for child in get_children():
 		if child is VisualFSMStateNode:
-			var state := _fsm.get_state(child.state_name)
+			var state := _fsm.get_state(child.state.name)
 			state.position = child.offset
 		elif child is GraphNode and child.name == "VisualFSMStartNode":
 			_fsm.start_position = child.offset
