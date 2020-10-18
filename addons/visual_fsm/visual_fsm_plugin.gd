@@ -52,12 +52,10 @@ func make_visible(visible) -> void:
 
 
 func handles(object) -> bool:
-	print("Received object to handle: %s" % object)
 	return object is _fsm_script
 
 
 func edit(object) -> void:
-	print("Received object to edit: %s" % object)
 	_fsm_editor.edit(object)
 	_current_fsm_node = object
 

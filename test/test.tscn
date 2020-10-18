@@ -1,8 +1,4 @@
-[gd_scene load_steps=14 format=2]
-
-[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine.gd" type="Script" id=1]
-[ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=2]
-[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd" type="Script" id=3]
+[gd_scene load_steps=6 format=2]
 
 [sub_resource type="Animation" id=1]
 
@@ -44,54 +40,6 @@ func _on_GraphEdit_disconnection_request(from, from_slot, to, to_slot):
 	if from != to:
 		disconnect_node(from, from_slot, to, to_slot)
 "
-
-[sub_resource type="GDScript" id=6]
-script/source = "# State name: My New State name    <--- DO NOT TOUCH
-extends VisualFSMStateBase
-
-func enter():
-	pass
-
-func update(delta: float, object, params):
-	pass
-
-func exit():
-	pass
-"
-
-[sub_resource type="Resource" id=7]
-script = ExtResource( 3 )
-name = "My New State name"
-position = Vector2( 563, 68 )
-custom_script = SubResource( 6 )
-
-[sub_resource type="GDScript" id=8]
-script/source = "# State name: Statedos    <--- DO NOT TOUCH
-extends VisualFSMStateBase
-
-func enter():
-	pass
-
-func update(delta: float, object, params):
-	pass
-
-func exit():
-	pass
-"
-
-[sub_resource type="Resource" id=9]
-script = ExtResource( 3 )
-name = "Statedos"
-position = Vector2( 264, 54 )
-custom_script = SubResource( 8 )
-
-[sub_resource type="Resource" id=10]
-script = ExtResource( 1 )
-start_position = Vector2( 100, 100 )
-states = [ SubResource( 7 ), SubResource( 9 ) ]
-events = [  ]
-transitions = [ "My New State name", "", "", "Statedos", "", "" ]
-start = ""
 
 [node name="Spatial" type="Spatial"]
 
@@ -184,10 +132,6 @@ margin_top = 24.0
 margin_right = 62.0
 margin_bottom = 38.0
 text = "Hello!!!"
-
-[node name="VisualFSM" type="Node" parent="."]
-script = ExtResource( 2 )
-finite_state_machine = SubResource( 10 )
 [connection signal="connection_request" from="GraphEdit" to="GraphEdit" method="_on_GraphEdit_connection_request"]
 [connection signal="connection_to_empty" from="GraphEdit" to="GraphEdit" method="_on_GraphEdit_connection_to_empty"]
 [connection signal="disconnection_request" from="GraphEdit" to="GraphEdit" method="_on_GraphEdit_disconnection_request"]

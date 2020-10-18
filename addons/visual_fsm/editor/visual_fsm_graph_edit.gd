@@ -53,7 +53,7 @@ func _on_fsm_changed():
 
 
 func _redraw_graph():
-	print_debug("Redrawing fsm graph.............")
+#	print_debug("Redrawing fsm graph.............")
 	clear_connections()
 	# clear graph elements
 	for child in get_children():
@@ -66,7 +66,6 @@ func _redraw_graph():
 
 	# add state nodes
 	for state in _fsm.get_states():
-		print_debug("VisualFSMGraphEdit: adding state node: " + state.name)
 		var node: VisualFSMStateNode = _fsm_state_scene.instance()
 		node.connect("state_removed", self, "_on_StateNode_state_removed")
 		node.connect(
@@ -121,7 +120,6 @@ func _on_popup_request(position: Vector2) -> void:
 func _on_popup_index_pressed(index: int) -> void:
 	match index:
 		0:
-			print_debug("adding new state...")
 			var mouse_pos: Vector2 = get_parent().get_local_mouse_position()
 			var base_name := "State"
 			var state_name := base_name
@@ -152,8 +150,6 @@ func exit():
 			state.custom_script = my_script
 #			state.custom_script.reload()
 			_fsm.add_state(state)
-		1:
-			print_debug("adding new transition...")
 
 
 func _on_connection_request(
@@ -196,7 +192,6 @@ func _on_disconnection_request(from, from_slot, to, to_slot):
 
 func _on_StateNode_state_removed(state_node: VisualFSMStateNode) -> void:
 	_fsm.remove_state(state_node.state.name)
-#	emit_signal("draw")
 
 
 func _on_StateNode_rename_request(
@@ -216,7 +211,7 @@ func _on_StateNode_rename_request(
 	if request_denied:
 		return
 
-	print_debug("Renaming from %s to %s" % [old_name, new_name])
+#	print_debug("Renaming from %s to %s" % [old_name, new_name])
 	_fsm.rename_state(old_name, new_name)
 
 
