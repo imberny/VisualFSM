@@ -75,7 +75,7 @@ _global_script_class_icons={
 [application]
 
 config/name="VisualFSM"
-run/main_scene="res://addons/visual_fsm/editor/visual_fsm_editor.tscn"
+run/main_scene="res://test/test.tscn"
 config/icon="res://icon.png"
 
 [editor_plugins]
