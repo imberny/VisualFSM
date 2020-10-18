@@ -5,7 +5,7 @@ onready var _fsm := $VisualFSM
 
 
 func _process(delta):
-	_fsm.update(delta, null, null)
+	_fsm.update(delta, self, null)
 	$StateContainer/State.text = _fsm._current_state.name
 
 

@@ -74,7 +74,7 @@ func _redraw_graph():
 			"new_event_request", self, "_on_StateNode_new_event_request")
 		node.fsm = _fsm
 		node.state = state
-		state.custom_script.reload()
+#		state.custom_script.reload()
 		add_child(node)
 
 	# add event slots
@@ -148,7 +148,9 @@ func exit():
 """ % state.name
 			my_script.reload()
 			state.custom_script = my_script
+#			state.script = my_script
 #			state.custom_script.reload()
+			print("Adding state %s" % state.name)
 			_fsm.add_state(state)
 
 
