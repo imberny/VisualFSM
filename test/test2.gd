@@ -44,3 +44,4 @@ func _ready():
 	ResourceSaver.save("res://test/saved_resource.tres", my_resource)
 	var my_loaded_resource = load("res://test/saved_resource.tres")
 	my_loaded_resource.say_hello()
+	EditorScript
