@@ -62,6 +62,12 @@ func rename_state(name: String, new_name: String) -> void:
 	var state: VisualFiniteStateMachineState = _states[name]
 	state.name = new_name
 	_states[new_name] = state
+	var source_code: String = state.custom_script.source_code
+	var first_endline = source_code.find('\n')
+	var new_first_line = "# State name: %s    <--- DO NOT TOUCH" % new_name
+	state.custom_script.source_code = new_first_line + source_code.substr(first_endline)
+	state.custom_script.reload()
+
 	if start_target == name:
 		start_target = new_name
 	var transitions: Dictionary = _transitions[name]

@@ -136,7 +136,7 @@ func _on_popup_index_pressed(index: int) -> void:
 ##			var custom_script: VisualFSMStateBase = _state_base_script.new()
 #			_state_base_script.source_code = _state_custom_script_template
 			var my_script = GDScript.new()
-			my_script.source_code = """
+			my_script.source_code = """# State name: %s    <--- DO NOT TOUCH
 extends VisualFSMStateBase
 
 func enter():
@@ -147,7 +147,7 @@ func update(delta: float, object, params):
 
 func exit():
 	pass
-"""
+""" % state.name
 			my_script.reload()
 			state.custom_script = my_script
 #			state.custom_script.reload()
