@@ -112,5 +112,5 @@ func _on_EventSlot_close_request(event_slot: VisualFSMEventSlot) -> void:
 
 func _on_Script_pressed() -> void:
 	$"/root/VisualFSMSingleton".emit_signal(
-		"edit_custom_script", self.fsm, self.state.custom_script
+		"edit_custom_script", self.state.custom_script
 	)

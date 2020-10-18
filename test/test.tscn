@@ -46,12 +46,12 @@ func _on_GraphEdit_disconnection_request(from, from_slot, to, to_slot):
 		disconnect_node(from, from_slot, to, to_slot)
 "
 
-[sub_resource type="Resource" id=9]
+[sub_resource type="Resource" id=6]
 script = ExtResource( 4 )
 name = "Test"
 action_name = ""
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=7]
 script/source = "
 extends VisualFSMStateBase
 
@@ -65,13 +65,13 @@ func exit():
 	pass
 "
 
-[sub_resource type="Resource" id=7]
+[sub_resource type="Resource" id=8]
 script = ExtResource( 3 )
 name = "State"
 position = Vector2( 380, 100 )
-custom_script = SubResource( 6 )
+custom_script = SubResource( 7 )
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id=9]
 script/source = "
 extends VisualFSMStateBase
 
@@ -79,23 +79,24 @@ func enter():
 	pass
 
 func update(delta: float, object, params):
+	print(\"MyOtherCode\")
 	pass
 
 func exit():
 	pass
 "
 
-[sub_resource type="Resource" id=11]
+[sub_resource type="Resource" id=10]
 script = ExtResource( 3 )
 name = "State1"
 position = Vector2( 660, 180 )
-custom_script = SubResource( 10 )
+custom_script = SubResource( 9 )
 
-[sub_resource type="Resource" id=8]
+[sub_resource type="Resource" id=11]
 script = ExtResource( 1 )
 start_position = Vector2( 100, 100 )
-states = [ SubResource( 7 ), SubResource( 11 ) ]
-events = [ SubResource( 9 ) ]
+states = [ SubResource( 8 ), SubResource( 10 ) ]
+events = [ SubResource( 6 ) ]
 transitions = [ "State", "Test", "State1", "State1", "", "" ]
 start = "State"
 
@@ -104,6 +105,7 @@ script/source = "
 extends VisualFSMStateBase
 
 func enter():
+	print(\"My Code\")
 	pass
 
 func update(delta: float, object, params):
@@ -241,7 +243,7 @@ text = "Hello!!!"
 
 [node name="VisualFSM" type="Node" parent="."]
 script = ExtResource( 2 )
-finite_state_machine = SubResource( 8 )
+finite_state_machine = SubResource( 11 )
 
 [node name="VisualFSM2" type="Node" parent="."]
 script = ExtResource( 2 )

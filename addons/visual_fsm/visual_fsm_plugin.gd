@@ -8,6 +8,7 @@ var _fsm_editor: Control
 var _tool_button: ToolButton
 var _fsm_script := preload("visual_fsm.gd")
 var _fsm_singleton: VisualFSMSingleton = preload("editor/visual_fsm_singleton.gd").new()
+var _current_fsm_node
 
 
 func _enter_tree() -> void:
@@ -56,9 +57,11 @@ func handles(object) -> bool:
 
 func edit(object) -> void:
 	_fsm_editor.edit(object)
+	_current_fsm_node = object
 
 
-func _on_edit_custom_script(fsm: VisualFiniteStateMachine, custom_script: GDScript) -> void:
+func _on_edit_custom_script(custom_script: GDScript) -> void:
+	assert(_current_fsm_node, "VisualFSM: Current VisualFSM node is null.")
 	get_editor_interface().edit_resource(custom_script)
 	# edit current fsm, otherwise we lose the fsm panel
-	get_editor_interface().edit_resource(fsm)
+	get_editor_interface().edit_resource(_current_fsm_node)
