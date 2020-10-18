@@ -26,8 +26,20 @@ func has_state(name: String) -> bool:
 	return _states.has(name)
 
 
+func get_start_state() -> VisualFiniteStateMachineState:
+	assert(not self.start_target.empty(), "VisualFSM: Missing start state.")
+	assert(_states.has(self.start_target), "Missing state: %s" % self.start_target)
+	return _states[self.start_target]
+
+
 func get_state(name: String) -> VisualFiniteStateMachineState:
 	return _states[name]
+
+
+func get_next_state(current: String, event_name: String) -> VisualFiniteStateMachineState:
+	assert(_transitions.has(current), "VisualFSM: Missing state: %s" % current)
+	assert(_transitions[current].has(event_name), "Missing transition on event: %s" % event_name)
+	return get_state(_transitions[current][event_name])
 
 
 func get_state_event_names(name: String) -> Array:

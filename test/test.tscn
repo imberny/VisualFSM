@@ -1,137 +1,180 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=16 format=2]
 
-[sub_resource type="Animation" id=1]
+[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_event_timer.gd" type="Script" id=1]
+[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine.gd" type="Script" id=2]
+[ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=3]
+[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd" type="Script" id=4]
+[ext_resource path="res://test/test.gd" type="Script" id=5]
 
-[sub_resource type="AnimationNodeAnimation" id=2]
-animation = "test"
+[sub_resource type="Resource" id=1]
+script = ExtResource( 1 )
+name = "2 seconds timer"
+duration = 2.0
 
-[sub_resource type="AnimationNodeStateMachine" id=3]
-states/test/node = SubResource( 2 )
-states/test/position = Vector2( 287, 128 )
+[sub_resource type="GDScript" id=2]
+script/source = "# State name: Red    <--- DO NOT TOUCH
+extends VisualFSMStateBase
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=4]
-
-[sub_resource type="GDScript" id=5]
-script/source = "extends GraphEdit
-
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = \"text\"
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	add_valid_connection_type(0, 0)
-	add_valid_right_disconnect_type(0)
-
-
-func _on_GraphEdit_connection_request(from, from_slot, to, to_slot):
-	if from != to:
-		connect_node(from, from_slot, to, to_slot)
-
-
-func _on_GraphEdit_connection_to_empty(from, from_slot, release_position):
-#	disconnect_node()
+func enter():
 	pass
 
+func update(delta: float, object, params):
+	object.red()
+	pass
 
-func _on_GraphEdit_disconnection_request(from, from_slot, to, to_slot):
-	if from != to:
-		disconnect_node(from, from_slot, to, to_slot)
+func exit():
+	pass
 "
 
-[node name="Spatial" type="Spatial"]
+[sub_resource type="Resource" id=3]
+script = ExtResource( 4 )
+name = "Red"
+position = Vector2( 279, 81 )
+custom_script = SubResource( 2 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/test = SubResource( 1 )
+[sub_resource type="GDScript" id=4]
+script/source = "# State name: Green    <--- DO NOT TOUCH
+extends VisualFSMStateBase
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 3 )
-anim_player = NodePath("../AnimationPlayer")
-parameters/playback = SubResource( 4 )
+func enter():
+	pass
 
-[node name="GraphEdit" type="GraphEdit" parent="."]
-margin_left = 206.0
-margin_top = 90.0
-margin_right = 708.0
-margin_bottom = 460.0
-scroll_offset = Vector2( -40, -40 )
-script = SubResource( 5 )
+func update(delta: float, object, params):
+	object.green()
+	pass
+
+func exit():
+	pass
+"
+
+[sub_resource type="Resource" id=5]
+script = ExtResource( 4 )
+name = "Green"
+position = Vector2( 591, 144 )
+custom_script = SubResource( 4 )
+
+[sub_resource type="Resource" id=6]
+script = ExtResource( 2 )
+start_position = Vector2( 100, 100 )
+states = [ SubResource( 3 ), SubResource( 5 ) ]
+events = [ SubResource( 1 ) ]
+transitions = [ "Red", "2 seconds timer", "Green", "Green", "2 seconds timer", "Red" ]
+start = "Red"
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.00784314, 1, 0.184314, 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.921569, 0.909804, 0.137255, 1 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 1, 0, 0, 1 )
+
+[node name="Test" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="StateContainer" type="HBoxContainer" parent="."]
+margin_left = 271.609
+margin_top = 32.7949
+margin_right = 362.609
+margin_bottom = 72.7949
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GraphNode" type="GraphNode" parent="GraphEdit"]
-margin_left = 40.0
-margin_top = 40.0
-margin_right = 118.0
-margin_bottom = 84.0
-mouse_filter = 1
-slot/0/left_enabled = true
-slot/0/left_type = 0
-slot/0/left_color = Color( 1, 1, 1, 1 )
-slot/0/right_enabled = true
-slot/0/right_type = 0
-slot/0/right_color = Color( 1, 1, 1, 1 )
+[node name="Label" type="Label" parent="StateContainer"]
+margin_top = 13.0
+margin_right = 87.0
+margin_bottom = 27.0
+text = "Current state:"
+
+[node name="State" type="Label" parent="StateContainer"]
+margin_left = 91.0
+margin_top = 13.0
+margin_right = 91.0
+margin_bottom = 27.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="GraphEdit/GraphNode"]
-margin_left = 16.0
-margin_top = 24.0
-margin_right = 62.0
-margin_bottom = 38.0
-text = "Hello!!!"
+[node name="VisualFSM" type="Node" parent="."]
+script = ExtResource( 3 )
+finite_state_machine = SubResource( 6 )
 
-[node name="GraphNode2" type="GraphNode" parent="GraphEdit"]
-margin_left = 160.0
-margin_top = 220.0
-margin_right = 238.0
-margin_bottom = 264.0
-mouse_filter = 1
-offset = Vector2( 120, 180 )
-slot/0/left_enabled = true
-slot/0/left_type = 0
-slot/0/left_color = Color( 1, 1, 1, 1 )
-slot/0/right_enabled = true
-slot/0/right_type = 0
-slot/0/right_color = Color( 1, 1, 1, 1 )
+[node name="TrafficLights" type="Panel" parent="."]
+margin_left = 320.0
+margin_top = 86.0
+margin_right = 360.0
+margin_bottom = 234.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="GraphEdit/GraphNode2"]
-margin_left = 16.0
-margin_top = 24.0
-margin_right = 62.0
-margin_bottom = 38.0
-text = "Hello!!!"
+[node name="Green" type="Node2D" parent="TrafficLights"]
+position = Vector2( 0, 0.840912 )
 
-[node name="GraphNode3" type="GraphNode" parent="GraphEdit"]
-margin_left = 300.0
-margin_top = 220.0
-margin_right = 378.0
-margin_bottom = 264.0
-mouse_filter = 1
-offset = Vector2( 260, 180 )
-slot/0/left_enabled = true
-slot/0/left_type = 0
-slot/0/left_color = Color( 1, 1, 1, 1 )
-slot/0/right_enabled = true
-slot/0/right_type = 0
-slot/0/right_color = Color( 1, 1, 1, 1 )
+[node name="Lit" type="Panel" parent="TrafficLights/Green"]
+margin_left = 6.72717
+margin_top = 13.4543
+margin_right = 46.7272
+margin_bottom = 53.4543
+rect_scale = Vector2( 0.68, 0.68 )
+custom_styles/panel = SubResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="GraphEdit/GraphNode3"]
-margin_left = 16.0
-margin_top = 24.0
-margin_right = 62.0
-margin_bottom = 38.0
-text = "Hello!!!"
-[connection signal="connection_request" from="GraphEdit" to="GraphEdit" method="_on_GraphEdit_connection_request"]
-[connection signal="connection_to_empty" from="GraphEdit" to="GraphEdit" method="_on_GraphEdit_connection_to_empty"]
-[connection signal="disconnection_request" from="GraphEdit" to="GraphEdit" method="_on_GraphEdit_disconnection_request"]
+[node name="Cover" type="Panel" parent="TrafficLights/Green"]
+margin_left = 6.72717
+margin_top = 13.4543
+margin_right = 46.7272
+margin_bottom = 53.4543
+rect_scale = Vector2( 0.68, 0.68 )
+custom_styles/panel = SubResource( 8 )
+
+[node name="Yellow" type="Node2D" parent="TrafficLights"]
+position = Vector2( 0, 46.2492 )
+
+[node name="Lit" type="Panel" parent="TrafficLights/Yellow"]
+margin_left = 6.72717
+margin_top = 13.4543
+margin_right = 46.7272
+margin_bottom = 53.4543
+rect_scale = Vector2( 0.68, 0.68 )
+custom_styles/panel = SubResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cover" type="Panel" parent="TrafficLights/Yellow"]
+margin_left = 6.72717
+margin_top = 13.4543
+margin_right = 46.7272
+margin_bottom = 53.4543
+rect_scale = Vector2( 0.68, 0.68 )
+custom_styles/panel = SubResource( 8 )
+
+[node name="Red" type="Node2D" parent="TrafficLights"]
+position = Vector2( 0, 90.8166 )
+
+[node name="Lit" type="Panel" parent="TrafficLights/Red"]
+margin_left = 6.72717
+margin_top = 13.4543
+margin_right = 46.7272
+margin_bottom = 53.4543
+rect_scale = Vector2( 0.68, 0.68 )
+custom_styles/panel = SubResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cover" type="Panel" parent="TrafficLights/Red"]
+margin_left = 6.72717
+margin_top = 13.4543
+margin_right = 46.7272
+margin_bottom = 53.4543
+rect_scale = Vector2( 0.68, 0.68 )
+custom_styles/panel = SubResource( 8 )

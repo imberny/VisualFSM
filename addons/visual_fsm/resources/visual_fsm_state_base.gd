@@ -3,11 +3,11 @@ extends Object
 
 signal internal_event(params)
 
-func enter():
+func enter() -> void:
 	pass
 
-func update(delta: float, object, params):
+func update(delta: float, object, params) -> void:
 	pass
 
-func exit():
+func exit() -> void:
 	pass

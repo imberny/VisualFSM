@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Object",
+"class": "VisualFSMEventBase",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/resources/visual_fsm_event_base.gd"
+}, {
 "base": "PanelContainer",
 "class": "VisualFSMEventSlot",
 "language": "GDScript",
@@ -60,6 +65,7 @@ _global_script_classes=[ {
 "path": "res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd"
 } ]
 _global_script_class_icons={
+"VisualFSMEventBase": "",
 "VisualFSMEventSlot": "",
 "VisualFSMSingleton": "",
 "VisualFSMStateBase": "",

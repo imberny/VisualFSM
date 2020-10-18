@@ -1,16 +1,10 @@
-extends Node
+class_name VisualFSMEventBase
+extends Object
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+func enter() -> void:
+	pass
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func is_triggered(delta: float, object, params) -> bool:
+	assert(false, "VisualFSM: Method \"is_triggered\" is unimplemented.")
+	return false

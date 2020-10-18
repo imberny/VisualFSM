@@ -104,6 +104,19 @@ func _on_confirmed() -> void:
 			event = VisualFiniteStateMachineEventTimer.new()
 		EVENT_TYPE_SCRIPT:
 			event = VisualFiniteStateMachineEventScript.new()
+			var custom_script := GDScript.new()
+			custom_script.source_code = """# Event name: %s    <--- DO NOT TOUCH
+extends VisualFSMEventBase
+
+func enter() -> void:
+	pass
+
+
+func is_triggered(delta: float, object, params) -> bool:
+	return false
+"""
+			custom_script.reload()
+			event.custom_script = custom_script
 	event.name = self.event_name
 	emit_signal("new_event_created", event)
 	close()

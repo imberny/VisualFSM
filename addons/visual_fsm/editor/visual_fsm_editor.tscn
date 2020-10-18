@@ -30,13 +30,14 @@ script = ExtResource( 1 )
 [node name="DialogLayer" type="CanvasLayer" parent="."]
 
 [node name="Dialog" type="ConfirmationDialog" parent="DialogLayer"]
+visible = true
 anchor_left = 0.000976562
 anchor_right = 0.000976562
 anchor_bottom = 0.00333333
 margin_left = 329.0
-margin_top = 220.0
+margin_top = 204.5
 margin_right = 693.0
-margin_bottom = 411.0
+margin_bottom = 393.5
 rect_min_size = Vector2( 350, 70 )
 window_title = "New event"
 script = ExtResource( 3 )
