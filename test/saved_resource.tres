@@ -1,10 +1,14 @@
 [gd_resource type="Resource" load_steps=2 format=2]
 
-[ext_resource path="res://test/resource.gd" type="Script" id=1]
+[sub_resource type="GDScript" id=1]
+script/source = "
+extends Resource
+
+var my_var = 0
+
+func say_hello():
+	print(\"Hello! this is my value: %s \" % my_var)
+"
 
 [resource]
-script = ExtResource( 1 )
-__meta__ = {
-"my_custom_var": 1
-}
-my_string = "Hello"
+script = SubResource( 1 )
