@@ -12,7 +12,7 @@ var _current_fsm_node
 
 
 func _enter_tree() -> void:
-	print("Installing VisualFSM plugin")
+	print_debug("Installing VisualFSM plugin")
 	add_custom_type(FSM_TYPE_NAME, "Node", _fsm_script, preload("resources/icons/flow-chart.png"))
 
 	yield(get_tree(), "idle_frame")
@@ -29,7 +29,7 @@ func _enter_tree() -> void:
 
 
 func _exit_tree() -> void:
-	print("Uninstalling VisualFSM plugin")
+	print_debug("Uninstalling VisualFSM plugin")
 	remove_custom_type(FSM_TYPE_NAME)
 	_fsm_singleton.disconnect("edit_custom_script", self, "_on_edit_custom_script")
 	remove_control_from_bottom_panel(_fsm_editor)
