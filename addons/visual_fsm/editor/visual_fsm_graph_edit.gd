@@ -133,6 +133,7 @@ func _on_popup_index_pressed(index: int) -> void:
 #			var custom_script: VisualFSMStateBase = _state_base_script.new()
 			_state_base_script.source_code = _state_custom_script_template
 			state.custom_script = _state_base_script
+			state.custom_script.reload()
 			_fsm.add_state(state)
 		1:
 			print_debug("adding new transition...")
@@ -156,13 +157,24 @@ func _on_connection_request(
 
 
 func _on_disconnection_request(from, from_slot, to, to_slot):
+	# cheap way to prevent weird connection lines when button held
+	while Input.is_mouse_button_pressed(BUTTON_LEFT):
+		yield(get_tree(), "idle_frame")
+	# may have been removed during redraw. If so do nothing
+	if not has_node(from) or not has_node(to):
+		return
+	
 	var from_node: GraphNode = get_node(from)
+	var to_node: VisualFSMStateNode = get_node(to)
+	
 	if from_node is VisualFSMStateNode:
 		var event_names := _fsm.get_state_event_names(from_node.state_name)
 		var event: String = event_names[from_slot]
 		_fsm.remove_transition(from_node.state_name, event)
 	else: # start node connection
-		_fsm.start_target = ""
+		# start_target may have been reconnected during yield
+		if _fsm.start_target == to_node.state_name:
+			_fsm.start_target = ""
 
 
 func _on_StateNode_state_removed(state_node: VisualFSMStateNode) -> void:
