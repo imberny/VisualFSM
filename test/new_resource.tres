@@ -1,31 +1,19 @@
-[gd_resource type="Resource" load_steps=8 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://addons/visual_fsm/resources/visual_fsm_state_base.gd" type="Script" id=1]
 [ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd" type="Script" id=2]
 [ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine.gd" type="Script" id=3]
-[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_event_action.gd" type="Script" id=4]
 
 [sub_resource type="Resource" id=1]
-script = ExtResource( 4 )
-name = "test"
-action_name = ""
-
-[sub_resource type="Resource" id=2]
 script = ExtResource( 2 )
 name = "State"
-position = Vector2( 280, 160 )
-custom_script = ExtResource( 1 )
-
-[sub_resource type="Resource" id=3]
-script = ExtResource( 2 )
-name = "State1"
-position = Vector2( 654, 112 )
+position = Vector2( 307, 115 )
 custom_script = ExtResource( 1 )
 
 [resource]
 script = ExtResource( 3 )
 start_position = Vector2( 100, 100 )
-start_target = ""
-states = [ SubResource( 2 ), SubResource( 3 ) ]
-events = [ SubResource( 1 ) ]
-transitions = [ "State", "test", "State1", "State1", "", "" ]
+start_target = "State"
+states = [ SubResource( 1 ) ]
+events = [  ]
+transitions = [ "State", "", "" ]
