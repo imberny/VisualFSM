@@ -3,10 +3,11 @@ extends Node2D
 
 onready var _fsm := $VisualFSM
 
+var current_state_name: String setget _set_current_state_name
+
 
 func _process(delta):
 	_fsm.update(delta, self, null)
-	$StateContainer/State.text = _fsm._current_state.name
 
 
 func green():
@@ -25,3 +26,8 @@ func red():
 	$TrafficLights/Green/Cover.visible = true
 	$TrafficLights/Yellow/Cover.visible = true
 	$TrafficLights/Red/Cover.visible = false
+
+
+func _set_current_state_name(value) -> void:
+	$StateContainer/State.text = value
+

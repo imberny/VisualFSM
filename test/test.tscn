@@ -30,8 +30,9 @@ extends VisualFSMStateBase
 func enter():
 	pass
 
-func update(delta: float, object, params):
+func update(_delta: float, object, _params):
 	object.red()
+	object.current_state_name = name
 	pass
 
 func exit():
@@ -51,8 +52,9 @@ extends VisualFSMStateBase
 func enter():
 	pass
 
-func update(delta: float, object, params):
+func update(_delta: float, object, _params):
 	object.green()
+	object.current_state_name = name
 	pass
 
 func exit():
@@ -81,72 +83,75 @@ duration = 3.0
 [sub_resource type="Resource" id=12]
 script = ExtResource( 4 )
 name = "1 second timer"
-duration = 1.0
-
-[sub_resource type="Resource" id=22]
-script = ExtResource( 4 )
-name = "0.5 seconds"
 duration = 0.6
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="Resource" id=13]
+script = ExtResource( 4 )
+name = "0.5 seconds"
+duration = 2.0
+
+[sub_resource type="GDScript" id=14]
 script/source = "# State name: State    <--- DO NOT TOUCH
 extends VisualFSMStateBase
 
 func enter():
 	pass
 
-func update(delta: float, object, params):
+func update(_delta: float, object, _params):
 	object.green()
+	object.current_state_name = name
 
 func exit():
 	pass
 "
 
-[sub_resource type="Resource" id=14]
+[sub_resource type="Resource" id=15]
 script = ExtResource( 3 )
 name = "Green"
 position = Vector2( 285, 75 )
-custom_script = SubResource( 13 )
+custom_script = SubResource( 14 )
 
-[sub_resource type="GDScript" id=15]
+[sub_resource type="GDScript" id=16]
 script/source = "# State name: State    <--- DO NOT TOUCH
 extends VisualFSMStateBase
 
 func enter():
 	pass
 
-func update(delta: float, object, params):
+func update(_delta: float, object, _params):
 	object.yellow()
+	object.current_state_name = name
 
 func exit():
 	pass
 "
 
-[sub_resource type="Resource" id=16]
+[sub_resource type="Resource" id=17]
 script = ExtResource( 3 )
 name = "Yellow"
 position = Vector2( 613, 111 )
-custom_script = SubResource( 15 )
+custom_script = SubResource( 16 )
 
-[sub_resource type="GDScript" id=17]
+[sub_resource type="GDScript" id=18]
 script/source = "# State name: State    <--- DO NOT TOUCH
 extends VisualFSMStateBase
 
 func enter():
 	pass
 
-func update(delta: float, object, params):
+func update(_delta: float, object, _params):
 	object.red()
+	object.current_state_name = name
 
 func exit():
 	pass
 "
 
-[sub_resource type="Resource" id=18]
+[sub_resource type="Resource" id=19]
 script = ExtResource( 3 )
 name = "Red"
 position = Vector2( 620, 380 )
-custom_script = SubResource( 17 )
+custom_script = SubResource( 18 )
 
 [sub_resource type="GDScript" id=20]
 script/source = "# State name: State    <--- DO NOT TOUCH
@@ -155,8 +160,9 @@ extends VisualFSMStateBase
 func enter():
 	pass
 
-func update(delta: float, object, params):
+func update(_delta: float, object, _params):
 	object.yellow()
+	object.current_state_name = name
 
 func exit():
 	pass
@@ -168,11 +174,11 @@ name = "Yellow2"
 position = Vector2( 140, 280 )
 custom_script = SubResource( 20 )
 
-[sub_resource type="Resource" id=19]
+[sub_resource type="Resource" id=22]
 script = ExtResource( 1 )
 start_position = Vector2( 100, 100 )
-states = [ SubResource( 14 ), SubResource( 16 ), SubResource( 18 ), SubResource( 21 ) ]
-events = [ SubResource( 11 ), SubResource( 12 ), SubResource( 22 ) ]
+states = [ SubResource( 15 ), SubResource( 17 ), SubResource( 19 ), SubResource( 21 ) ]
+events = [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ]
 transitions = [ "Green", "0.5 seconds", "Yellow", "Yellow", "1 second timer", "Red", "Red", "3 seconds timer", "Yellow2", "Yellow2", "1 second timer", "Green" ]
 start = "Green"
 
@@ -393,4 +399,4 @@ custom_styles/panel = SubResource( 2 )
 
 [node name="VisualFSM" type="Node" parent="TrafficLight2"]
 script = ExtResource( 2 )
-finite_state_machine = SubResource( 19 )
+finite_state_machine = SubResource( 22 )

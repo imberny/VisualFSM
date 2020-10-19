@@ -1,7 +1,10 @@
 class_name VisualFSMStateBase
-extends Object
+extends Reference
 
 signal internal_event(params)
+
+var name: String
+
 
 func enter() -> void:
 	pass

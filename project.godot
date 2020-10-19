@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Object",
+"base": "Reference",
 "class": "VisualFSMEventBase",
 "language": "GDScript",
 "path": "res://addons/visual_fsm/resources/visual_fsm_event_base.gd"
@@ -24,7 +24,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/visual_fsm/editor/visual_fsm_singleton.gd"
 }, {
-"base": "Object",
+"base": "Reference",
 "class": "VisualFSMStateBase",
 "language": "GDScript",
 "path": "res://addons/visual_fsm/resources/visual_fsm_state_base.gd"

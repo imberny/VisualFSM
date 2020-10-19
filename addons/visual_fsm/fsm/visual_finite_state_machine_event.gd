@@ -9,6 +9,6 @@ func enter() -> void:
 	pass
 
 
-func is_triggered(delta: float, object, params) -> bool:
+func is_triggered(_delta: float, _object, _params) -> bool:
 	assert(false, "VisualFSM: Method \"is_triggered\" is unimplemented in event \"%s\"" % name)
 	return false
