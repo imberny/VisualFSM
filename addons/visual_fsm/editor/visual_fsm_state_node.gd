@@ -66,13 +66,14 @@ func _on_AddEvent_about_to_show() -> void:
 	popup.clear()
 	# important: this steals focus from state name and triggers validation
 	popup.grab_focus()
-	var script_event_names = fsm.get_script_event_names()
-	for state_event_name in fsm.get_state_script_event_names(self.state.name):
-		var idx = script_event_names.find(state_event_name)
-		if 0 <= idx:
-			script_event_names.remove(idx)
-	for event in script_event_names:
-		popup.add_item(event)
+	var options := []
+	# TODO: potential issue with ordering
+	for script_event_id in fsm.get_script_events():
+		if not self.state.has_event(script_event_id):
+			var event := fsm.get_event(script_event_id)
+			options.push_back(event)
+	for event in options:
+		popup.add_icon_item(script_icon, event.name)
 	if 0 < popup.get_item_count():
 		popup.add_separator()
 	popup.add_icon_item(timer_icon, "New timer event")
@@ -84,30 +85,19 @@ func _on_AddEvent_index_pressed(index: int) -> void:
 	var popup: PopupMenu = _add_event_dropdown.get_popup()
 	var num_items = popup.get_item_count()
 	if num_items - 3 == index: # new timer
-		var timer_event := VisualFiniteStateMachineEventTimer.new()
-		timer_event.duration = 1
-		var suffix = 0
-		var event_name = "Timer" + str(suffix)
-		while fsm.has_timer_event(event_name):
-			suffix += 1
-			event_name = "Timer" + str(suffix)
-		timer_event.name = event_name
-		fsm.add_event(timer_event)
-		fsm.add_timer_transition(self.state.name, timer_event.name)
+		fsm.create_timer_event(self.state)
 	elif num_items - 2 == index: # new input action
-		var action_event := VisualFiniteStateMachineEventAction.new()
-		var suffix = 0
-		var event_name = "Action" + str(suffix)
-		while fsm.has_action_event(event_name):
-			suffix += 1
-			event_name = "Action" + str(suffix)
-		action_event.name = event_name
-		fsm.add_event(action_event)
-		fsm.add_action_transition(self.state.name, action_event.name)
+		fsm.create_action_event(self.state)
 	elif num_items - 1 == index: # new script
 		emit_signal("new_script_request", self)
-	else:
-		fsm.add_transition(self.state.name, popup.get_item_text(index))
+	else: # reuse existing script event
+		var options := []
+		for script_event_id in fsm.get_script_events():
+			var script_event := fsm.get_event(script_event_id)
+			if not self.state.has_event(script_event.id):
+				options.push_back(script_event)
+		var selected_event = options[index]
+		self.state.add_event(selected_event)
 
 
 func _on_StateGraphNode_close_request() -> void:
@@ -121,7 +111,7 @@ func _on_StateGraphNode_resize_request(new_minsize) -> void:
 
 func _on_EventSlot_close_request(event_slot: VisualFSMEventSlot) -> void:
 	# TODO: Confirm
-	fsm.remove_state_event(self.state.name, event_slot.event)
+	fsm.remove_event_from_state(self.state, event_slot.event)
 
 
 func _on_Script_pressed() -> void:

@@ -15,17 +15,16 @@ func _ready() -> void:
 
 
 func _set_event(value: VisualFiniteStateMachineEvent) -> void:
-	$Content/EventLabel.text = value.name
 	event = value
 
-	for button in $Content/Buttons.get_children():
-		button.visible = false
 	if event is VisualFiniteStateMachineEventAction:
-		$Content/Buttons/Action.visible = true
+		$Action.visible = true
 	elif event is VisualFiniteStateMachineEventTimer:
-		$Content/Buttons/Timer.visible = true
+		$Timer.visible = true
+		$Timer/DurationMargins/Duration.text = str(event.duration)
 	elif event is VisualFiniteStateMachineEventScript:
-		$Content/Buttons/Script.visible = true;
+		$Script.visible = true;
+		$Script/TitleMargins/Title.text = event.name
 
 
 func _on_CloseButton_pressed() -> void:

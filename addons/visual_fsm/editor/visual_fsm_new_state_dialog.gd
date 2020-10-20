@@ -24,7 +24,7 @@ func try_create(context: GDScriptFunctionState) -> void:
 	if _context:
 		_context.resume(false)
 	_context = context
-
+	show()
 
 
 func deny_name_request(name: String) -> void:

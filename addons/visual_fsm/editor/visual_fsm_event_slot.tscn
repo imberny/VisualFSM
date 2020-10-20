@@ -13,18 +13,20 @@ bg_color = Color( 0.0941176, 0.0941176, 0.0941176, 1 )
 [node name="EventSlot" type="PanelContainer"]
 margin_right = 172.0
 margin_bottom = 32.0
+size_flags_horizontal = 3
 custom_styles/panel = SubResource( 1 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Content" type="HBoxContainer" parent="."]
-margin_right = 172.0
+[node name="Action" type="HBoxContainer" parent="."]
+visible = false
+margin_right = 184.0
 margin_bottom = 32.0
 
-[node name="EventLabel" type="Label" parent="Content"]
-margin_right = 108.0
+[node name="EventLabel" type="Label" parent="Action"]
+margin_right = 120.0
 margin_bottom = 32.0
 focus_mode = 2
 size_flags_horizontal = 3
@@ -32,14 +34,13 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 valign = 1
 
-[node name="Buttons" type="CenterContainer" parent="Content"]
-margin_left = 112.0
-margin_right = 140.0
+[node name="Button" type="CenterContainer" parent="Action"]
+margin_left = 124.0
+margin_right = 152.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 28, 32 )
 
-[node name="Action" type="Button" parent="Content/Buttons"]
-visible = false
+[node name="Action" type="Button" parent="Action/Button"]
 margin_right = 28.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
@@ -47,8 +48,60 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 icon = ExtResource( 5 )
 
-[node name="Timer" type="Button" parent="Content/Buttons"]
+[node name="Close" type="CenterContainer" parent="Action"]
+margin_left = 156.0
+margin_right = 184.0
+margin_bottom = 32.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Button" type="Button" parent="Action/Close"]
+margin_right = 28.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 28, 32 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = ExtResource( 1 )
+expand_icon = true
+
+[node name="Timer" type="HBoxContainer" parent="."]
 visible = false
+margin_right = 172.0
+margin_bottom = 32.0
+
+[node name="DurationMargins" type="MarginContainer" parent="Timer"]
+margin_right = 28.0
+margin_bottom = 32.0
+custom_constants/margin_right = 10
+custom_constants/margin_left = 10
+
+[node name="Duration" type="Label" parent="Timer/DurationMargins"]
+margin_left = 10.0
+margin_right = 18.0
+margin_bottom = 32.0
+focus_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+text = "0"
+valign = 1
+
+[node name="Seconds" type="Label" parent="Timer"]
+margin_left = 32.0
+margin_right = 108.0
+margin_bottom = 32.0
+focus_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "sec"
+valign = 1
+
+[node name="Button" type="CenterContainer" parent="Timer"]
+margin_left = 112.0
+margin_right = 140.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 28, 32 )
+
+[node name="Timer" type="Button" parent="Timer/Button"]
 margin_right = 28.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
@@ -56,8 +109,52 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 icon = ExtResource( 4 )
 
-[node name="Script" type="Button" parent="Content/Buttons"]
+[node name="Close" type="CenterContainer" parent="Timer"]
+margin_left = 144.0
+margin_right = 172.0
+margin_bottom = 32.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Button" type="Button" parent="Timer/Close"]
+margin_right = 28.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 28, 32 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+icon = ExtResource( 1 )
+expand_icon = true
+
+[node name="Script" type="HBoxContainer" parent="."]
 visible = false
+margin_right = 172.0
+margin_bottom = 32.0
+
+[node name="TitleMargins" type="MarginContainer" parent="Script"]
+margin_right = 108.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+custom_constants/margin_right = 10
+custom_constants/margin_left = 10
+
+[node name="Title" type="Label" parent="Script/TitleMargins"]
+margin_left = 10.0
+margin_right = 98.0
+margin_bottom = 32.0
+focus_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+text = "ScriptName"
+valign = 1
+
+[node name="Button" type="CenterContainer" parent="Script"]
+margin_left = 112.0
+margin_right = 140.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 28, 32 )
+
+[node name="Script" type="Button" parent="Script/Button"]
 margin_right = 28.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
@@ -65,14 +162,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 icon = ExtResource( 3 )
 
-[node name="Close" type="CenterContainer" parent="Content"]
+[node name="Close" type="CenterContainer" parent="Script"]
 margin_left = 144.0
 margin_right = 172.0
 margin_bottom = 32.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="Button" type="Button" parent="Content/Close"]
+[node name="Button" type="Button" parent="Script/Close"]
 margin_right = 28.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 28, 32 )
@@ -151,9 +248,11 @@ step = 0.2
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="Content/Buttons/Timer" to="." method="_on_Timer_pressed"]
-[connection signal="pressed" from="Content/Buttons/Script" to="." method="_on_Script_pressed"]
-[connection signal="pressed" from="Content/Close/Button" to="." method="_on_CloseButton_pressed"]
+[connection signal="pressed" from="Action/Close/Button" to="." method="_on_CloseButton_pressed"]
+[connection signal="pressed" from="Timer/Button/Timer" to="." method="_on_Timer_pressed"]
+[connection signal="pressed" from="Timer/Close/Button" to="." method="_on_CloseButton_pressed"]
+[connection signal="pressed" from="Script/Button/Script" to="." method="_on_Script_pressed"]
+[connection signal="pressed" from="Script/Close/Button" to="." method="_on_CloseButton_pressed"]
 [connection signal="confirmed" from="DialogLayer/SetTimerDurationDialog" to="DialogLayer/SetTimerDurationDialog" method="_on_confirmed"]
 [connection signal="text_changed" from="DialogLayer/SetTimerDurationDialog/Margins/Content/Margins/Display/Duration" to="DialogLayer/SetTimerDurationDialog" method="_on_Duration_text_changed"]
 [connection signal="value_changed" from="DialogLayer/SetTimerDurationDialog/Margins/Content/DurationSlider" to="DialogLayer/SetTimerDurationDialog" method="_on_DurationSlider_value_changed"]
