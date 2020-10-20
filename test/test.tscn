@@ -37,7 +37,7 @@ func exit() -> void:
 [sub_resource type="Resource" id=6]
 script = ExtResource( 1 )
 name = "Red"
-position = Vector2( 226, 72 )
+position = Vector2( 300, 60 )
 custom_script = SubResource( 5 )
 
 [sub_resource type="Resource" id=7]
@@ -46,7 +46,7 @@ start_position = Vector2( 100, 100 )
 states = [ SubResource( 6 ) ]
 events = [  ]
 transitions = [ "Red", "", "" ]
-start = "Red"
+start = ""
 
 [node name="TrafficLightsDemo" type="Node2D"]
 

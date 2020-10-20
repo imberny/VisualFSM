@@ -27,8 +27,8 @@ func has_state(name: String) -> bool:
 
 
 func get_start_state() -> VisualFiniteStateMachineState:
-	assert(not self.start_target.empty(), "VisualFSM: Missing start state.")
-	assert(_states.has(self.start_target), "Missing state: %s" % self.start_target)
+	if self.start_target.empty():
+		return null
 	return _states[self.start_target]
 
 

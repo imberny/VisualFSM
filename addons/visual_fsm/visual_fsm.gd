@@ -14,6 +14,7 @@ func _ready():
 			self.fsm = VisualFiniteStateMachine.new()
 	else:
 		_current_state = fsm.get_start_state()
+		assert(_current_state, "VisualFSM: %s's finite state machine doesn't point to a starting state." % _controlled_entity.name)
 		if _current_state:
 			_current_state.enter()
 
