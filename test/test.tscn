@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd" type="Script" id=1]
 [ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine.gd" type="Script" id=2]
 [ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=3]
+[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_event_timer.gd" type="Script" id=4]
 [ext_resource path="res://test/traffic_lights.gd" type="Script" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -23,30 +24,38 @@ extends VisualFSMStateBase
 
 
 func enter() -> void:
-	print(\"Entering from %s\" % name)
+	pass
 
 
 func update(_object, _delta: float) -> void:
-	_object.red()
+    pass
 
 
 func exit() -> void:
-	pass
-"
+	pass"
 
 [sub_resource type="Resource" id=6]
 script = ExtResource( 1 )
 name = "Red"
-position = Vector2( 300, 60 )
+position = Vector2( 272, 99 )
 custom_script = SubResource( 5 )
 
 [sub_resource type="Resource" id=7]
+script = ExtResource( 4 )
+name = "Timer0"
+duration = 1
+
+[sub_resource type="Resource" id=8]
 script = ExtResource( 2 )
 start_position = Vector2( 100, 100 )
 states = [ SubResource( 6 ) ]
-events = [  ]
-transitions = [ "Red", "", "" ]
-start = ""
+timer_events = [ SubResource( 7 ) ]
+action_events = [  ]
+script_events = [  ]
+timer_transitions = [ "Red", "", "" ]
+action_transitions = [ "Red", "", "" ]
+script_transitions = [ "Red", "", "" ]
+start = "Red"
 
 [node name="TrafficLightsDemo" type="Node2D"]
 
@@ -158,7 +167,7 @@ custom_styles/panel = SubResource( 2 )
 
 [node name="VisualFSM" type="Node" parent="TrafficLight1"]
 script = ExtResource( 3 )
-finite_state_machine = SubResource( 7 )
+finite_state_machine = SubResource( 8 )
 
 [node name="TrafficLight2" type="Node2D" parent="."]
 position = Vector2( 244.7, 82.4076 )

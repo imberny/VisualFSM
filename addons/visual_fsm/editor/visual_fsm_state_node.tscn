@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/visual_fsm/editor/visual_fsm_state_node.gd" type="Script" id=1]
 [ext_resource path="res://addons/visual_fsm/resources/icons/icon_script.svg" type="Texture" id=2]
+[ext_resource path="res://addons/visual_fsm/resources/icons/icon_timer.svg" type="Texture" id=3]
+[ext_resource path="res://addons/visual_fsm/resources/icons/icon_joypad.svg" type="Texture" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.0941176, 0.0941176, 0.0941176, 1 )
@@ -35,6 +37,9 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+timer_icon = ExtResource( 3 )
+action_icon = ExtResource( 4 )
+script_icon = ExtResource( 2 )
 
 [node name="TitlePanel" type="PanelContainer" parent="."]
 margin_left = 16.0
@@ -91,3 +96,4 @@ switch_on_hover = true
 [connection signal="close_request" from="." to="." method="_on_StateGraphNode_close_request"]
 [connection signal="resize_request" from="." to="." method="_on_StateGraphNode_resize_request"]
 [connection signal="pressed" from="TitlePanel/HBox/Script" to="." method="_on_Script_pressed"]
+[connection signal="about_to_show" from="BottomPanel/AddEventDropdown" to="." method="_on_AddEvent_about_to_show"]

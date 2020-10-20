@@ -28,21 +28,28 @@ func _process(delta) -> void:
 	_current_state.update(_controlled_entity, delta)
 
 	var next_state: VisualFiniteStateMachineState
-	for event_name in fsm.get_state_event_names(_current_state.name):
-		var event := fsm.get_event(event_name)
-		var advance := false
-		if event is VisualFiniteStateMachineEventTimer:
-			advance = event.is_over(delta)
-		if event is VisualFiniteStateMachineEventScript:
-			advance = event.is_triggered(_controlled_entity, delta)
-		if advance:
-			next_state = fsm.get_next_state(_current_state.name, event.name)
+	for event_name in fsm.get_state_timer_event_names(_current_state.name):
+		var event := fsm.get_timer_event(event_name)
+		if event.is_over(delta):
+			next_state = fsm.get_next_state(_current_state.name, event)
+			break
+
+	for event_name in fsm.get_state_script_event_names(_current_state.name):
+		var event := fsm.get_script_event(event_name)
+		if event.is_triggered(_controlled_entity, delta):
+			next_state = fsm.get_next_state(_current_state.name, event)
 			break
 
 	if next_state:
 		next_state.enter()
-		for event_name in fsm.get_state_event_names(next_state.name):
-			var event := fsm.get_event(event_name)
+		for event_name in fsm.get_state_timer_event_names(next_state.name):
+			var event := fsm.get_timer_event(event_name)
+			event.enter()
+		for event_name in fsm.get_state_action_event_names(next_state.name):
+			var event := fsm.get_action_event(event_name)
+			event.enter()
+		for event_name in fsm.get_state_script_event_names(next_state.name):
+			var event := fsm.get_script_event(event_name)
 			event.enter()
 		_current_state = next_state
 

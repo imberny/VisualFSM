@@ -112,10 +112,10 @@ func enter() -> void:
 	pass
 
 
-func is_triggered(delta: float, object, params) -> bool:
+func is_triggered(_object, delta: float) -> bool:
 	return false
 """
-			custom_script.reload()
+			custom_script.reload(true)
 			event.custom_script = custom_script
 	event.name = self.event_name
 	emit_signal("new_event_created", event)
