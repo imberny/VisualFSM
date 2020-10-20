@@ -1,7 +1,7 @@
 class_name VisualFSMStateBase
-extends Reference
+extends Object
 
-signal internal_event(params)
+#signal internal_event(params)
 
 var name: String
 
@@ -9,7 +9,7 @@ var name: String
 func enter() -> void:
 	pass
 
-func update(delta: float, object, params) -> void:
+func update(_object, _delta: float) -> void:
 	pass
 
 func exit() -> void:

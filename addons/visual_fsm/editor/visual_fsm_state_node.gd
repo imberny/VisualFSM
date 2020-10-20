@@ -2,17 +2,8 @@ tool
 class_name VisualFSMStateNode
 extends GraphNode
 
-signal state_rename_request(state_node, new_name)
 signal state_removed(state_node)
 signal new_event_request(state_node)
-
-onready var _add_event_dropdown := $BottomPanel/AddEventDropdown
-
-var state: VisualFiniteStateMachineState setget _set_state
-var fsm: VisualFiniteStateMachine
-var _event_slot_scene: PackedScene = preload("visual_fsm_event_slot.tscn")
-#var state_name: String setget _set_state_name, _get_state_name
-var _old_state_name: String
 
 const COLORS := [
 	Color.coral,
@@ -27,6 +18,13 @@ const COLORS := [
 	Color.limegreen
 ]
 
+onready var _state_label := $TitlePanel/HBox/Margins/Name
+onready var _add_event_dropdown := $BottomPanel/AddEventDropdown
+
+var state: VisualFiniteStateMachineState setget _set_state
+var fsm: VisualFiniteStateMachine
+var _event_slot_scene: PackedScene = preload("visual_fsm_event_slot.tscn")
+
 
 func _ready() -> void:
 	set_slot(0, true, 0, COLORS[0], false, 0, Color.white)
@@ -36,7 +34,6 @@ func _ready() -> void:
 	add_event_menu.connect(
 		"index_pressed", self, "_on_AddEvent_index_pressed")
 	add_event_menu.connect("focus_exited", add_event_menu, "hide")
-	$Title/Name.connect("focus_exited", self, "_on_StateName_focus_exited")
 
 
 func add_event(event: VisualFiniteStateMachineEvent) -> void:
@@ -55,8 +52,8 @@ func add_event(event: VisualFiniteStateMachineEvent) -> void:
 
 
 func _set_state(value: VisualFiniteStateMachineState) -> void:
-	$Title/Name.text = value.name
 	offset = value.position
+	_state_label.text = value.name
 	state = value
 
 
@@ -97,16 +94,8 @@ func _on_StateGraphNode_resize_request(new_minsize) -> void:
 	rect_size = new_minsize
 
 
-func _on_StateName_text_entered(new_name: String) -> void:
-	if new_name != self.state.name:
-		emit_signal("state_rename_request", self, new_name)
-
-
-func _on_StateName_focus_exited() -> void:	
-	_on_StateName_text_entered(self.state.name)
-
-
 func _on_EventSlot_close_request(event_slot: VisualFSMEventSlot) -> void:
+	# TODO: Confirm
 	fsm.remove_state_event(self.state.name, event_slot.event.name)
 
 

@@ -1,0 +1,10 @@
+# Event: %s
+extends VisualFSMEventBase
+
+
+func enter() -> void:
+    pass
+
+
+func is_triggered(_object, _delta: float) -> bool:
+    return false

@@ -1,40 +1,39 @@
 tool
 extends GraphEdit
 
-#onready var _state_base_script: Script = preload("../resources/visual_fsm_state_base.gd")
-onready var _new_event_dialog: ConfirmationDialog = $"../DialogLayer/Dialog"
+const STATE_TEMPLATE_PATH := "res://addons/visual_fsm/resources/state_template.txt"
+const EVENT_TEMPLATE_PATH := "res://addons/visual_fsm/resources/event_template.txt"
+
+onready var _new_event_dialog := $"../DialogLayer/Dialog"
+onready var _new_state_dialog := $"../DialogLayer/NewStateDialog"
 
 var _fsm_start_scene: PackedScene = preload("visual_fsm_start_node.tscn")
 var _fsm_state_scene: PackedScene = preload("visual_fsm_state_node.tscn")
 var _fsm: VisualFiniteStateMachine
-var _popup_options := ["New state", "New transition", "save", "load"]
-var _popup: PopupMenu
 var _events := {}
 var _state_node_creating_event: VisualFSMStateNode
 var _state_custom_script_template: String
+var _event_custom_script_template: String
+
+
+func _read_from_file(path: String) -> String:
+	var f = File.new()
+	var err = f.open(path, File.READ)
+	if err != OK:
+		printerr("Could not open file \"%s\", error code: %s" % [path, err])
+		return ""
+	var content = f.get_as_text()
+	f.close()
+	return content
 
 
 func _ready() -> void:
 	add_valid_left_disconnect_type(0)
 
-	connect("popup_request", self, "_on_popup_request")
-	_popup = PopupMenu.new()
-	_popup.connect("index_pressed", self, "_on_popup_index_pressed")
-	_popup.connect("focus_exited", _popup, "hide")
-	for opt in _popup_options:
-		_popup.add_item(opt)
-	add_child(_popup)
-
 	_new_event_dialog.rect_position = get_viewport_rect().size / 2 - _new_event_dialog.rect_size / 2
 
-	var state_template_path = "res://addons/visual_fsm/resources/state_template.txt"
-	var f = File.new()
-	var err = f.open(state_template_path, File.READ)
-	if err != OK:
-		printerr("Could not open file \"%s\", error code: %s" % [state_template_path, err])
-		return
-	var _state_custom_script_template = f.get_as_text()
-	f.close()
+	_state_custom_script_template = _read_from_file(STATE_TEMPLATE_PATH)
+	_event_custom_script_template = _read_from_file(EVENT_TEMPLATE_PATH)
 
 	edit(VisualFiniteStateMachine.new())
 
@@ -67,15 +66,13 @@ func _redraw_graph():
 	# add state nodes
 	for state in _fsm.get_states():
 		var node: VisualFSMStateNode = _fsm_state_scene.instance()
+		add_child(node)
 		node.connect("state_removed", self, "_on_StateNode_state_removed")
-		node.connect(
-			"state_rename_request", self, "_on_StateNode_rename_request")
 		node.connect(
 			"new_event_request", self, "_on_StateNode_new_event_request")
 		node.fsm = _fsm
 		node.state = state
 #		state.custom_script.reload()
-		add_child(node)
 
 	# add event slots
 	for transition in _fsm.get_transitions():
@@ -111,47 +108,54 @@ func _redraw_graph():
 					connect_node(start_node.name, 0, child.name, 0)
 
 
-func _on_popup_request(position: Vector2) -> void:
-	_popup.set_position(position)
-	_popup.show()
-	_popup.grab_focus()
+#func _on_popup_request(position: Vector2) -> void:
+#	_popup.set_position(position)
+#	_popup.show()
+#	_popup.grab_focus()
 
 
 func _on_popup_index_pressed(index: int) -> void:
 	match index:
 		0:
-			var mouse_pos: Vector2 = get_parent().get_local_mouse_position()
+			
 			var base_name := "State"
 			var state_name := base_name
 			var suffix := 1
 			while _fsm.has_state(state_name):
 				state_name = base_name + str(suffix)
 				suffix += 1
-			var state := VisualFiniteStateMachineState.new()
-			state.name = state_name
-			state.position = mouse_pos - Vector2(115, 40)
 			
-##			var custom_script: VisualFSMStateBase = _state_base_script.new()
-#			_state_base_script.source_code = _state_custom_script_template
-			var my_script = GDScript.new()
-			my_script.source_code = """# State name: %s    <--- DO NOT TOUCH
-extends VisualFSMStateBase
+			
 
-func enter():
-	pass
 
-func update(delta: float, object, params):
-	pass
+func _try_create_new_state(from: String, from_slot: int, position: Vector2) -> void:
+	if not yield():
+		return
 
-func exit():
-	pass
-""" % state.name
-			my_script.reload()
-			state.custom_script = my_script
-#			state.script = my_script
-#			state.custom_script.reload()
-			print("Adding state %s" % state.name)
-			_fsm.add_state(state)
+	var state := VisualFiniteStateMachineState.new()
+	state.name = _new_state_dialog.state_name
+	state.position = position - Vector2(115, 40)
+			
+	var custom_script = GDScript.new()
+	custom_script.source_code = _state_custom_script_template % state.name
+	custom_script.reload(true)
+	state.custom_script = custom_script
+
+	var from_node: GraphNode = get_node(from)
+	print_debug("Adding state %s" % state.name)
+	_fsm.add_state(state)
+	if from_node is VisualFSMStateNode:
+		var event_name = _fsm.get_event_names()[from_slot]
+		_fsm.add_transition(from_node.state.name, event_name, state.name)
+	else: # start node
+		_fsm.start_target = state.name
+
+
+func _on_connection_to_empty(from: String, from_slot: int, release_position: Vector2):
+	var mouse_pos: Vector2 = get_parent().get_global_mouse_position()
+	_new_state_dialog.rect_position = mouse_pos - _new_state_dialog.rect_size / 2
+	_new_state_dialog.try_create(_try_create_new_state(from, from_slot, release_position))
+	_new_state_dialog.show()
 
 
 func _on_connection_request(
@@ -172,13 +176,16 @@ func _on_connection_request(
 
 
 func _on_disconnection_request(from, from_slot, to, to_slot):
-	# cheap way to prevent weird connection lines when button held
+	# hacky way to prevent weird connection lines when button held
 	while Input.is_mouse_button_pressed(BUTTON_LEFT):
 		yield(get_tree(), "idle_frame")
+
 	# may have been removed during redraw. If so do nothing
 	if not has_node(from) or not has_node(to):
 		return
-	
+
+
+	yield(get_tree(), "idle_frame")
 	var from_node: GraphNode = get_node(from)
 	var to_node: VisualFSMStateNode = get_node(to)
 	
@@ -217,17 +224,18 @@ func _on_StateNode_rename_request(
 	_fsm.rename_state(old_name, new_name)
 
 
+func _on_end_node_move():
+	for child in get_children():
+		if child is VisualFSMStateNode:
+			var state := _fsm.get_state(child.state.name)
+			state.position = child.offset
+		elif child is GraphNode and child.name == "VisualFSMStartNode":
+			_fsm.start_position = child.offset
+
+
 func _on_StateNode_new_event_request(node: VisualFSMStateNode) -> void:
 	_state_node_creating_event = node
 	_new_event_dialog.show()
-
-
-func _on_Dialog_event_name_request(event_name: String) -> void:
-	if not _fsm.has_event(event_name):
-		_new_event_dialog.event_name = event_name
-	else:
-		_new_event_dialog.event_name = ""
-		_new_event_dialog.name_request_denied(event_name)
 
 
 func _on_Dialog_new_event_created(event: VisualFiniteStateMachineEvent) -> void:
@@ -237,10 +245,15 @@ func _on_Dialog_new_event_created(event: VisualFiniteStateMachineEvent) -> void:
 	_new_event_dialog.hide()
 
 
-func _on_end_node_move():
-	for child in get_children():
-		if child is VisualFSMStateNode:
-			var state := _fsm.get_state(child.state.name)
-			state.position = child.offset
-		elif child is GraphNode and child.name == "VisualFSMStartNode":
-			_fsm.start_position = child.offset
+func _on_Dialog_event_name_request(event_name: String) -> void:
+	if not _fsm.has_event(event_name):
+		_new_event_dialog.event_name = event_name
+	else:
+		_new_event_dialog.event_name = ""
+		_new_event_dialog.name_request_denied(event_name)
+
+func _on_StateCreateDialog_state_name_request(name: String) -> void:
+	if not _fsm.has_state(name):
+		_new_state_dialog.approve_name_request(name)
+	else:
+		_new_state_dialog.deny_name_request(name)

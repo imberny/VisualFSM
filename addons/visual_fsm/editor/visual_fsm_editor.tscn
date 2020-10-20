@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://addons/visual_fsm/editor/visual_fsm_graph_edit.gd" type="Script" id=1]
 [ext_resource path="res://addons/visual_fsm/editor/visual_fsm_editor.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://addons/visual_fsm/resources/icons/icon_script.svg" type="Texture" id=4]
 [ext_resource path="res://addons/visual_fsm/resources/icons/icon_timer.svg" type="Texture" id=5]
 [ext_resource path="res://addons/visual_fsm/resources/icons/icon_joypad.svg" type="Texture" id=6]
+[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_new_state_dialog.gd" type="Script" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.113725, 0.113725, 0.117647, 1 )
@@ -35,9 +36,9 @@ anchor_left = 0.000976562
 anchor_right = 0.000976562
 anchor_bottom = 0.00333333
 margin_left = 329.0
-margin_top = 204.5
+margin_top = 206.5
 margin_right = 693.0
-margin_bottom = 393.5
+margin_bottom = 391.5
 rect_min_size = Vector2( 350, 70 )
 window_title = "New event"
 script = ExtResource( 3 )
@@ -127,9 +128,86 @@ size_flags_vertical = 3
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "Must select an event type from the dropdown."
 valign = 1
+
+[node name="NewStateDialog" type="ConfirmationDialog" parent="DialogLayer"]
+anchor_left = 0.000976562
+anchor_right = 0.000976562
+anchor_bottom = 0.00333333
+margin_left = 329.0
+margin_top = 229.0
+margin_right = 679.0
+margin_bottom = 371.0
+rect_min_size = Vector2( 350, 160 )
+window_title = "New state"
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margins" type="MarginContainer" parent="DialogLayer/NewStateDialog"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 342.0
+margin_bottom = 124.0
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Content" type="VBoxContainer" parent="DialogLayer/NewStateDialog/Margins"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 318.0
+margin_bottom = 100.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StateName" type="LineEdit" parent="DialogLayer/NewStateDialog/Margins/Content"]
+margin_right = 302.0
+margin_bottom = 24.0
+placeholder_text = "State name"
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Prompt" type="PanelContainer" parent="DialogLayer/NewStateDialog/Margins/Content"]
+margin_top = 34.0
+margin_right = 302.0
+margin_bottom = 68.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="Margin" type="MarginContainer" parent="DialogLayer/NewStateDialog/Margins/Content/Prompt"]
+margin_right = 302.0
+margin_bottom = 34.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="Name" type="Label" parent="DialogLayer/NewStateDialog/Margins/Content/Prompt/Margin"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 292.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+text = "State must have a name."
+valign = 1
+autowrap = true
 [connection signal="_end_node_move" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_end_node_move"]
 [connection signal="connection_request" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_connection_request"]
+[connection signal="connection_to_empty" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_connection_to_empty"]
 [connection signal="disconnection_request" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_disconnection_request"]
 [connection signal="confirmed" from="DialogLayer/Dialog" to="DialogLayer/Dialog" method="_on_confirmed"]
 [connection signal="event_name_request" from="DialogLayer/Dialog" to="VisualFSMGraphEdit" method="_on_Dialog_event_name_request"]
 [connection signal="new_event_created" from="DialogLayer/Dialog" to="VisualFSMGraphEdit" method="_on_Dialog_new_event_created"]
+[connection signal="confirmed" from="DialogLayer/NewStateDialog" to="DialogLayer/NewStateDialog" method="_on_confirmed"]
+[connection signal="state_name_request" from="DialogLayer/NewStateDialog" to="VisualFSMGraphEdit" method="_on_StateCreateDialog_state_name_request"]
+[connection signal="text_changed" from="DialogLayer/NewStateDialog/Margins/Content/StateName" to="DialogLayer/NewStateDialog" method="_on_StateName_text_changed"]

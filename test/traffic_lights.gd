@@ -1,13 +1,7 @@
 extends Node2D
 
 
-onready var _fsm := $VisualFSM
-
 var current_state_name: String setget _set_current_state_name
-
-
-func _process(delta):
-	_fsm.update(delta, self, null)
 
 
 func green():

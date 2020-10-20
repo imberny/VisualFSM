@@ -1,10 +1,14 @@
+# State: %s
 extends VisualFSMStateBase
 
-func enter():
+
+func enter() -> void:
 	pass
 
-func update(delta: float, object, params):
+
+func update(_object, _delta: float) -> void:
     pass
 
-func exit():
+
+func exit() -> void:
 	pass

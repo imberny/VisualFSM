@@ -1,14 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/visual_fsm/editor/visual_fsm_state_node.gd" type="Script" id=1]
 [ext_resource path="res://addons/visual_fsm/resources/icons/icon_script.svg" type="Texture" id=2]
 
 [sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.0941176, 0.0941176, 0.0941176, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.0156863, 0.113725, 0.235294, 1 )
 
 [node name="StateGraphNode" type="GraphNode"]
-margin_right = 205.0
-margin_bottom = 94.0
+margin_right = 200.0
+margin_bottom = 91.0
 rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 9
 size_flags_vertical = 9
@@ -33,22 +36,39 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="HBoxContainer" parent="."]
+[node name="TitlePanel" type="PanelContainer" parent="."]
 margin_left = 16.0
 margin_top = 24.0
-margin_right = 189.0
+margin_right = 184.0
 margin_bottom = 48.0
+size_flags_horizontal = 3
+custom_styles/panel = SubResource( 1 )
 
-[node name="Name" type="LineEdit" parent="Title"]
-margin_right = 141.0
+[node name="HBox" type="HBoxContainer" parent="TitlePanel"]
+margin_right = 168.0
+margin_bottom = 24.0
+
+[node name="Margins" type="MarginContainer" parent="TitlePanel/HBox"]
+margin_right = 136.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 5.0
-expand_to_text_length = true
+size_flags_vertical = 3
+custom_constants/margin_right = 8
+custom_constants/margin_left = 10
 
-[node name="Script" type="Button" parent="Title"]
-margin_left = 145.0
-margin_right = 173.0
+[node name="Name" type="Label" parent="TitlePanel/HBox/Margins"]
+margin_left = 10.0
+margin_right = 128.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+text = "State name"
+valign = 1
+
+[node name="Script" type="Button" parent="TitlePanel/HBox"]
+margin_left = 140.0
+margin_right = 168.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 24 )
 icon = ExtResource( 2 )
@@ -56,13 +76,13 @@ icon = ExtResource( 2 )
 [node name="BottomPanel" type="PanelContainer" parent="."]
 margin_left = 16.0
 margin_top = 56.0
-margin_right = 189.0
+margin_right = 184.0
 margin_bottom = 76.0
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="AddEventDropdown" type="MenuButton" parent="BottomPanel"]
-margin_right = 173.0
+margin_right = 168.0
 margin_bottom = 20.0
 text = "Add event"
 flat = false
@@ -70,5 +90,4 @@ expand_icon = true
 switch_on_hover = true
 [connection signal="close_request" from="." to="." method="_on_StateGraphNode_close_request"]
 [connection signal="resize_request" from="." to="." method="_on_StateGraphNode_resize_request"]
-[connection signal="text_entered" from="Title/Name" to="." method="_on_StateName_text_entered"]
-[connection signal="pressed" from="Title/Script" to="." method="_on_Script_pressed"]
+[connection signal="pressed" from="TitlePanel/HBox/Script" to="." method="_on_Script_pressed"]

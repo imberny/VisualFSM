@@ -1,9 +1,8 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine.gd" type="Script" id=1]
-[ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=2]
-[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd" type="Script" id=3]
-[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_event_timer.gd" type="Script" id=4]
+[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd" type="Script" id=1]
+[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine.gd" type="Script" id=2]
+[ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=3]
 [ext_resource path="res://test/traffic_lights.gd" type="Script" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -18,169 +17,36 @@ bg_color = Color( 0.921569, 0.909804, 0.137255, 1 )
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 1, 0, 0, 1 )
 
-[sub_resource type="Resource" id=5]
-script = ExtResource( 4 )
-name = "1 sec timer"
-duration = 1.0
-
-[sub_resource type="GDScript" id=6]
-script/source = "# State name: State    <--- DO NOT TOUCH
+[sub_resource type="GDScript" id=5]
+script/source = "# State: Red
 extends VisualFSMStateBase
 
-func enter():
-	pass
 
-func update(_delta: float, object, _params):
-	object.red()
-	object.current_state_name = name
-	pass
+func enter() -> void:
+	print(\"Entering from %s\" % name)
 
-func exit():
+
+func update(_object, _delta: float) -> void:
+	_object.red()
+
+
+func exit() -> void:
 	pass
 "
+
+[sub_resource type="Resource" id=6]
+script = ExtResource( 1 )
+name = "Red"
+position = Vector2( 226, 72 )
+custom_script = SubResource( 5 )
 
 [sub_resource type="Resource" id=7]
-script = ExtResource( 3 )
-name = "Red"
-position = Vector2( 400, 100 )
-custom_script = SubResource( 6 )
-
-[sub_resource type="GDScript" id=8]
-script/source = "# State name: State    <--- DO NOT TOUCH
-extends VisualFSMStateBase
-
-func enter():
-	pass
-
-func update(_delta: float, object, _params):
-	object.green()
-	object.current_state_name = name
-	pass
-
-func exit():
-	pass
-"
-
-[sub_resource type="Resource" id=9]
-script = ExtResource( 3 )
-name = "Green"
-position = Vector2( 340, 380 )
-custom_script = SubResource( 8 )
-
-[sub_resource type="Resource" id=10]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 start_position = Vector2( 100, 100 )
-states = [ SubResource( 7 ), SubResource( 9 ) ]
-events = [ SubResource( 5 ) ]
-transitions = [ "Red", "1 sec timer", "Green", "Green", "1 sec timer", "Red" ]
+states = [ SubResource( 6 ) ]
+events = [  ]
+transitions = [ "Red", "", "" ]
 start = "Red"
-
-[sub_resource type="Resource" id=11]
-script = ExtResource( 4 )
-name = "3 seconds timer"
-duration = 3.0
-
-[sub_resource type="Resource" id=12]
-script = ExtResource( 4 )
-name = "1 second timer"
-duration = 0.6
-
-[sub_resource type="Resource" id=13]
-script = ExtResource( 4 )
-name = "0.5 seconds"
-duration = 2.0
-
-[sub_resource type="GDScript" id=14]
-script/source = "# State name: State    <--- DO NOT TOUCH
-extends VisualFSMStateBase
-
-func enter():
-	pass
-
-func update(_delta: float, object, _params):
-	object.green()
-	object.current_state_name = name
-
-func exit():
-	pass
-"
-
-[sub_resource type="Resource" id=15]
-script = ExtResource( 3 )
-name = "Green"
-position = Vector2( 285, 75 )
-custom_script = SubResource( 14 )
-
-[sub_resource type="GDScript" id=16]
-script/source = "# State name: State    <--- DO NOT TOUCH
-extends VisualFSMStateBase
-
-func enter():
-	pass
-
-func update(_delta: float, object, _params):
-	object.yellow()
-	object.current_state_name = name
-
-func exit():
-	pass
-"
-
-[sub_resource type="Resource" id=17]
-script = ExtResource( 3 )
-name = "Yellow"
-position = Vector2( 613, 111 )
-custom_script = SubResource( 16 )
-
-[sub_resource type="GDScript" id=18]
-script/source = "# State name: State    <--- DO NOT TOUCH
-extends VisualFSMStateBase
-
-func enter():
-	pass
-
-func update(_delta: float, object, _params):
-	object.red()
-	object.current_state_name = name
-
-func exit():
-	pass
-"
-
-[sub_resource type="Resource" id=19]
-script = ExtResource( 3 )
-name = "Red"
-position = Vector2( 620, 380 )
-custom_script = SubResource( 18 )
-
-[sub_resource type="GDScript" id=20]
-script/source = "# State name: State    <--- DO NOT TOUCH
-extends VisualFSMStateBase
-
-func enter():
-	pass
-
-func update(_delta: float, object, _params):
-	object.yellow()
-	object.current_state_name = name
-
-func exit():
-	pass
-"
-
-[sub_resource type="Resource" id=21]
-script = ExtResource( 3 )
-name = "Yellow2"
-position = Vector2( 140, 280 )
-custom_script = SubResource( 20 )
-
-[sub_resource type="Resource" id=22]
-script = ExtResource( 1 )
-start_position = Vector2( 100, 100 )
-states = [ SubResource( 15 ), SubResource( 17 ), SubResource( 19 ), SubResource( 21 ) ]
-events = [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ]
-transitions = [ "Green", "0.5 seconds", "Yellow", "Yellow", "1 second timer", "Red", "Red", "3 seconds timer", "Yellow2", "Yellow2", "1 second timer", "Green" ]
-start = "Green"
 
 [node name="TrafficLightsDemo" type="Node2D"]
 
@@ -291,8 +157,8 @@ rect_scale = Vector2( 0.68, 0.68 )
 custom_styles/panel = SubResource( 2 )
 
 [node name="VisualFSM" type="Node" parent="TrafficLight1"]
-script = ExtResource( 2 )
-finite_state_machine = SubResource( 10 )
+script = ExtResource( 3 )
+finite_state_machine = SubResource( 7 )
 
 [node name="TrafficLight2" type="Node2D" parent="."]
 position = Vector2( 244.7, 82.4076 )
@@ -396,7 +262,3 @@ margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
 custom_styles/panel = SubResource( 2 )
-
-[node name="VisualFSM" type="Node" parent="TrafficLight2"]
-script = ExtResource( 2 )
-finite_state_machine = SubResource( 22 )
