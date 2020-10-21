@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "TrafficLightsController",
+"language": "GDScript",
+"path": "res://test/traffic_lights.gd"
+}, {
 "base": "Object",
 "class": "VisualFSMEventBase",
 "language": "GDScript",
@@ -22,7 +27,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "VisualFSMSingleton",
 "language": "GDScript",
-"path": "res://addons/visual_fsm/editor/visual_fsm_singleton.gd"
+"path": "res://addons/visual_fsm/visual_fsm_singleton.gd"
 }, {
 "base": "Object",
 "class": "VisualFSMStateBase",
@@ -65,6 +70,7 @@ _global_script_classes=[ {
 "path": "res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd"
 } ]
 _global_script_class_icons={
+"TrafficLightsController": "",
 "VisualFSMEventBase": "",
 "VisualFSMEventSlot": "",
 "VisualFSMSingleton": "",

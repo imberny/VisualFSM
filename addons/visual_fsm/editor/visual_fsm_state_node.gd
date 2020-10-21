@@ -25,6 +25,8 @@ export(Texture) var script_icon
 onready var _state_label := $TitlePanel/HBox/Margins/Name
 onready var _add_event_dropdown := $BottomPanel/AddEventDropdown
 
+var timer_duration_dialog: AcceptDialog
+var input_action_dialog: AcceptDialog
 var state: VisualFiniteStateMachineState setget _set_state
 var fsm: VisualFiniteStateMachine
 var _event_slot_scene: PackedScene = preload("visual_fsm_event_slot.tscn")
@@ -47,9 +49,11 @@ func add_event(event: VisualFiniteStateMachineEvent) -> void:
 	var slot_idx = get_child_count() - 1
 	var next_to_last = get_child(slot_idx - 1)
 	var event_slot: VisualFSMEventSlot = _event_slot_scene.instance()
+	add_child_below_node(next_to_last, event_slot)
+	event_slot.timer_duration_dialog = timer_duration_dialog
+	event_slot.input_action_dialog = input_action_dialog
 	event_slot.connect("close_request", self, "_on_EventSlot_close_request")
 	event_slot.event = event
-	add_child_below_node(next_to_last, event_slot)
 	set_slot(slot_idx, false, 0, Color.white, true, 0, COLORS[slot_idx])
 
 
@@ -68,10 +72,9 @@ func _on_AddEvent_about_to_show() -> void:
 	popup.grab_focus()
 	var options := []
 	# TODO: potential issue with ordering
-	for script_event_id in fsm.get_script_events():
-		if not self.state.has_event(script_event_id):
-			var event := fsm.get_event(script_event_id)
-			options.push_back(event)
+	for script_event in fsm.get_script_events():
+		if not self.state.has_event(script_event.fsm_id):
+			options.push_back(script_event)
 	for event in options:
 		popup.add_icon_item(script_icon, event.name)
 	if 0 < popup.get_item_count():
@@ -92,9 +95,8 @@ func _on_AddEvent_index_pressed(index: int) -> void:
 		emit_signal("new_script_request", self)
 	else: # reuse existing script event
 		var options := []
-		for script_event_id in fsm.get_script_events():
-			var script_event := fsm.get_event(script_event_id)
-			if not self.state.has_event(script_event.id):
+		for script_event in fsm.get_script_events():
+			if not self.state.has_event(script_event.fsm_id):
 				options.push_back(script_event)
 		var selected_event = options[index]
 		self.state.add_event(selected_event)

@@ -2,7 +2,7 @@ tool
 class_name VisualFiniteStateMachineState
 extends Resource
 
-export(int) var id: int
+export(int) var fsm_id: int
 export(String) var name: String
 export(Vector2) var position: Vector2
 export(Array) var event_ids: Array
@@ -11,17 +11,17 @@ export(GDScript) var custom_script: GDScript setget _set_custom_script
 var custom_script_instance: VisualFSMStateBase
 
 
-func has_event(id: int) -> bool:
-	return event_ids.find(id) > 0
+func has_event(fsm_id: int) -> bool:
+	return event_ids.find(fsm_id) > -1
 
 
 func add_event(event: VisualFiniteStateMachineEvent) -> void:
-	event_ids.push_back(event.id)
+	event_ids.push_back(event.fsm_id)
 	_changed()
 
 
 func remove_event(event: VisualFiniteStateMachineEvent) -> void:
-	event_ids.erase(event.id)
+	event_ids.erase(event.fsm_id)
 	_changed()
 
 
@@ -31,7 +31,7 @@ func get_event_id_from_index(index: int) -> int:
 
 func get_event_index(event: VisualFiniteStateMachineEvent) -> int:
 	for i in range(len(event_ids)):
-		if event.id == event_ids[i]:
+		if event.fsm_id == event_ids[i]:
 			return i
 	return -1
 

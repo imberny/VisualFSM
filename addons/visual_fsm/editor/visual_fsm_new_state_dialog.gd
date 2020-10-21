@@ -28,7 +28,7 @@ func try_create(context: GDScriptFunctionState) -> void:
 
 
 func deny_name_request(name: String) -> void:
-	_name_status.text = "An event with the name \"%s\" already exists." % name
+	_name_status.text = "A state with this name already exists." 
 	_name_status.add_color_override("font_color", Color.red)
 
 

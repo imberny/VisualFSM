@@ -7,7 +7,7 @@ const FSM_TYPE_NAME := "VisualFSM"
 var _fsm_editor: Control
 var _tool_button: ToolButton
 var _fsm_script := preload("visual_fsm.gd")
-var _fsm_singleton: VisualFSMSingleton = preload("editor/visual_fsm_singleton.gd").new()
+var _fsm_singleton: VisualFSMSingleton = preload("visual_fsm_singleton.gd").new()
 var _current_fsm_node
 
 

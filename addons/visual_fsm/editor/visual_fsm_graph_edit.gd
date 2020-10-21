@@ -6,6 +6,8 @@ const EVENT_TEMPLATE_PATH := "res://addons/visual_fsm/resources/event_template.t
 
 onready var _new_event_dialog := $"../DialogLayer/NewScriptEventDialog"
 onready var _new_state_dialog := $"../DialogLayer/NewStateDialog"
+onready var _timer_duration_dialog := $"../DialogLayer/TimerDurationDialog"
+onready var _input_action_dialog := $"../DialogLayer/TimerDurationDialog"
 
 var _fsm_start_scene: PackedScene = preload("visual_fsm_start_node.tscn")
 var _fsm_state_scene: PackedScene = preload("visual_fsm_state_node.tscn")
@@ -73,6 +75,8 @@ func _redraw_graph():
 	# add state nodes
 	for state in _fsm.get_states():
 		var node: VisualFSMStateNode = _fsm_state_scene.instance()
+		node.timer_duration_dialog = _timer_duration_dialog
+		node.input_action_dialog = _input_action_dialog
 		add_child(node)
 		node.connect("state_removed", self, "_on_StateNode_state_removed")
 		node.connect(
@@ -96,62 +100,6 @@ func _redraw_graph():
 					"VisualFSM: Missing event \"%s\" in state \"%s\"" 
 					% [event.name, from_state.name])
 				connect_node(from_node.name, from_port, to_node.name, 0)
-				
-
-#	# add event slots
-#	for transition in _fsm.get_timer_transitions():
-#		var from_node: VisualFSMStateNode
-#		var to_node: VisualFSMStateNode
-#		for child in get_children():
-#			if child is VisualFSMStateNode:
-#				if child.state.name == transition.from:
-#					from_node = child
-#				if child.state.name == transition.to:
-#					to_node = child
-#		var state_event_names: Array = _fsm.get_state_timer_event_names(transition.from)
-#		var event := _fsm.get_timer_event(transition.event)
-#		from_node.add_event(event)
-#		var event_index := 0
-#		while state_event_names[event_index] != transition.event:
-#			event_index += 1
-#		if from_node and to_node:
-#			connect_node(from_node.name, event_index, to_node.name, 0)
-#
-#	for transition in _fsm.get_action_transitions():
-#		var from_node: VisualFSMStateNode
-#		var to_node: VisualFSMStateNode
-#		for child in get_children():
-#			if child is VisualFSMStateNode:
-#				if child.state.name == transition.from:
-#					from_node = child
-#				if child.state.name == transition.to:
-#					to_node = child
-#		var state_event_names: Array = _fsm.get_state_action_event_names(transition.from)
-#		var event := _fsm.get_action_event(transition.event)
-#		from_node.add_event(event)
-#		var event_index := 0
-#		while state_event_names[event_index] != transition.event:
-#			event_index += 1
-#		if from_node and to_node:
-#			connect_node(from_node.name, event_index, to_node.name, 0)
-#
-#	for transition in _fsm.get_script_transitions():
-#		var from_node: VisualFSMStateNode
-#		var to_node: VisualFSMStateNode
-#		for child in get_children():
-#			if child is VisualFSMStateNode:
-#				if child.state.name == transition.from:
-#					from_node = child
-#				if child.state.name == transition.to:
-#					to_node = child
-#		var state_event_names: Array = _fsm.get_state_script_event_names(transition.from)
-#		var event := _fsm.get_script_event(transition.event)
-#		from_node.add_event(event)
-#		var event_index := 0
-#		while state_event_names[event_index] != transition.event:
-#			event_index += 1
-#		if from_node and to_node:
-#			connect_node(from_node.name, event_index, to_node.name, 0)
 
 	# add start node
 	var start_node = _fsm_start_scene.instance()
@@ -162,15 +110,8 @@ func _redraw_graph():
 	# add start connection
 	var start_state := _fsm.get_start_state()
 	if start_state:
-		var start_target_node := _find_state_node(start_state)
-		connect_node(start_node.name, 0, start_target_node.name, 0)
-
-
-#func _on_popup_request(position: Vector2) -> void:
-#	_popup.set_position(position)
-#	_popup.show()
-#	_popup.grab_focus()
-
+		var start_state_node := _find_state_node(start_state)
+		connect_node(start_node.name, 0, start_state_node.name, 0)
 
 
 func _try_create_new_state(from: String, from_slot: int, position: Vector2) -> void:
@@ -178,8 +119,9 @@ func _try_create_new_state(from: String, from_slot: int, position: Vector2) -> v
 		return
 
 	var state_name: String = _new_state_dialog.state_name
-	var state_position := position - Vector2(115, 40)
+	var state_position := position - Vector2(0, 40)
 	var from_node = get_node(from)
+	assert(from_node, "Missing node in create new state")
 	if from_node is VisualFSMStateNode:
 		var from_state: VisualFiniteStateMachineState = from_node.state
 		var from_event_id := from_state.get_event_id_from_index(from_slot)
@@ -204,14 +146,15 @@ func _on_connection_request(
 		return
 	
 	var from_node: GraphNode = get_node(from)
+	assert(from_node, "Missing from node in connection request")
 	var to_node: VisualFSMStateNode = get_node(to)
-	assert(to_node)
+	assert(to_node, "Missing tonode in connection request")
 	if from_node is VisualFSMStateNode:
 		var event_id: int = from_node.state.get_event_id_from_index(from_slot)
 		var event := _fsm.get_event(event_id)
 		_fsm.add_transition(from_node.state, event, to_node.state)
 	else: # start node connection
-		_fsm.start_target_id = to_node.state.id
+		_fsm.set_start_state(to_node.state)
 
 
 func _on_disconnection_request(from, from_slot, to, to_slot):
@@ -219,11 +162,11 @@ func _on_disconnection_request(from, from_slot, to, to_slot):
 	while Input.is_mouse_button_pressed(BUTTON_LEFT):
 		yield(get_tree(), "idle_frame")
 
+	yield(get_tree(), "idle_frame")
 	# may have been removed during redraw. If so do nothing
 	if not has_node(from) or not has_node(to):
 		return
 
-	yield(get_tree(), "idle_frame")
 	var from_node: GraphNode = get_node(from)
 	var to_node: VisualFSMStateNode = get_node(to)
 	if from_node is VisualFSMStateNode:
@@ -232,8 +175,8 @@ func _on_disconnection_request(from, from_slot, to, to_slot):
 		_fsm.remove_transition(from_node.state, event)
 	else: # start node connection
 		# start_target may have been reconnected during yield
-		if _fsm.start_target_id == to_node.state.id:
-			_fsm.start_target_id = -1
+		if _fsm.get_start_state().fsm_id == to_node.state.fsm_id:
+			_fsm.set_start_state(null)
 
 
 func _on_StateNode_state_removed(state_node: VisualFSMStateNode) -> void:
@@ -265,7 +208,7 @@ func _on_StateNode_rename_request(
 func _on_end_node_move():
 	for child in get_children():
 		if child is VisualFSMStateNode:
-			var state := _fsm.get_state(child.state.id)
+			var state := _fsm.get_state(child.state.fsm_id)
 			state.position = child.offset
 		elif child is GraphNode and child.name == "VisualFSMStartNode":
 			_fsm.start_position = child.offset

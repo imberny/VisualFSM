@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/visual_fsm/editor/visual_fsm_graph_edit.gd" type="Script" id=1]
 [ext_resource path="res://addons/visual_fsm/editor/visual_fsm_editor.gd" type="Script" id=2]
 [ext_resource path="res://addons/visual_fsm/editor/visual_fsm_new_event_dialog.gd" type="Script" id=3]
 [ext_resource path="res://addons/visual_fsm/resources/icons/icon_script.svg" type="Texture" id=4]
-[ext_resource path="res://addons/visual_fsm/resources/icons/icon_timer.svg" type="Texture" id=5]
-[ext_resource path="res://addons/visual_fsm/resources/icons/icon_joypad.svg" type="Texture" id=6]
+[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_timer_dialog.gd" type="Script" id=5]
 [ext_resource path="res://addons/visual_fsm/editor/visual_fsm_new_state_dialog.gd" type="Script" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -25,6 +24,7 @@ margin_right = 1024.0
 margin_bottom = 600.0
 custom_constants/port_grab_distance_vertical = 24
 custom_constants/port_grab_distance_horizontal = 32
+custom_constants/bezier_len_neg = 1000
 right_disconnects = true
 script = ExtResource( 1 )
 
@@ -35,24 +35,22 @@ anchor_left = 0.000976562
 anchor_right = 0.000976562
 anchor_bottom = 0.00333333
 margin_left = 329.0
-margin_top = 215.0
+margin_top = 218.0
 margin_right = 693.0
-margin_bottom = 383.0
+margin_bottom = 380.0
 rect_min_size = Vector2( 350, 70 )
 window_title = "New event"
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-timer_icon = ExtResource( 5 )
-action_icon = ExtResource( 6 )
 script_icon = ExtResource( 4 )
 
 [node name="Margins" type="MarginContainer" parent="DialogLayer/NewScriptEventDialog"]
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 356.0
-margin_bottom = 134.0
+margin_bottom = 128.0
 custom_constants/margin_right = 16
 custom_constants/margin_top = 16
 custom_constants/margin_left = 16
@@ -65,7 +63,7 @@ __meta__ = {
 margin_left = 16.0
 margin_top = 16.0
 margin_right = 332.0
-margin_bottom = 110.0
+margin_bottom = 104.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 10
@@ -182,6 +180,97 @@ custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "State must have a name."
 valign = 1
 autowrap = true
+
+[node name="TimerDurationDialog" type="AcceptDialog" parent="DialogLayer"]
+margin_right = 181.0
+margin_bottom = 100.0
+window_title = "Set timer duration"
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margins" type="MarginContainer" parent="DialogLayer/TimerDurationDialog"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 173.0
+margin_bottom = 64.0
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Content" type="HBoxContainer" parent="DialogLayer/TimerDurationDialog/Margins"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 149.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="Duration" type="LineEdit" parent="DialogLayer/TimerDurationDialog/Margins/Content"]
+margin_right = 101.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Seconds" type="Label" parent="DialogLayer/TimerDurationDialog/Margins/Content"]
+margin_left = 111.0
+margin_top = 5.0
+margin_right = 133.0
+margin_bottom = 19.0
+text = "sec"
+
+[node name="InputActionDialog" type="AcceptDialog" parent="DialogLayer"]
+margin_right = 181.0
+margin_bottom = 100.0
+window_title = "Set timer duration"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margins" type="MarginContainer" parent="DialogLayer/InputActionDialog"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 173.0
+margin_bottom = 64.0
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Content" type="HBoxContainer" parent="DialogLayer/InputActionDialog/Margins"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 149.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="Duration" type="LineEdit" parent="DialogLayer/InputActionDialog/Margins/Content"]
+margin_right = 101.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Seconds" type="Label" parent="DialogLayer/InputActionDialog/Margins/Content"]
+margin_left = 111.0
+margin_top = 5.0
+margin_right = 133.0
+margin_bottom = 19.0
+text = "sec"
 [connection signal="_end_node_move" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_end_node_move"]
 [connection signal="connection_request" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_connection_request"]
 [connection signal="connection_to_empty" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_connection_to_empty"]
@@ -189,6 +278,9 @@ autowrap = true
 [connection signal="confirmed" from="DialogLayer/NewScriptEventDialog" to="DialogLayer/NewScriptEventDialog" method="_on_confirmed"]
 [connection signal="event_name_request" from="DialogLayer/NewScriptEventDialog" to="VisualFSMGraphEdit" method="_on_Dialog_event_name_request"]
 [connection signal="new_event_created" from="DialogLayer/NewScriptEventDialog" to="VisualFSMGraphEdit" method="_on_Dialog_new_event_created"]
+[connection signal="text_changed" from="DialogLayer/NewScriptEventDialog/Margins/Content/EventName" to="DialogLayer/NewScriptEventDialog" method="_on_EventName_text_changed"]
 [connection signal="confirmed" from="DialogLayer/NewStateDialog" to="DialogLayer/NewStateDialog" method="_on_confirmed"]
 [connection signal="state_name_request" from="DialogLayer/NewStateDialog" to="VisualFSMGraphEdit" method="_on_StateCreateDialog_state_name_request"]
 [connection signal="text_changed" from="DialogLayer/NewStateDialog/Margins/Content/StateName" to="DialogLayer/NewStateDialog" method="_on_StateName_text_changed"]
+[connection signal="confirmed" from="DialogLayer/TimerDurationDialog" to="DialogLayer/TimerDurationDialog" method="_on_confirmed"]
+[connection signal="text_changed" from="DialogLayer/TimerDurationDialog/Margins/Content/Duration" to="DialogLayer/TimerDurationDialog" method="_on_Duration_text_changed"]

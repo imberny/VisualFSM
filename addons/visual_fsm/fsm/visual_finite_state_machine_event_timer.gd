@@ -10,7 +10,7 @@ func enter() -> void:
 	_timer = 0
 
 
-func is_triggered(delta: float, _object, _params) -> bool:
+func is_over(delta: float) -> bool:
 	_timer += delta
 	if duration < _timer:
 		return true

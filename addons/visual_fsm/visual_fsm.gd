@@ -60,7 +60,6 @@ func _get(property):
 	match property:
 		"finite_state_machine":
 			return fsm
-			return true
 	return null
 
 

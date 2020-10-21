@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd" type="Script" id=1]
 [ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine.gd" type="Script" id=2]
@@ -20,50 +20,256 @@ bg_color = Color( 1, 0, 0, 1 )
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 4 )
-id = 0
+fsm_id = 0
 name = ""
-duration = 0.0
+duration = 1.5
 
 [sub_resource type="Resource" id=6]
 script = ExtResource( 4 )
-id = 1
+fsm_id = 1
 name = ""
-duration = 0.0
+duration = 2.0
 
 [sub_resource type="Resource" id=7]
 script = ExtResource( 4 )
-id = 2
+fsm_id = 2
 name = ""
-duration = 0.0
+duration = 1.0
 
-[sub_resource type="Resource" id=8]
-script = ExtResource( 1 )
-id = 0
-name = "red"
-position = Vector2( 247, 123 )
-event_ids = [ 0 ]
+[sub_resource type="GDScript" id=8]
+script/source = "# State: Red
+extends VisualFSMStateBase
+
+
+func enter() -> void:
+	print(\"Entering state %s\" % name)
+
+
+func update(_object, _delta: float) -> void:
+	var controller := _object as TrafficLightsController
+	controller.current_state_name = name
+	controller.red()
+
+
+func exit() -> void:
+	print(\"Exiting state %s\" % name)
+"
 
 [sub_resource type="Resource" id=9]
 script = ExtResource( 1 )
-id = 1
-name = "green"
-position = Vector2( 443, 144 )
-event_ids = [ 1 ]
+fsm_id = 0
+name = "Red"
+position = Vector2( 372, 83 )
+event_ids = [ 0 ]
+custom_script = SubResource( 8 )
 
-[sub_resource type="Resource" id=10]
-script = ExtResource( 1 )
-id = 2
-name = "yellow"
-position = Vector2( 183, 307 )
-event_ids = [ 2 ]
+[sub_resource type="GDScript" id=10]
+script/source = "# State: Green
+extends VisualFSMStateBase
+
+
+func enter() -> void:
+	print(\"Entering state %s\" % name)
+
+
+func update(_object, _delta: float) -> void:
+	var controller := _object as TrafficLightsController
+	controller.current_state_name = name
+	controller.green()
+
+
+func exit() -> void:
+	print(\"Exiting state %s\" % name)
+"
 
 [sub_resource type="Resource" id=11]
+script = ExtResource( 1 )
+fsm_id = 1
+name = "Green"
+position = Vector2( 737, 120 )
+event_ids = [ 1 ]
+custom_script = SubResource( 10 )
+
+[sub_resource type="GDScript" id=12]
+script/source = "# State: Yellow
+extends VisualFSMStateBase
+
+
+func enter() -> void:
+	print(\"Entering state %s\" % name)
+
+
+func update(_object, _delta: float) -> void:
+	var controller := _object as TrafficLightsController
+	controller.current_state_name = name
+	controller.yellow()
+
+
+func exit() -> void:
+	print(\"Exiting state %s\" % name)
+"
+
+[sub_resource type="Resource" id=13]
+script = ExtResource( 1 )
+fsm_id = 2
+name = "Yellow"
+position = Vector2( 499, 285 )
+event_ids = [ 2 ]
+custom_script = SubResource( 12 )
+
+[sub_resource type="Resource" id=14]
 script = ExtResource( 2 )
-start_target_id = 0
+start_state_fsm_id = 0
 start_position = Vector2( 100, 100 )
-states = [ SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ]
+states = [ SubResource( 9 ), SubResource( 11 ), SubResource( 13 ) ]
 events = [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ]
 transitions = [ 0, 0, 1, 1, 1, 2, 2, 2, 0 ]
+
+[sub_resource type="Resource" id=15]
+script = ExtResource( 4 )
+fsm_id = 0
+name = ""
+duration = 1
+
+[sub_resource type="Resource" id=16]
+script = ExtResource( 4 )
+fsm_id = 1
+name = ""
+duration = 1
+
+[sub_resource type="Resource" id=17]
+script = ExtResource( 4 )
+fsm_id = 2
+name = ""
+duration = 1
+
+[sub_resource type="Resource" id=18]
+script = ExtResource( 4 )
+fsm_id = 3
+name = ""
+duration = 1
+
+[sub_resource type="Resource" id=19]
+script = ExtResource( 4 )
+fsm_id = 4
+name = ""
+duration = 1
+
+[sub_resource type="GDScript" id=20]
+script/source = "# State: Green
+extends VisualFSMStateBase
+
+
+func enter() -> void:
+	print(\"Entering state %s\" % name)
+
+
+func update(_object, _delta: float) -> void:
+	var controller := _object as TrafficLightsController
+	controller.current_state_name = name
+	controller.green()
+
+
+func exit() -> void:
+	print(\"Exiting state %s\" % name)
+"
+
+[sub_resource type="Resource" id=21]
+script = ExtResource( 1 )
+fsm_id = 0
+name = "Green"
+position = Vector2( 300, 60 )
+event_ids = [ 0 ]
+custom_script = SubResource( 20 )
+
+[sub_resource type="GDScript" id=22]
+script/source = "# State: Yellow1
+extends VisualFSMStateBase
+
+
+func enter() -> void:
+	print(\"Entering state %s\" % name)
+
+
+func update(_object, _delta: float) -> void:
+	var controller := _object as TrafficLightsController
+	controller.current_state_name = name
+	controller.yellow()
+
+
+func exit() -> void:
+	print(\"Exiting state %s\" % name)
+"
+
+[sub_resource type="Resource" id=23]
+script = ExtResource( 1 )
+fsm_id = 1
+name = "Yellow1"
+position = Vector2( 660, 20 )
+event_ids = [ 1 ]
+custom_script = SubResource( 22 )
+
+[sub_resource type="GDScript" id=24]
+script/source = "# State: Red
+extends VisualFSMStateBase
+
+
+func enter() -> void:
+	print(\"Entering state %s\" % name)
+
+
+func update(_object, _delta: float) -> void:
+	var controller := _object as TrafficLightsController
+	controller.current_state_name = name
+	controller.red()
+
+
+func exit() -> void:
+	print(\"Exiting state %s\" % name)
+"
+
+[sub_resource type="Resource" id=25]
+script = ExtResource( 1 )
+fsm_id = 2
+name = "Red"
+position = Vector2( 780, 200 )
+event_ids = [ 3 ]
+custom_script = SubResource( 24 )
+
+[sub_resource type="GDScript" id=26]
+script/source = "# State: Yellow2
+extends VisualFSMStateBase
+
+
+func enter() -> void:
+	print(\"Entering state %s\" % name)
+
+
+func update(_object, _delta: float) -> void:
+	var controller := _object as TrafficLightsController
+	controller.current_state_name = name
+	controller.yellow()
+
+
+func exit() -> void:
+	print(\"Exiting state %s\" % name)
+"
+
+[sub_resource type="Resource" id=27]
+script = ExtResource( 1 )
+fsm_id = 3
+name = "Yellow2"
+position = Vector2( 440, 240 )
+event_ids = [ 4 ]
+custom_script = SubResource( 26 )
+
+[sub_resource type="Resource" id=28]
+script = ExtResource( 2 )
+start_state_fsm_id = 0
+start_position = Vector2( 100, 100 )
+states = [ SubResource( 21 ), SubResource( 23 ), SubResource( 25 ), SubResource( 27 ) ]
+events = [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ]
+transitions = [ 0, 0, 1, 1, 1, 2, 2, 3, 3, 3, 4, 0 ]
 
 [node name="TrafficLightsDemo" type="Node2D"]
 
@@ -175,7 +381,7 @@ custom_styles/panel = SubResource( 2 )
 
 [node name="VisualFSM" type="Node" parent="TrafficLight1"]
 script = ExtResource( 3 )
-finite_state_machine = SubResource( 11 )
+finite_state_machine = SubResource( 14 )
 
 [node name="TrafficLight2" type="Node2D" parent="."]
 position = Vector2( 244.7, 82.4076 )
@@ -279,3 +485,7 @@ margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
 custom_styles/panel = SubResource( 2 )
+
+[node name="VisualFSM" type="Node" parent="TrafficLight2"]
+script = ExtResource( 3 )
+finite_state_machine = SubResource( 28 )

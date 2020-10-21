@@ -2,7 +2,7 @@ tool
 class_name VisualFiniteStateMachineEvent
 extends Resource
 
-export(int) var id: int
+export(int) var fsm_id: int
 export(String) var name: String
 
 

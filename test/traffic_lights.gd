@@ -1,3 +1,4 @@
+class_name TrafficLightsController
 extends Node2D
 
 
