@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "SimpleAIJumper",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/demos/simple_ai_character/simple_ai_jumpter.gd"
+}, {
 "base": "Node2D",
 "class": "TrafficLightsController",
 "language": "GDScript",
@@ -70,6 +75,7 @@ _global_script_classes=[ {
 "path": "res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd"
 } ]
 _global_script_class_icons={
+"SimpleAIJumper": "",
 "TrafficLightsController": "",
 "VisualFSMEventBase": "",
 "VisualFSMEventSlot": "",
@@ -88,7 +94,7 @@ _global_script_class_icons={
 
 config/name="VisualFSM"
 run/main_scene="res://addons/visual_fsm/demos/simple_traffic_lights/simple_traffic_lights.tscn"
-config/icon="res://icon.png"
+config/icon="res://addons/visual_fsm/demos/icon.png"
 
 [editor_plugins]
 

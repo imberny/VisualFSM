@@ -1,0 +1,357 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://addons/visual_fsm/demos/simple_ai_character/simple_ai_jumpter.gd" type="Script" id=1]
+[ext_resource path="res://addons/visual_fsm/demos/icon.png" type="Texture" id=2]
+[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_event_script.gd" type="Script" id=3]
+[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd" type="Script" id=4]
+[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine.gd" type="Script" id=5]
+[ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=6]
+
+[sub_resource type="GDScript" id=2]
+script/source = "# Event: detect gap
+extends VisualFSMEventBase
+
+
+func is_triggered(_object, _delta: float) -> bool:
+	var jumper := _object as SimpleAIJumper
+	return not jumper._gap_raycast.is_colliding()
+"
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 3 )
+fsm_id = 0
+name = "detect gap"
+custom_script = SubResource( 2 )
+
+[sub_resource type="GDScript" id=4]
+script/source = "# Event: left ground
+extends VisualFSMEventBase
+
+
+func enter() -> void:
+	pass
+
+
+func is_triggered(_object, _delta: float) -> bool:
+	var jumper := _object as SimpleAIJumper
+	return not jumper.is_on_floor()
+"
+
+[sub_resource type="Resource" id=5]
+script = ExtResource( 3 )
+fsm_id = 1
+name = "left ground"
+custom_script = SubResource( 4 )
+
+[sub_resource type="GDScript" id=6]
+script/source = "# Event: %s
+extends VisualFSMEventBase
+
+
+func enter() -> void:
+	pass
+
+
+func is_triggered(_object, _delta: float) -> bool:
+	var jumper := _object as SimpleAIJumper
+	return jumper.is_on_floor()
+"
+
+[sub_resource type="Resource" id=7]
+script = ExtResource( 3 )
+fsm_id = 2
+name = "lands"
+custom_script = SubResource( 6 )
+
+[sub_resource type="GDScript" id=8]
+script/source = "# State: walking
+extends VisualFSMStateBase
+
+
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+	_object.get_node(\"CurrentState\").text = name
+
+
+func exit() -> void:
+	pass
+"
+
+[sub_resource type="Resource" id=9]
+script = ExtResource( 4 )
+fsm_id = 0
+name = "walking"
+position = Vector2( 296, 98 )
+event_ids = [ 0, 1 ]
+custom_script = SubResource( 8 )
+
+[sub_resource type="GDScript" id=10]
+script/source = "# State: jumping
+extends VisualFSMStateBase
+
+
+func update(_object, _delta: float) -> void:
+	var jumper = _object as SimpleAIJumper
+	jumper.get_node(\"CurrentState\").text = name
+	jumper.jump()
+"
+
+[sub_resource type="Resource" id=11]
+script = ExtResource( 4 )
+fsm_id = 1
+name = "jumping"
+position = Vector2( 640, 160 )
+event_ids = [ 1 ]
+custom_script = SubResource( 10 )
+
+[sub_resource type="GDScript" id=12]
+script/source = "# State: airborne
+extends VisualFSMStateBase
+
+
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+	_object.get_node(\"CurrentState\").text = name
+
+
+func exit() -> void:
+	pass
+"
+
+[sub_resource type="Resource" id=13]
+script = ExtResource( 4 )
+fsm_id = 2
+name = "airborne"
+position = Vector2( 360, 300 )
+event_ids = [ 2 ]
+custom_script = SubResource( 12 )
+
+[sub_resource type="GDScript" id=16]
+script/source = "# State: falling
+extends VisualFSMStateBase
+
+
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+	var jumper := _object as SimpleAIJumper
+	jumper.get_node(\"CurrentState\").text = name
+
+
+func exit() -> void:
+	pass
+"
+
+[sub_resource type="Resource" id=17]
+script = ExtResource( 4 )
+fsm_id = 3
+name = "falling"
+position = Vector2( 600, -60 )
+event_ids = [ 2 ]
+custom_script = SubResource( 16 )
+
+[sub_resource type="Resource" id=14]
+script = ExtResource( 5 )
+start_state_fsm_id = 0
+start_position = Vector2( 60, 100 )
+states = [ SubResource( 9 ), SubResource( 11 ), SubResource( 13 ), SubResource( 17 ) ]
+events = [ SubResource( 3 ), SubResource( 5 ), SubResource( 7 ) ]
+transitions = [ 0, 0, 1, 1, 1, 2, 2, 2, 0 ]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 29.1352
+height = 3.62146
+
+[sub_resource type="RectangleShape2D" id=15]
+extents = Vector2( 30.7244, 31.4757 )
+
+[node name="World" type="Node2D"]
+
+[node name="SimpleAIJumper" type="KinematicBody2D" parent="."]
+position = Vector2( 0, 6.35678 )
+collision_mask = 2
+script = ExtResource( 1 )
+speed = 50.0
+jump_speed = 80.0
+gravity = 98.0
+
+[node name="VisualFSM" type="Node" parent="SimpleAIJumper"]
+script = ExtResource( 6 )
+finite_state_machine = SubResource( 14 )
+
+[node name="Sprite" type="Sprite" parent="SimpleAIJumper"]
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SimpleAIJumper"]
+shape = SubResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="SimpleAIJumper"]
+current = true
+
+[node name="GapDetector" type="RayCast2D" parent="SimpleAIJumper"]
+position = Vector2( 13.8748, 0 )
+enabled = true
+cast_to = Vector2( 0, 75 )
+collision_mask = 2
+
+[node name="CurrentState" type="Label" parent="SimpleAIJumper"]
+margin_left = -31.1127
+margin_top = -47.3762
+margin_right = 8.88728
+margin_bottom = -33.3762
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 0, 62.2965 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D"]
+shape = SubResource( 15 )
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 61.3316, 62.2965 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D2"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D2"]
+shape = SubResource( 15 )
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 119.983, 62.2965 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D3"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D3"]
+shape = SubResource( 15 )
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 247.039, 62.2965 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D4"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D4"]
+shape = SubResource( 15 )
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 308.511, 62.2965 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D5"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D5"]
+shape = SubResource( 15 )
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 365.529, 73.8782 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D6"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D6"]
+shape = SubResource( 15 )
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 420.765, 89.9144 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D7"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D7"]
+shape = SubResource( 15 )
+
+[node name="StaticBody2D8" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 471.546, 110.405 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D8"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D8"]
+shape = SubResource( 15 )
+
+[node name="StaticBody2D9" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 590.98, 110.405 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D9"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D9"]
+shape = SubResource( 15 )
+
+[node name="StaticBody2D10" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 652.398, 110.405 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D10"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D10"]
+shape = SubResource( 15 )
+
+[node name="StaticBody2D11" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 776.233, 110.405 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D11"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D11"]
+shape = SubResource( 15 )
+
+[node name="StaticBody2D12" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 933.032, 181.677 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D12"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D12"]
+shape = SubResource( 15 )
+
+[node name="StaticBody2D13" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 993.613, 181.677 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D13"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D13"]
+shape = SubResource( 15 )

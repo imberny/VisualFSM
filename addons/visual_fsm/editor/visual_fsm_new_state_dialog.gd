@@ -40,7 +40,7 @@ func _unhandled_input(event) -> void:
 	if not _context:
 		return
 
-	if event.is_action("ui_accept") and not get_ok().disabled:
+	if event is InputEventKey and event.scancode == KEY_ENTER and not get_ok().disabled:
 		emit_signal("confirmed")
 		hide()
 

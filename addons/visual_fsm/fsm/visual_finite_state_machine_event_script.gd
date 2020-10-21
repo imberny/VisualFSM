@@ -6,7 +6,7 @@ export(GDScript) var custom_script: GDScript setget _set_custom_script
 var custom_script_instance: VisualFSMEventBase
 
 func enter() -> void:
-	custom_script.enter()
+	custom_script_instance.enter()
 
 
 func is_triggered(object: Node, delta: float) -> bool:
