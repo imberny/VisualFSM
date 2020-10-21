@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "TrafficLightsController",
 "language": "GDScript",
-"path": "res://test/traffic_lights.gd"
+"path": "res://addons/visual_fsm/demos/simple_traffic_lights/traffic_lights.gd"
 }, {
 "base": "Object",
 "class": "VisualFSMEventBase",
@@ -87,7 +87,7 @@ _global_script_class_icons={
 [application]
 
 config/name="VisualFSM"
-run/main_scene="res://test/test.tscn"
+run/main_scene="res://addons/visual_fsm/demos/simple_traffic_lights/simple_traffic_lights.tscn"
 config/icon="res://icon.png"
 
 [editor_plugins]

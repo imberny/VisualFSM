@@ -1,22 +1,10 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd" type="Script" id=1]
 [ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine.gd" type="Script" id=2]
 [ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=3]
 [ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_event_timer.gd" type="Script" id=4]
-[ext_resource path="res://test/traffic_lights.gd" type="Script" id=5]
-
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.00784314, 1, 0.184314, 1 )
-
-[sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 0, 0, 0, 1 )
-
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.921569, 0.909804, 0.137255, 1 )
-
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 1, 0, 0, 1 )
+[ext_resource path="res://addons/visual_fsm/demos/simple_traffic_lights/traffic_lights.gd" type="Script" id=5]
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 4 )
@@ -59,7 +47,7 @@ func exit() -> void:
 script = ExtResource( 1 )
 fsm_id = 0
 name = "Red"
-position = Vector2( 372, 83 )
+position = Vector2( 420, 80 )
 event_ids = [ 0 ]
 custom_script = SubResource( 8 )
 
@@ -113,7 +101,7 @@ func exit() -> void:
 script = ExtResource( 1 )
 fsm_id = 2
 name = "Yellow"
-position = Vector2( 499, 285 )
+position = Vector2( 500, 340 )
 event_ids = [ 2 ]
 custom_script = SubResource( 12 )
 
@@ -125,33 +113,57 @@ states = [ SubResource( 9 ), SubResource( 11 ), SubResource( 13 ) ]
 events = [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ]
 transitions = [ 0, 0, 1, 1, 1, 2, 2, 2, 0 ]
 
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.00784314, 1, 0.184314, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.921569, 0.909804, 0.137255, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 1, 0, 0, 1 )
+
 [sub_resource type="Resource" id=15]
 script = ExtResource( 4 )
 fsm_id = 0
 name = ""
-duration = 1
+duration = 1.0
 
 [sub_resource type="Resource" id=16]
 script = ExtResource( 4 )
 fsm_id = 1
 name = ""
-duration = 1
+duration = 1.0
 
 [sub_resource type="Resource" id=17]
 script = ExtResource( 4 )
 fsm_id = 2
 name = ""
-duration = 1
+duration = 0.0
 
 [sub_resource type="Resource" id=18]
 script = ExtResource( 4 )
 fsm_id = 3
 name = ""
-duration = 1
+duration = 1.0
 
 [sub_resource type="Resource" id=19]
 script = ExtResource( 4 )
 fsm_id = 4
+name = ""
+duration = 1.0
+
+[sub_resource type="Resource" id=29]
+script = ExtResource( 4 )
+fsm_id = 5
+name = ""
+duration = 1
+
+[sub_resource type="Resource" id=30]
+script = ExtResource( 4 )
+fsm_id = 6
 name = ""
 duration = 1
 
@@ -178,7 +190,7 @@ func exit() -> void:
 script = ExtResource( 1 )
 fsm_id = 0
 name = "Green"
-position = Vector2( 300, 60 )
+position = Vector2( 360, 40 )
 event_ids = [ 0 ]
 custom_script = SubResource( 20 )
 
@@ -259,7 +271,7 @@ func exit() -> void:
 script = ExtResource( 1 )
 fsm_id = 3
 name = "Yellow2"
-position = Vector2( 440, 240 )
+position = Vector2( 380, 280 )
 event_ids = [ 4 ]
 custom_script = SubResource( 26 )
 
@@ -268,7 +280,7 @@ script = ExtResource( 2 )
 start_state_fsm_id = 0
 start_position = Vector2( 100, 100 )
 states = [ SubResource( 21 ), SubResource( 23 ), SubResource( 25 ), SubResource( 27 ) ]
-events = [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ]
+events = [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 29 ), SubResource( 30 ) ]
 transitions = [ 0, 0, 1, 1, 1, 2, 2, 3, 3, 3, 4, 0 ]
 
 [node name="TrafficLightsDemo" type="Node2D"]
@@ -276,6 +288,10 @@ transitions = [ 0, 0, 1, 1, 1, 2, 2, 3, 3, 3, 4, 0 ]
 [node name="TrafficLight1" type="Node2D" parent="."]
 position = Vector2( -63.908, 78.2032 )
 script = ExtResource( 5 )
+
+[node name="VisualFSM" type="Node" parent="TrafficLight1"]
+script = ExtResource( 3 )
+finite_state_machine = SubResource( 14 )
 
 [node name="StateContainer" type="HBoxContainer" parent="TrafficLight1"]
 margin_left = 271.609
@@ -379,13 +395,13 @@ margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
 custom_styles/panel = SubResource( 2 )
 
-[node name="VisualFSM" type="Node" parent="TrafficLight1"]
-script = ExtResource( 3 )
-finite_state_machine = SubResource( 14 )
-
 [node name="TrafficLight2" type="Node2D" parent="."]
 position = Vector2( 244.7, 82.4076 )
 script = ExtResource( 5 )
+
+[node name="VisualFSM" type="Node" parent="TrafficLight2"]
+script = ExtResource( 3 )
+finite_state_machine = SubResource( 28 )
 
 [node name="StateContainer" type="HBoxContainer" parent="TrafficLight2"]
 margin_left = 271.609
@@ -485,7 +501,3 @@ margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
 custom_styles/panel = SubResource( 2 )
-
-[node name="VisualFSM" type="Node" parent="TrafficLight2"]
-script = ExtResource( 3 )
-finite_state_machine = SubResource( 28 )
