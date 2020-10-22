@@ -63,6 +63,13 @@ func _set_state(value: VisualFiniteStateMachineState) -> void:
 	state = value
 
 
+func _has_timer_event(state: VisualFiniteStateMachineState) -> bool:
+	for event in fsm.get_events_in_state(state):
+		if event is VisualFiniteStateMachineEventTimer:
+			return true
+	return false
+
+
 func _on_AddEvent_about_to_show() -> void:
 	var popup: PopupMenu = _add_event_dropdown.get_popup()
 	if not popup.is_inside_tree():
@@ -79,7 +86,8 @@ func _on_AddEvent_about_to_show() -> void:
 		popup.add_icon_item(script_icon, event.name)
 	if 0 < popup.get_item_count():
 		popup.add_separator()
-	popup.add_icon_item(timer_icon, "New timer event")
+	if not _has_timer_event(self.state):
+		popup.add_icon_item(timer_icon, "New timer event")
 	popup.add_icon_item(action_icon, "New input action event")
 	popup.add_icon_item(script_icon, "New script event")
 
