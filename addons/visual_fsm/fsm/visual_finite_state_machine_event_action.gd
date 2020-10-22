@@ -1,11 +1,15 @@
+tool
 class_name VisualFiniteStateMachineEventAction
 extends VisualFiniteStateMachineEvent
 
-export(String) var action_name: String
+export(Array) var action_list: Array
 
 
 func is_trigger_action(input: InputEvent) -> bool:
-	return input.is_action(action_name)
+	for action in action_list:
+		if input.is_action(action):
+			return true
+	return false
 
 
 # add down, released, duration held...

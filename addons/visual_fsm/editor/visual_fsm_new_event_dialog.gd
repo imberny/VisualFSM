@@ -49,7 +49,7 @@ func approve_name_request(name: String) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not _context:
+	if not visible:
 		return
 
 	if event is InputEventKey and event.scancode == KEY_ENTER and not get_ok().disabled:

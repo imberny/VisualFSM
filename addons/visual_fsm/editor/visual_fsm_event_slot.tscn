@@ -24,7 +24,7 @@ visible = false
 margin_right = 184.0
 margin_bottom = 32.0
 
-[node name="EventLabel" type="Label" parent="Action"]
+[node name="ActionLabel" type="Label" parent="Action"]
 margin_right = 120.0
 margin_bottom = 32.0
 focus_mode = 2
@@ -176,6 +176,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 icon = ExtResource( 1 )
 expand_icon = true
+[connection signal="pressed" from="Action/Button/Action" to="." method="_on_Action_pressed"]
 [connection signal="pressed" from="Action/Close/Button" to="." method="_on_CloseButton_pressed"]
 [connection signal="pressed" from="Timer/Button/Timer" to="." method="_on_Timer_pressed"]
 [connection signal="pressed" from="Timer/Close/Button" to="." method="_on_CloseButton_pressed"]

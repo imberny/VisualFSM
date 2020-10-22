@@ -12,7 +12,7 @@ var _current_fsm_node
 
 
 func _enter_tree() -> void:
-	add_custom_type(FSM_TYPE_NAME, "Node", _fsm_script, preload("resources/icons/flow-chart.png"))
+	add_custom_type(FSM_TYPE_NAME, "Node", _fsm_script, preload("resources/icons/visual_fsm.png"))
 
 	yield(get_tree(), "idle_frame")
 	_fsm_singleton.name = "VisualFSMSingleton"

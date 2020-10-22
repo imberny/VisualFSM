@@ -7,7 +7,7 @@ const EVENT_TEMPLATE_PATH := "res://addons/visual_fsm/resources/event_template.t
 onready var _new_event_dialog := $"../DialogLayer/NewScriptEventDialog"
 onready var _new_state_dialog := $"../DialogLayer/NewStateDialog"
 onready var _timer_duration_dialog := $"../DialogLayer/TimerDurationDialog"
-onready var _input_action_dialog := $"../DialogLayer/TimerDurationDialog"
+onready var _input_action_dialog := $"../DialogLayer/InputActionDialog"
 
 var _fsm_start_scene: PackedScene = preload("visual_fsm_start_node.tscn")
 var _fsm_state_scene: PackedScene = preload("visual_fsm_state_node.tscn")
@@ -30,6 +30,13 @@ func _read_from_file(path: String) -> String:
 
 
 func _ready() -> void:
+#	var hbox := get_zoom_hbox()
+#	var event_dropdown := MenuButton.new()
+#	event_dropdown.text = "ScriptEvents"
+#	event_dropdown.flat = false
+#	hbox.add_child(event_dropdown)
+#	hbox.move_child(event_dropdown, 0)
+
 	add_valid_left_disconnect_type(0)
 
 	_new_event_dialog.rect_position = get_viewport_rect().size / 2 - _new_event_dialog.rect_size / 2
@@ -62,6 +69,12 @@ func _find_state_node(state: VisualFiniteStateMachineState) -> VisualFSMStateNod
 
 func _redraw_graph():
 #	print_debug("Redrawing fsm graph.............")
+
+	# clear dialogs
+	_new_state_dialog.close()
+	_timer_duration_dialog.close()
+	_input_action_dialog.close()
+
 	clear_connections()
 	# clear graph elements
 	for child in get_children():
@@ -134,8 +147,7 @@ func _try_create_new_state(from: String, from_slot: int, position: Vector2) -> v
 func _on_connection_to_empty(from: String, from_slot: int, release_position: Vector2):
 	var mouse_pos := get_global_mouse_position()
 	_new_state_dialog.rect_position = mouse_pos - _new_state_dialog.rect_size / 2
-	_new_state_dialog.try_create(_try_create_new_state(from, from_slot, release_position))
-	_new_state_dialog.show()
+	_new_state_dialog.open(_try_create_new_state(from, from_slot, release_position))
 
 
 func _on_connection_request(

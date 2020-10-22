@@ -14,17 +14,21 @@ func _ready() -> void:
 	get_cancel().connect("pressed", self, "_on_canceled")
 
 
-func show() -> void:
-	self.state_name = ""
-	.show()
-	_state_name_field.grab_focus()
-
-
-func try_create(context: GDScriptFunctionState) -> void:
+func open(context: GDScriptFunctionState) -> void:
 	if _context:
 		_context.resume(false)
 	_context = context
+
 	show()
+	self.state_name = ""
+	_state_name_field.grab_focus()
+
+
+func close() -> void:
+	if _context:
+		_context.resume(false)
+	_context = null
+	hide()
 
 
 func deny_name_request(name: String) -> void:

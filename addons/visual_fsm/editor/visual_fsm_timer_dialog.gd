@@ -5,22 +5,31 @@ var duration: float
 
 onready var _duration_field := $Margins/Content/Duration
 
-var _timer_event: VisualFiniteStateMachineEventTimer
+var _context: GDScriptFunctionState
 
 
-func open(event: VisualFiniteStateMachineEventTimer) -> void:
-	_timer_event = event
-	duration = event.duration
+func open(timer_duration: float, context: GDScriptFunctionState) -> void:
+	if _context: # opened from another slot
+		_context.resume(false)
+	_context = context
+	
 	show()
-	_duration_field.text = str(duration)
+	duration = timer_duration
+	_duration_field.text = str(timer_duration)
 	_duration_field.caret_position = len(_duration_field.text)
 	_duration_field.grab_focus()
 
 
-func _unhandled_input(event) -> void:
-	if not _timer_event:
-		return
+func close() -> void:
+	if _context:
+		_context.resume(false)
+	_context = null
+	hide()
 
+
+func _unhandled_input(event) -> void:
+	if not visible:
+		return
 	if event.is_action("ui_accept"):
 		emit_signal("confirmed")
 		hide()
@@ -39,8 +48,5 @@ func _on_Duration_text_changed(new_text: String) -> void:
 
 
 func _on_confirmed() -> void:
-	if not _timer_event:
-		return
-
-	_timer_event.duration = float(_duration_field.text)
-	_timer_event = null
+	duration = float(_duration_field.text)
+	_context.resume(true)
