@@ -181,7 +181,7 @@ func create_script_event(
 	_next_event_fsm_id += 1
 	script_event.name = event_name
 	var custom_script := GDScript.new()
-	custom_script.source_code = _event_custom_script_template
+	custom_script.source_code = _event_custom_script_template % event_name
 	script_event.custom_script = custom_script
 	_event_fsm_id_map[script_event.fsm_id] = script_event
 	state.add_event(script_event)
