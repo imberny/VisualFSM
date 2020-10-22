@@ -1,4 +1,4 @@
-class_name SimpleAIJumper
+class_name VisualFSMSimpleAIJumper
 extends KinematicBody2D
 
 export(float) var speed = 10

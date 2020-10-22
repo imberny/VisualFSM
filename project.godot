@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "KinematicBody2D",
-"class": "SimpleAIJumper",
-"language": "GDScript",
-"path": "res://addons/visual_fsm/demos/simple_ai_character/simple_ai_jumpter.gd"
-}, {
 "base": "Node2D",
 "class": "TrafficLightsController",
 "language": "GDScript",
@@ -28,6 +23,11 @@ _global_script_classes=[ {
 "class": "VisualFSMEventSlot",
 "language": "GDScript",
 "path": "res://addons/visual_fsm/editor/visual_fsm_event_slot.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "VisualFSMSimpleAIJumper",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/demos/simple_ai_character/simple_ai_jumpter.gd"
 }, {
 "base": "Node",
 "class": "VisualFSMSingleton",
@@ -75,10 +75,10 @@ _global_script_classes=[ {
 "path": "res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd"
 } ]
 _global_script_class_icons={
-"SimpleAIJumper": "",
 "TrafficLightsController": "",
 "VisualFSMEventBase": "",
 "VisualFSMEventSlot": "",
+"VisualFSMSimpleAIJumper": "",
 "VisualFSMSingleton": "",
 "VisualFSMStateBase": "",
 "VisualFSMStateNode": "",
