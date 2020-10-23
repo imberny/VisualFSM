@@ -19,9 +19,26 @@ func _ready():
 			_current_state.enter()
 
 
-func _input(trigger):
-	# handle transitions based on input action
-	pass
+func _unhandled_input(event: InputEvent) -> void:
+	var next_state: VFSMState
+	for trigger_id in _current_state.trigger_ids:
+		var trigger := fsm.get_trigger(trigger_id)
+		var go_to_next_trigger := false
+		if trigger is VFSMTriggerAction:
+			go_to_next_trigger = trigger.is_trigger_action(event)
+
+		if go_to_next_trigger:
+			get_tree().set_input_as_handled()
+			next_state = fsm.get_next_state(_current_state, trigger)
+			break
+
+	if next_state:
+		_current_state.exit()
+
+		_current_state = next_state
+		_current_state.enter()
+		for trigger_id in _current_state.trigger_ids:
+			fsm.get_trigger(trigger_id).enter()
 
 
 func _process(delta) -> void:

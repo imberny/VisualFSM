@@ -135,7 +135,7 @@ func _on_connection_request(
 		from: String, from_slot: int, to: String, to_slot: int
 	) -> void:
 	if from.empty() or to.empty():
-		printerr("VisualFSM States must have names.")
+		push_warning("VisualFSM States must have names.")
 		return
 	
 	var from_node: GraphNode = get_node(from)
@@ -182,13 +182,13 @@ func _on_StateNode_rename_request(
 	var old_name := state_node.state.name
 	var request_denied = false
 	if new_name.empty():
-		printerr("VisualFSM: States must have names.")
+		push_warning("VisualFSM: States must have names.")
 		request_denied = true
 	if _vfsm.has_state(new_name):
-		printerr("VisualFSM: A state named \"%s\" already exists." % new_name)
+		push_warning("VisualFSM: A state named \"%s\" already exists." % new_name)
 		request_denied = true
 	if "Start" == new_name:
-		printerr("VisualFSM: The name \"Start\" is reserved." % new_name)
+		push_warning("VisualFSM: The name \"Start\" is reserved." % new_name)
 		request_denied = true
 
 	if request_denied:

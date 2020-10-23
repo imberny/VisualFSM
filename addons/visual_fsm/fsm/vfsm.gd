@@ -31,7 +31,7 @@ func _read_from_file(path: String) -> String:
 	var f = File.new()
 	var err = f.open(path, File.READ)
 	if err != OK:
-		printerr("Could not open file \"%s\", error code: %s" % [path, err])
+		push_warning("Could not open file \"%s\", error code: %s" % [path, err])
 		return ""
 	var content = f.get_as_text()
 	f.close()

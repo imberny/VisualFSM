@@ -1,26 +1,263 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=32 format=2]
 
+[ext_resource path="res://addons/visual_fsm/fsm/vfsm.gd" type="Script" id=1]
+[ext_resource path="res://addons/visual_fsm/fsm/vfsm_state.gd" type="Script" id=2]
+[ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=3]
+[ext_resource path="res://addons/visual_fsm/fsm/vfsm_trigger_action.gd" type="Script" id=4]
 [ext_resource path="res://addons/visual_fsm/demos/simple_traffic_lights/traffic_lights.gd" type="Script" id=5]
+[ext_resource path="res://addons/visual_fsm/fsm/vfsm_trigger_timer.gd" type="Script" id=6]
 
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.00784314, 1, 0.184314, 1 )
+[sub_resource type="GDScript" id=1]
+script/source = "# State: Green
+extends VFSMStateBase
 
-[sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.921569, 0.909804, 0.137255, 1 )
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+	var traffic_lights := _object as VFSMDemoTrafficLightsController
+	traffic_lights.green()
+	traffic_lights.current_state_name = name
+
+
+func exit() -> void:
+	pass
+"
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 2 )
+vfsm_id = 0
+name = "Green"
+position = Vector2( 380, 20 )
+trigger_ids = [ 0 ]
+custom_script = SubResource( 1 )
+
+[sub_resource type="GDScript" id=19]
+script/source = "# State: Yellow
+extends VFSMStateBase
+
+
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+	var traffic_lights := _object as VFSMDemoTrafficLightsController
+	traffic_lights.yellow()
+	traffic_lights.current_state_name = name
+
+
+func exit() -> void:
+	pass
+"
+
+[sub_resource type="Resource" id=20]
+script = ExtResource( 2 )
+vfsm_id = 1
+name = "Yellow"
+position = Vector2( 766, 128 )
+trigger_ids = [ 1 ]
+custom_script = SubResource( 19 )
+
+[sub_resource type="GDScript" id=21]
+script/source = "# State: Red
+extends VFSMStateBase
+
+
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+	var traffic_lights := _object as VFSMDemoTrafficLightsController
+	traffic_lights.red()
+	traffic_lights.current_state_name = name
+
+
+func exit() -> void:
+	pass
+"
+
+[sub_resource type="Resource" id=22]
+script = ExtResource( 2 )
+vfsm_id = 2
+name = "Red"
+position = Vector2( 439, 248 )
+trigger_ids = [ 2 ]
+custom_script = SubResource( 21 )
+
+[sub_resource type="Resource" id=23]
+script = ExtResource( 6 )
+vfsm_id = 0
+name = ""
+duration = 1
+
+[sub_resource type="Resource" id=24]
+script = ExtResource( 6 )
+vfsm_id = 1
+name = ""
+duration = 0.5
+
+[sub_resource type="Resource" id=25]
+script = ExtResource( 6 )
+vfsm_id = 2
+name = ""
+duration = 1.5
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 1 )
+start_state_vfsm_id = 0
+start_position = Vector2( 100, 100 )
+states = [ SubResource( 2 ), SubResource( 20 ), SubResource( 22 ) ]
+triggers = [ SubResource( 23 ), SubResource( 24 ), SubResource( 25 ) ]
+transitions = [ 0, 0, 1, 1, 1, 2, 2, 2, 0 ]
 
 [sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.00784314, 1, 0.184314, 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.921569, 0.909804, 0.137255, 1 )
+
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="GDScript" id=8]
+script/source = "# State: Green
+extends VFSMStateBase
+
+
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+	var traffic_lights := _object as VFSMDemoTrafficLightsController
+	traffic_lights.green()
+
+
+func exit() -> void:
+	pass
+"
+
+[sub_resource type="Resource" id=9]
+script = ExtResource( 2 )
+vfsm_id = 0
+name = "Green"
+position = Vector2( 420, -20 )
+trigger_ids = [ 0 ]
+custom_script = SubResource( 8 )
+
+[sub_resource type="GDScript" id=10]
+script/source = "# State: Yellow
+extends VFSMStateBase
+
+
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+	var traffic_lights := _object as VFSMDemoTrafficLightsController
+	traffic_lights.yellow()
+
+
+func exit() -> void:
+	pass
+"
+
+[sub_resource type="Resource" id=11]
+script = ExtResource( 2 )
+vfsm_id = 1
+name = "Yellow"
+position = Vector2( 420, 120 )
+trigger_ids = [ 1, 2 ]
+custom_script = SubResource( 10 )
+
+[sub_resource type="GDScript" id=12]
+script/source = "# State: Red
+extends VFSMStateBase
+
+
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+	var traffic_lights := _object as VFSMDemoTrafficLightsController
+	traffic_lights.red()
+
+
+func exit() -> void:
+	pass
+"
+
+[sub_resource type="Resource" id=13]
+script = ExtResource( 2 )
+vfsm_id = 2
+name = "Red"
+position = Vector2( 421, 302 )
+trigger_ids = [ 3 ]
+custom_script = SubResource( 12 )
+
+[sub_resource type="Resource" id=14]
+script = ExtResource( 4 )
+vfsm_id = 0
+name = ""
+action_list = [ "ui_down" ]
+
+[sub_resource type="Resource" id=15]
+script = ExtResource( 4 )
+vfsm_id = 1
+name = ""
+action_list = [ "ui_up" ]
+
+[sub_resource type="Resource" id=16]
+script = ExtResource( 4 )
+vfsm_id = 2
+name = ""
+action_list = [ "ui_down" ]
+
+[sub_resource type="Resource" id=17]
+script = ExtResource( 4 )
+vfsm_id = 3
+name = ""
+action_list = [ "ui_up" ]
+
+[sub_resource type="Resource" id=18]
+script = ExtResource( 1 )
+start_state_vfsm_id = 0
+start_position = Vector2( 100, 100 )
+states = [ SubResource( 9 ), SubResource( 11 ), SubResource( 13 ) ]
+triggers = [ SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ) ]
+transitions = [ 0, 0, 1, 1, 1, 0, 1, 2, 2, 2, 3, 1 ]
 
 [node name="TrafficLightsDemo" type="Node2D"]
 
-[node name="TrafficLight1" type="Node2D" parent="."]
+[node name="TimedTrafficLights" type="Node2D" parent="."]
 position = Vector2( -63.908, 78.2032 )
 script = ExtResource( 5 )
 
-[node name="StateContainer" type="HBoxContainer" parent="TrafficLight1"]
+[node name="VisualFSM" type="Node" parent="TimedTrafficLights"]
+script = ExtResource( 3 )
+finite_state_machine = SubResource( 3 )
+
+[node name="Label2" type="Label" parent="TimedTrafficLights"]
+margin_left = 257.217
+margin_top = 16.9993
+margin_right = 465.217
+margin_bottom = 47.9993
+text = "States switch based on a timer
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StateContainer" type="HBoxContainer" parent="TimedTrafficLights"]
 margin_left = 271.609
 margin_top = 32.7949
 margin_right = 362.609
@@ -29,13 +266,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="TrafficLight1/StateContainer"]
+[node name="Label" type="Label" parent="TimedTrafficLights/StateContainer"]
 margin_top = 13.0
 margin_right = 87.0
 margin_bottom = 27.0
 text = "Current state:"
 
-[node name="State" type="Label" parent="TrafficLight1/StateContainer"]
+[node name="State" type="Label" parent="TimedTrafficLights/StateContainer"]
 margin_left = 91.0
 margin_top = 13.0
 margin_right = 91.0
@@ -44,7 +281,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TrafficLights" type="Panel" parent="TrafficLight1"]
+[node name="TrafficLights" type="Panel" parent="TimedTrafficLights"]
 margin_left = 320.0
 margin_top = 86.0
 margin_right = 360.0
@@ -53,57 +290,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Green" type="Node2D" parent="TrafficLight1/TrafficLights"]
+[node name="Green" type="Node2D" parent="TimedTrafficLights/TrafficLights"]
 position = Vector2( 0, 0.840912 )
 
-[node name="Lit" type="Panel" parent="TrafficLight1/TrafficLights/Green"]
-margin_left = 6.72717
-margin_top = 13.4543
-margin_right = 46.7272
-margin_bottom = 53.4543
-rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Cover" type="Panel" parent="TrafficLight1/TrafficLights/Green"]
-margin_left = 6.72717
-margin_top = 13.4543
-margin_right = 46.7272
-margin_bottom = 53.4543
-rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Yellow" type="Node2D" parent="TrafficLight1/TrafficLights"]
-position = Vector2( 0, 46.2492 )
-
-[node name="Lit" type="Panel" parent="TrafficLight1/TrafficLights/Yellow"]
-margin_left = 6.72717
-margin_top = 13.4543
-margin_right = 46.7272
-margin_bottom = 53.4543
-rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Cover" type="Panel" parent="TrafficLight1/TrafficLights/Yellow"]
-margin_left = 6.72717
-margin_top = 13.4543
-margin_right = 46.7272
-margin_bottom = 53.4543
-rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 2 )
-
-[node name="Red" type="Node2D" parent="TrafficLight1/TrafficLights"]
-position = Vector2( 0, 90.8166 )
-
-[node name="Lit" type="Panel" parent="TrafficLight1/TrafficLights/Red"]
+[node name="Lit" type="Panel" parent="TimedTrafficLights/TrafficLights/Green"]
 margin_left = 6.72717
 margin_top = 13.4543
 margin_right = 46.7272
@@ -114,34 +304,98 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Cover" type="Panel" parent="TrafficLight1/TrafficLights/Red"]
+[node name="Cover" type="Panel" parent="TimedTrafficLights/TrafficLights/Green"]
 margin_left = 6.72717
 margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TrafficLight2" type="Node2D" parent="."]
+[node name="Yellow" type="Node2D" parent="TimedTrafficLights/TrafficLights"]
+position = Vector2( 0, 46.2492 )
+
+[node name="Lit" type="Panel" parent="TimedTrafficLights/TrafficLights/Yellow"]
+margin_left = 6.72717
+margin_top = 13.4543
+margin_right = 46.7272
+margin_bottom = 53.4543
+rect_scale = Vector2( 0.68, 0.68 )
+custom_styles/panel = SubResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cover" type="Panel" parent="TimedTrafficLights/TrafficLights/Yellow"]
+margin_left = 6.72717
+margin_top = 13.4543
+margin_right = 46.7272
+margin_bottom = 53.4543
+rect_scale = Vector2( 0.68, 0.68 )
+custom_styles/panel = SubResource( 5 )
+
+[node name="Red" type="Node2D" parent="TimedTrafficLights/TrafficLights"]
+position = Vector2( 0, 90.8166 )
+
+[node name="Lit" type="Panel" parent="TimedTrafficLights/TrafficLights/Red"]
+margin_left = 6.72717
+margin_top = 13.4543
+margin_right = 46.7272
+margin_bottom = 53.4543
+rect_scale = Vector2( 0.68, 0.68 )
+custom_styles/panel = SubResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cover" type="Panel" parent="TimedTrafficLights/TrafficLights/Red"]
+margin_left = 6.72717
+margin_top = 13.4543
+margin_right = 46.7272
+margin_bottom = 53.4543
+rect_scale = Vector2( 0.68, 0.68 )
+custom_styles/panel = SubResource( 5 )
+
+[node name="ActionTrafficLights" type="Node2D" parent="."]
 position = Vector2( 244.7, 82.4076 )
 script = ExtResource( 5 )
 
-[node name="StateContainer" type="HBoxContainer" parent="TrafficLight2"]
-margin_left = 271.609
-margin_top = 32.7949
-margin_right = 362.609
-margin_bottom = 72.7949
+[node name="VisualFSM" type="Node" parent="ActionTrafficLights"]
+script = ExtResource( 3 )
+finite_state_machine = SubResource( 18 )
+
+[node name="Label" type="Label" parent="ActionTrafficLights"]
+margin_left = 266.609
+margin_top = 21.7949
+margin_right = 499.609
+margin_bottom = 69.7949
+text = "States switch based on input actions
+
+Press up or down to switch state."
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="TrafficLight2/StateContainer"]
+[node name="StateContainer" type="HBoxContainer" parent="ActionTrafficLights"]
+visible = false
+margin_left = -36.999
+margin_top = 28.5905
+margin_right = 54.001
+margin_bottom = 68.5905
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ActionTrafficLights/StateContainer"]
 margin_top = 13.0
 margin_right = 87.0
 margin_bottom = 27.0
 text = "Current state:"
 
-[node name="State" type="Label" parent="TrafficLight2/StateContainer"]
+[node name="State" type="Label" parent="ActionTrafficLights/StateContainer"]
 margin_left = 91.0
 margin_top = 13.0
 margin_right = 91.0
@@ -150,7 +404,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TrafficLights" type="Panel" parent="TrafficLight2"]
+[node name="TrafficLights" type="Panel" parent="ActionTrafficLights"]
 margin_left = 320.0
 margin_top = 86.0
 margin_right = 360.0
@@ -159,54 +413,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Green" type="Node2D" parent="TrafficLight2/TrafficLights"]
+[node name="Green" type="Node2D" parent="ActionTrafficLights/TrafficLights"]
 position = Vector2( 0, 0.840912 )
 
-[node name="Lit" type="Panel" parent="TrafficLight2/TrafficLights/Green"]
-margin_left = 6.72717
-margin_top = 13.4543
-margin_right = 46.7272
-margin_bottom = 53.4543
-rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Cover" type="Panel" parent="TrafficLight2/TrafficLights/Green"]
-margin_left = 6.72717
-margin_top = 13.4543
-margin_right = 46.7272
-margin_bottom = 53.4543
-rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 2 )
-
-[node name="Yellow" type="Node2D" parent="TrafficLight2/TrafficLights"]
-position = Vector2( 0, 46.2492 )
-
-[node name="Lit" type="Panel" parent="TrafficLight2/TrafficLights/Yellow"]
-margin_left = 6.72717
-margin_top = 13.4543
-margin_right = 46.7272
-margin_bottom = 53.4543
-rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Cover" type="Panel" parent="TrafficLight2/TrafficLights/Yellow"]
-margin_left = 6.72717
-margin_top = 13.4543
-margin_right = 46.7272
-margin_bottom = 53.4543
-rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 2 )
-
-[node name="Red" type="Node2D" parent="TrafficLight2/TrafficLights"]
-position = Vector2( 0, 90.8166 )
-
-[node name="Lit" type="Panel" parent="TrafficLight2/TrafficLights/Red"]
+[node name="Lit" type="Panel" parent="ActionTrafficLights/TrafficLights/Green"]
 margin_left = 6.72717
 margin_top = 13.4543
 margin_right = 46.7272
@@ -217,12 +427,56 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Cover" type="Panel" parent="TrafficLight2/TrafficLights/Red"]
+[node name="Cover" type="Panel" parent="ActionTrafficLights/TrafficLights/Green"]
 margin_left = 6.72717
 margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 5 )
+
+[node name="Yellow" type="Node2D" parent="ActionTrafficLights/TrafficLights"]
+position = Vector2( 0, 46.2492 )
+
+[node name="Lit" type="Panel" parent="ActionTrafficLights/TrafficLights/Yellow"]
+margin_left = 6.72717
+margin_top = 13.4543
+margin_right = 46.7272
+margin_bottom = 53.4543
+rect_scale = Vector2( 0.68, 0.68 )
+custom_styles/panel = SubResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cover" type="Panel" parent="ActionTrafficLights/TrafficLights/Yellow"]
+margin_left = 6.72717
+margin_top = 13.4543
+margin_right = 46.7272
+margin_bottom = 53.4543
+rect_scale = Vector2( 0.68, 0.68 )
+custom_styles/panel = SubResource( 5 )
+
+[node name="Red" type="Node2D" parent="ActionTrafficLights/TrafficLights"]
+position = Vector2( 0, 90.8166 )
+
+[node name="Lit" type="Panel" parent="ActionTrafficLights/TrafficLights/Red"]
+margin_left = 6.72717
+margin_top = 13.4543
+margin_right = 46.7272
+margin_bottom = 53.4543
+rect_scale = Vector2( 0.68, 0.68 )
+custom_styles/panel = SubResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cover" type="Panel" parent="ActionTrafficLights/TrafficLights/Red"]
+margin_left = 6.72717
+margin_top = 13.4543
+margin_right = 46.7272
+margin_bottom = 53.4543
+rect_scale = Vector2( 0.68, 0.68 )
+custom_styles/panel = SubResource( 5 )
 
 [node name="Node" type="Node" parent="."]

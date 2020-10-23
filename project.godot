@@ -9,15 +9,15 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node2D",
-"class": "TrafficLightsController",
-"language": "GDScript",
-"path": "res://addons/visual_fsm/demos/simple_traffic_lights/traffic_lights.gd"
-}, {
 "base": "Resource",
 "class": "VFSM",
 "language": "GDScript",
 "path": "res://addons/visual_fsm/fsm/vfsm.gd"
+}, {
+"base": "Node2D",
+"class": "VFSMDemoTrafficLightsController",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/demos/simple_traffic_lights/traffic_lights.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "VFSMSimpleAIJumper",
@@ -75,8 +75,8 @@ _global_script_classes=[ {
 "path": "res://addons/visual_fsm/fsm/vfsm_trigger_timer.gd"
 } ]
 _global_script_class_icons={
-"TrafficLightsController": "",
 "VFSM": "",
+"VFSMDemoTrafficLightsController": "",
 "VFSMSimpleAIJumper": "",
 "VFSMSingleton": "",
 "VFSMState": "",

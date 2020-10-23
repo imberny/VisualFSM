@@ -3,8 +3,8 @@ extends VFSMTriggerBase
 
 
 func enter() -> void:
-    pass
+	pass
 
 
 func is_triggered(_object, _delta: float) -> bool:
-    return false
+	return false

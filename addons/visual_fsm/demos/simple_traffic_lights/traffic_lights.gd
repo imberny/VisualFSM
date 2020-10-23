@@ -1,8 +1,9 @@
-class_name TrafficLightsController
+class_name VFSMDemoTrafficLightsController
 extends Node2D
 
 
 var current_state_name: String setget _set_current_state_name
+var available_actions: Array setget _set_available_actions
 
 
 func green():
@@ -24,5 +25,17 @@ func red():
 
 
 func _set_current_state_name(value) -> void:
-	$StateContainer/State.text = value
+	if has_node("StateContainer/State"):
+		$StateContainer/State.text = value
+
+
+func _set_available_actions(value) -> void:
+	available_actions = value.duplicate()
+	$Actions/Actions.text = ""
+	if available_actions.empty():
+		return
+	
+	for action in available_actions:
+		$Actions/Actions.text = action + ", "
+	$Actions/Actions.text = $Actions/Actions.text.substr(0, len($Actions/Actions.text) - 2)
 

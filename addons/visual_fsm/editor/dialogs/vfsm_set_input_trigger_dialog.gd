@@ -3,6 +3,7 @@ extends AcceptDialog
 
 onready var actions := $Margins/Content/ActionContainer/Margins/Actions
 onready var invalid_panel := $Margins/Content/ValidationPanel
+onready var _filter_field := $Margins/Content/Header/FilterMargins/Filter
 onready var _action_list := []
 
 var _context: GDScriptFunctionState
@@ -14,7 +15,8 @@ func open(trigger_actions: Array, context: GDScriptFunctionState) -> void:
 	_context = context
 
 	show()
-	$Margins/Content/Header/FilterMargins/Filter.grab_focus()
+	_filter_field.clear()
+	_filter_field.grab_focus()
 	
 	for action in actions.get_children():
 		actions.remove_child(action)

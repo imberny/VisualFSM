@@ -7,7 +7,7 @@ func enter() -> void:
 
 
 func update(_object, _delta: float) -> void:
-    pass
+	pass
 
 
 func exit() -> void:

@@ -42,7 +42,7 @@ func _ready() -> void:
 
 func add_trigger(trigger: VFSMTrigger) -> void:
 	if get_child_count() == COLORS.size() - 2:
-		printerr("VisualFSM: Maximum number of triggers in state %s reached!" 
+		push_warning("VisualFSM: Maximum number of triggers in state %s reached!" 
 			% self.state.name)
 		return
 
