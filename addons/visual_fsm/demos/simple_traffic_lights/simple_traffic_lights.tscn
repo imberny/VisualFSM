@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd" type="Script" id=1]
 [ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine.gd" type="Script" id=2]
@@ -47,19 +47,19 @@ action_list = [  ]
 script = ExtResource( 6 )
 fsm_id = 6
 name = ""
-action_list = [ "ui_accept", "ui_select", "ui_cancel", "ui_left", "ui_right" ]
+action_list = [  ]
 
 [sub_resource type="Resource" id=8]
 script = ExtResource( 6 )
 fsm_id = 7
 name = ""
-action_list = [ "ui_page_down", "ui_home", "ui_end" ]
+action_list = [  ]
 
 [sub_resource type="Resource" id=9]
 script = ExtResource( 6 )
 fsm_id = 8
 name = ""
-action_list = [ "ui_cancel" ]
+action_list = [  ]
 
 [sub_resource type="Resource" id=10]
 script = ExtResource( 6 )
@@ -71,21 +71,27 @@ action_list = [  ]
 script = ExtResource( 6 )
 fsm_id = 10
 name = ""
-action_list = [ "ui_focus_next" ]
+action_list = [  ]
 
 [sub_resource type="Resource" id=12]
 script = ExtResource( 6 )
 fsm_id = 11
 name = ""
-action_list = [ "ui_cancel", "ui_focus_next", "ui_left", "ui_right" ]
+action_list = [  ]
 
 [sub_resource type="Resource" id=13]
 script = ExtResource( 6 )
 fsm_id = 12
 name = ""
-action_list = [  ]
+action_list = [ "ui_accept", "ui_select", "ui_cancel" ]
 
-[sub_resource type="GDScript" id=14]
+[sub_resource type="Resource" id=14]
+script = ExtResource( 6 )
+fsm_id = 13
+name = ""
+action_list = [ "ui_accept", "ui_select", "ui_cancel", "ui_focus_next", "ui_focus_prev", "ui_left" ]
+
+[sub_resource type="GDScript" id=15]
 script/source = "# State: Red
 extends VisualFSMStateBase
 
@@ -104,15 +110,15 @@ func exit() -> void:
 	print(\"Exiting state %s\" % name)
 "
 
-[sub_resource type="Resource" id=15]
+[sub_resource type="Resource" id=16]
 script = ExtResource( 1 )
 fsm_id = 0
 name = "Red"
 position = Vector2( 460, 80 )
-event_ids = [ 0, 12 ]
-custom_script = SubResource( 14 )
+event_ids = [ 0 ]
+custom_script = SubResource( 15 )
 
-[sub_resource type="GDScript" id=16]
+[sub_resource type="GDScript" id=17]
 script/source = "# State: Green
 extends VisualFSMStateBase
 
@@ -131,15 +137,15 @@ func exit() -> void:
 	print(\"Exiting state %s\" % name)
 "
 
-[sub_resource type="Resource" id=17]
+[sub_resource type="Resource" id=18]
 script = ExtResource( 1 )
 fsm_id = 1
 name = "Green"
 position = Vector2( 780, 80 )
 event_ids = [ 1 ]
-custom_script = SubResource( 16 )
+custom_script = SubResource( 17 )
 
-[sub_resource type="GDScript" id=18]
+[sub_resource type="GDScript" id=19]
 script/source = "# State: Yellow
 extends VisualFSMStateBase
 
@@ -158,77 +164,77 @@ func exit() -> void:
 	print(\"Exiting state %s\" % name)
 "
 
-[sub_resource type="Resource" id=19]
+[sub_resource type="Resource" id=20]
 script = ExtResource( 1 )
 fsm_id = 2
 name = "Yellow"
 position = Vector2( 500, 340 )
 event_ids = [ 2 ]
-custom_script = SubResource( 18 )
+custom_script = SubResource( 19 )
 
-[sub_resource type="Resource" id=20]
+[sub_resource type="Resource" id=21]
 script = ExtResource( 2 )
 start_state_fsm_id = 0
 start_position = Vector2( 100, 100 )
-states = [ SubResource( 15 ), SubResource( 17 ), SubResource( 19 ) ]
-events = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ]
+states = [ SubResource( 16 ), SubResource( 18 ), SubResource( 20 ) ]
+events = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ]
 transitions = [ 0, 0, 1, 1, 1, 2, 2, 2, 0 ]
 
-[sub_resource type="StyleBoxFlat" id=21]
+[sub_resource type="StyleBoxFlat" id=22]
 bg_color = Color( 0.00784314, 1, 0.184314, 1 )
 
-[sub_resource type="StyleBoxFlat" id=22]
+[sub_resource type="StyleBoxFlat" id=23]
 bg_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=23]
+[sub_resource type="StyleBoxFlat" id=24]
 bg_color = Color( 0.921569, 0.909804, 0.137255, 1 )
 
-[sub_resource type="StyleBoxFlat" id=24]
+[sub_resource type="StyleBoxFlat" id=25]
 bg_color = Color( 1, 0, 0, 1 )
 
-[sub_resource type="Resource" id=25]
+[sub_resource type="Resource" id=26]
 script = ExtResource( 4 )
 fsm_id = 0
 name = ""
 duration = 1.0
 
-[sub_resource type="Resource" id=26]
+[sub_resource type="Resource" id=27]
 script = ExtResource( 4 )
 fsm_id = 1
 name = ""
 duration = 1.0
 
-[sub_resource type="Resource" id=27]
+[sub_resource type="Resource" id=28]
 script = ExtResource( 4 )
 fsm_id = 2
 name = ""
 duration = 0.0
 
-[sub_resource type="Resource" id=28]
+[sub_resource type="Resource" id=29]
 script = ExtResource( 4 )
 fsm_id = 3
 name = ""
 duration = 1.0
 
-[sub_resource type="Resource" id=29]
+[sub_resource type="Resource" id=30]
 script = ExtResource( 4 )
 fsm_id = 4
 name = ""
 duration = 1.0
 
-[sub_resource type="Resource" id=30]
+[sub_resource type="Resource" id=31]
 script = ExtResource( 4 )
 fsm_id = 5
 name = ""
 duration = 0.0
 
-[sub_resource type="Resource" id=31]
+[sub_resource type="Resource" id=32]
 script = ExtResource( 4 )
 fsm_id = 6
 name = ""
 duration = 0.0
 
-[sub_resource type="GDScript" id=32]
+[sub_resource type="GDScript" id=33]
 script/source = "# State: Green
 extends VisualFSMStateBase
 
@@ -247,15 +253,15 @@ func exit() -> void:
 	print(\"Exiting state %s\" % name)
 "
 
-[sub_resource type="Resource" id=33]
+[sub_resource type="Resource" id=34]
 script = ExtResource( 1 )
 fsm_id = 0
 name = "Green"
 position = Vector2( 360, 40 )
 event_ids = [ 0 ]
-custom_script = SubResource( 32 )
+custom_script = SubResource( 33 )
 
-[sub_resource type="GDScript" id=34]
+[sub_resource type="GDScript" id=35]
 script/source = "# State: Yellow1
 extends VisualFSMStateBase
 
@@ -274,15 +280,15 @@ func exit() -> void:
 	print(\"Exiting state %s\" % name)
 "
 
-[sub_resource type="Resource" id=35]
+[sub_resource type="Resource" id=36]
 script = ExtResource( 1 )
 fsm_id = 1
 name = "Yellow1"
 position = Vector2( 660, 20 )
 event_ids = [ 1 ]
-custom_script = SubResource( 34 )
+custom_script = SubResource( 35 )
 
-[sub_resource type="GDScript" id=36]
+[sub_resource type="GDScript" id=37]
 script/source = "# State: Red
 extends VisualFSMStateBase
 
@@ -301,15 +307,15 @@ func exit() -> void:
 	print(\"Exiting state %s\" % name)
 "
 
-[sub_resource type="Resource" id=37]
+[sub_resource type="Resource" id=38]
 script = ExtResource( 1 )
 fsm_id = 2
 name = "Red"
 position = Vector2( 780, 200 )
 event_ids = [ 3 ]
-custom_script = SubResource( 36 )
+custom_script = SubResource( 37 )
 
-[sub_resource type="GDScript" id=38]
+[sub_resource type="GDScript" id=39]
 script/source = "# State: Yellow2
 extends VisualFSMStateBase
 
@@ -328,20 +334,20 @@ func exit() -> void:
 	print(\"Exiting state %s\" % name)
 "
 
-[sub_resource type="Resource" id=39]
+[sub_resource type="Resource" id=40]
 script = ExtResource( 1 )
 fsm_id = 3
 name = "Yellow2"
 position = Vector2( 380, 280 )
 event_ids = [ 4 ]
-custom_script = SubResource( 38 )
+custom_script = SubResource( 39 )
 
-[sub_resource type="Resource" id=40]
+[sub_resource type="Resource" id=41]
 script = ExtResource( 2 )
 start_state_fsm_id = 0
 start_position = Vector2( 100, 100 )
-states = [ SubResource( 33 ), SubResource( 35 ), SubResource( 37 ), SubResource( 39 ) ]
-events = [ SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ) ]
+states = [ SubResource( 34 ), SubResource( 36 ), SubResource( 38 ), SubResource( 40 ) ]
+events = [ SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ), SubResource( 32 ) ]
 transitions = [ 0, 0, 1, 1, 1, 2, 2, 3, 3, 3, 4, 0 ]
 
 [node name="TrafficLightsDemo" type="Node2D"]
@@ -352,7 +358,7 @@ script = ExtResource( 5 )
 
 [node name="VisualFSM" type="Node" parent="TrafficLight1"]
 script = ExtResource( 3 )
-finite_state_machine = SubResource( 20 )
+finite_state_machine = SubResource( 21 )
 
 [node name="StateContainer" type="HBoxContainer" parent="TrafficLight1"]
 margin_left = 271.609
@@ -396,7 +402,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 21 )
+custom_styles/panel = SubResource( 22 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -407,7 +413,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 22 )
+custom_styles/panel = SubResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -421,7 +427,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 23 )
+custom_styles/panel = SubResource( 24 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -432,7 +438,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 22 )
+custom_styles/panel = SubResource( 23 )
 
 [node name="Red" type="Node2D" parent="TrafficLight1/TrafficLights"]
 position = Vector2( 0, 90.8166 )
@@ -443,7 +449,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 24 )
+custom_styles/panel = SubResource( 25 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -454,7 +460,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 22 )
+custom_styles/panel = SubResource( 23 )
 
 [node name="TrafficLight2" type="Node2D" parent="."]
 position = Vector2( 244.7, 82.4076 )
@@ -462,7 +468,7 @@ script = ExtResource( 5 )
 
 [node name="VisualFSM" type="Node" parent="TrafficLight2"]
 script = ExtResource( 3 )
-finite_state_machine = SubResource( 40 )
+finite_state_machine = SubResource( 41 )
 
 [node name="StateContainer" type="HBoxContainer" parent="TrafficLight2"]
 margin_left = 271.609
@@ -506,7 +512,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 21 )
+custom_styles/panel = SubResource( 22 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -517,7 +523,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 22 )
+custom_styles/panel = SubResource( 23 )
 
 [node name="Yellow" type="Node2D" parent="TrafficLight2/TrafficLights"]
 position = Vector2( 0, 46.2492 )
@@ -528,7 +534,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 23 )
+custom_styles/panel = SubResource( 24 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -539,7 +545,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 22 )
+custom_styles/panel = SubResource( 23 )
 
 [node name="Red" type="Node2D" parent="TrafficLight2/TrafficLights"]
 position = Vector2( 0, 90.8166 )
@@ -550,7 +556,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 24 )
+custom_styles/panel = SubResource( 25 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -561,6 +567,6 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 22 )
+custom_styles/panel = SubResource( 23 )
 
 [node name="Node" type="Node" parent="."]

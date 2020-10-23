@@ -3,7 +3,7 @@ extends AcceptDialog
 
 onready var actions := $Margins/Content/ActionContainer/Margins/Actions
 onready var invalid_panel := $Margins/Content/ValidationPanel
-onready var action_list := []
+onready var _action_list := []
 
 var _context: GDScriptFunctionState
 
@@ -36,6 +36,10 @@ func close() -> void:
 	hide()
 
 
+func get_selected_actions() -> Array:
+	return self._action_list.duplicate()
+
+
 func _unhandled_input(event) -> void:
 	if not visible:
 		return
@@ -46,17 +50,17 @@ func _unhandled_input(event) -> void:
 
 
 func _validate() -> void:
-	invalid_panel.visible = action_list.empty()
-	get_ok().disabled = action_list.empty()
+	invalid_panel.visible = _action_list.empty()
+	get_ok().disabled = _action_list.empty()
 
 
 func _on_Action_toggled(_pressed) -> void:
 	# no way to know which item, so rebuild list
-	action_list.clear()
+	_action_list.clear()
 	for action in actions.get_children():
 		var checkbox := action as CheckBox
 		if checkbox.pressed:
-			action_list.push_back(checkbox.text)
+			_action_list.push_back(checkbox.text)
 	_validate()
 
 
@@ -67,7 +71,7 @@ func _on_Filter_text_changed(new_text: String) -> void:
 
 
 func _on_ClearButton_pressed():
-	action_list.clear()
+	_action_list.clear()
 	for action in actions.get_children():
 		var checkbox := action as CheckBox
 		checkbox.pressed = false

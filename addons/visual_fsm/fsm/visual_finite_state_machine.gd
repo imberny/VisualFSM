@@ -156,8 +156,7 @@ func remove_state(state: VisualFiniteStateMachineState) -> void:
 
 func create_timer_event(state: VisualFiniteStateMachineState) -> void:
 	var timer_event := VisualFiniteStateMachineEventTimer.new()
-	timer_event.fsm_id = _next_event_fsm_id
-	_next_event_fsm_id += 1
+	timer_event.fsm_id = _get_next_transition_id()
 	timer_event.duration = 1
 	_event_fsm_id_map[timer_event.fsm_id] = timer_event
 	state.add_event(timer_event)
@@ -165,8 +164,7 @@ func create_timer_event(state: VisualFiniteStateMachineState) -> void:
 
 func create_action_event(state: VisualFiniteStateMachineState) -> void:
 	var action_event := VisualFiniteStateMachineEventAction.new()
-	action_event.fsm_id = _next_event_fsm_id
-	_next_event_fsm_id += 1
+	action_event.fsm_id = _get_next_transition_id()
 	_event_fsm_id_map[action_event.fsm_id] = action_event
 	state.add_event(action_event)
 
@@ -177,8 +175,7 @@ func create_script_event(
 ) -> void:
 	assert(not has_script_event(event_name))
 	var script_event := VisualFiniteStateMachineEventScript.new()
-	script_event.fsm_id = _next_event_fsm_id
-	_next_event_fsm_id += 1
+	script_event.fsm_id = _get_next_transition_id()
 	script_event.name = event_name
 	var custom_script := GDScript.new()
 	custom_script.source_code = _event_custom_script_template % event_name
@@ -221,6 +218,18 @@ func remove_transition(
 
 func _changed() -> void:
 	call_deferred("emit_signal", "changed")
+
+
+func _get_next_state_id() -> int:
+	var id = _next_state_fsm_id
+	_next_state_fsm_id += 1
+	return id
+
+
+func _get_next_transition_id() -> int:
+	var id = _next_event_fsm_id
+	_next_event_fsm_id += 1
+	return id
 
 
 func _get(property: String):

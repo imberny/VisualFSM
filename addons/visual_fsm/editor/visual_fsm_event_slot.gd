@@ -64,7 +64,7 @@ func _update_action_label() -> void:
 
 func try_set_action_list() -> void:
 	if yield():
-		self.event.action_list = input_action_dialog.action_list
+		self.event.action_list = input_action_dialog.get_selected_actions()
 	else:
 		self.event.action_list = []
 	_update_action_label()
