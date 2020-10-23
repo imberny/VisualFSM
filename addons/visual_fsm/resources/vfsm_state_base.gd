@@ -1,4 +1,4 @@
-class_name VisualFSMStateBase
+class_name VFSMStateBase
 extends Object
 
 #signal internal_event(params)

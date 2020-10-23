@@ -1,29 +1,29 @@
 tool
 extends ConfirmationDialog
 
-signal new_event_created(event)
-signal event_name_request(name)
+signal new_trigger_created(trigger)
+signal trigger_name_request(name)
 
 export(Texture) var script_icon
 
-var event_name: String setget _set_event_name, _get_event_name
+var trigger_name: String setget _set_trigger_name, _get_trigger_name
 
-onready var _event_name := $Margins/Content/EventName
+onready var _trigger_name := $Margins/Content/TriggerName
 onready var _name_status := $Margins/Content/Prompt/Margin/VBox/Name
 
 var _context: GDScriptFunctionState
 
 
 func _ready() -> void:
-	get_ok().text = "Create event"
+	get_ok().text = "Create trigger"
 	get_cancel().connect("pressed", self, "_on_canceled")
 	_validate()
 
 
 func show() -> void:
-	self.event_name = ""
+	self.trigger_name = ""
 	.show()
-	_event_name.grab_focus()
+	_trigger_name.grab_focus()
 
 
 func try_create(context: GDScriptFunctionState) -> void:
@@ -34,13 +34,13 @@ func try_create(context: GDScriptFunctionState) -> void:
 
 
 func close() -> void:
-	self.event_name = ""
+	self.trigger_name = ""
 	_context = null
 	hide()
 
 
 func deny_name_request(name: String) -> void:
-	_name_status.text = "An event with this name already exists."
+	_name_status.text = "An trigger with this name already exists."
 	_name_status.add_color_override("font_color", Color.red)
 
 
@@ -48,41 +48,41 @@ func approve_name_request(name: String) -> void:
 	self.state_name = name
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(trigger: InputEvent) -> void:
 	if not visible:
 		return
 
-	if event is InputEventKey and event.scancode == KEY_ENTER and not get_ok().disabled:
+	if trigger is InputEventKey and trigger.scancode == KEY_ENTER and not get_ok().disabled:
 		emit_signal("confirmed")
 		hide()
 
 
-func _set_event_name(value: String) -> void:
-	var caret_pos = _event_name.caret_position
-	_event_name.text = value
-	_event_name.caret_position = caret_pos
+func _set_trigger_name(value: String) -> void:
+	var caret_pos = _trigger_name.caret_position
+	_trigger_name.text = value
+	_trigger_name.caret_position = caret_pos
 	_validate()
 
 
-func _get_event_name() -> String:
-	return _event_name.text
+func _get_trigger_name() -> String:
+	return _trigger_name.text
 
 
 func _validate() -> void:
 	var ok_button = get_ok()
-	var invalid_event_name: bool = self.event_name.empty()
-	if invalid_event_name:
-		_name_status.text = "Event must have a name."
+	var invalid_trigger_name: bool = self.trigger_name.empty()
+	if invalid_trigger_name:
+		_name_status.text = "Trigger must have a name."
 		_name_status.add_color_override("font_color", Color.red)
 	else:
-		_name_status.text = "Event name is available."
+		_name_status.text = "Trigger name is available."
 		_name_status.add_color_override("font_color", Color.green)
 
-	ok_button.disabled = invalid_event_name
+	ok_button.disabled = invalid_trigger_name
 
 
 func _on_about_to_show() -> void:
-	_event_name.grab_focus()
+	_trigger_name.grab_focus()
 
 
 func _on_confirmed() -> void:
@@ -95,6 +95,6 @@ func _on_canceled() -> void:
 	close()
 
 
-func _on_EventName_text_changed(text: String) -> void:
-	emit_signal("event_name_request", text)
+func _on_TriggerName_text_changed(text: String) -> void:
+	emit_signal("trigger_name_request", text)
 

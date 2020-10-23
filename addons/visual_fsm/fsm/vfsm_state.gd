@@ -1,37 +1,37 @@
 tool
-class_name VisualFiniteStateMachineState
+class_name VFSMState
 extends Resource
 
-export(int) var fsm_id: int
+export(int) var vfsm_id: int
 export(String) var name: String
 export(Vector2) var position: Vector2
-export(Array) var event_ids: Array
+export(Array) var trigger_ids: Array
 export(GDScript) var custom_script: GDScript setget _set_custom_script
 
-var custom_script_instance: VisualFSMStateBase
+var custom_script_instance: VFSMStateBase
 
 
-func has_event(fsm_id: int) -> bool:
-	return event_ids.find(fsm_id) > -1
+func has_trigger(vfsm_id: int) -> bool:
+	return trigger_ids.find(vfsm_id) > -1
 
 
-func add_event(event: VisualFiniteStateMachineEvent) -> void:
-	event_ids.push_back(event.fsm_id)
+func add_trigger(trigger: VFSMTrigger) -> void:
+	trigger_ids.push_back(trigger.vfsm_id)
 	_changed()
 
 
-func remove_event(event: VisualFiniteStateMachineEvent) -> void:
-	event_ids.erase(event.fsm_id)
+func remove_trigger(trigger: VFSMTrigger) -> void:
+	trigger_ids.erase(trigger.vfsm_id)
 	_changed()
 
 
-func get_event_id_from_index(index: int) -> int:
-	return event_ids[index]
+func get_trigger_id_from_index(index: int) -> int:
+	return trigger_ids[index]
 
 
-func get_event_index(event: VisualFiniteStateMachineEvent) -> int:
-	for i in range(len(event_ids)):
-		if event.fsm_id == event_ids[i]:
+func get_trigger_index(trigger: VFSMTrigger) -> int:
+	for i in range(len(trigger_ids)):
+		if trigger.vfsm_id == trigger_ids[i]:
 			return i
 	return -1
 
@@ -56,8 +56,8 @@ func _set_custom_script(value: GDScript) -> void:
 
 
 func _init_script() -> void:
-	custom_script_instance = self.custom_script.new() as VisualFSMStateBase
-	assert(custom_script_instance, "VisualFSM: Script in state \"%s\" must extend VisualFSMStateBase" % self.name)
+	custom_script_instance = self.custom_script.new() as VFSMStateBase
+	assert(custom_script_instance, "VisualFSM: Script in state \"%s\" must extend VFSMStateBase" % self.name)
 	custom_script_instance.name = self.name
 
 

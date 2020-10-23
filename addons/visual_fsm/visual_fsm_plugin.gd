@@ -7,7 +7,7 @@ const FSM_TYPE_NAME := "VisualFSM"
 var _fsm_editor: Control
 var _tool_button: ToolButton
 var _fsm_script := preload("visual_fsm.gd")
-var _fsm_singleton: VisualFSMSingleton = preload("visual_fsm_singleton.gd").new()
+var _fsm_singleton: VFSMSingleton = preload("vfsm_singleton.gd").new()
 var _current_fsm_node
 
 
@@ -15,11 +15,11 @@ func _enter_tree() -> void:
 	add_custom_type(FSM_TYPE_NAME, "Node", _fsm_script, preload("resources/icons/visual_fsm.png"))
 
 	yield(get_tree(), "idle_frame")
-	_fsm_singleton.name = "VisualFSMSingleton"
+	_fsm_singleton.name = "VFSMSingleton"
 	_fsm_singleton.connect("edit_custom_script", self, "_on_edit_custom_script")
 	get_tree().root.add_child(_fsm_singleton)
 
-	_fsm_editor = preload("editor/visual_fsm_editor.tscn").instance()
+	_fsm_editor = preload("editor/vfsm_editor.tscn").instance()
 	_tool_button = add_control_to_bottom_panel(_fsm_editor, CONTROL_LABEL)
 	_tool_button.hide()
 	var selected_nodes := get_editor_interface().get_selection().get_selected_nodes()

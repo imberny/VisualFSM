@@ -1,40 +1,24 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://addons/visual_fsm/fsm/vfsm.gd" type="Script" id=2]
-[ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=3]
 [ext_resource path="res://addons/visual_fsm/demos/simple_traffic_lights/traffic_lights.gd" type="Script" id=5]
 
-[sub_resource type="Resource" id=1]
-script = ExtResource( 2 )
-start_state_fsm_id = 0
-start_position = Vector2( 100, 100 )
-
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.00784314, 1, 0.184314, 1 )
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.921569, 0.909804, 0.137255, 1 )
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 1, 0, 0, 1 )
-
-[sub_resource type="Resource" id=6]
-script = ExtResource( 2 )
-start_state_fsm_id = 0
-start_position = Vector2( 100, 100 )
 
 [node name="TrafficLightsDemo" type="Node2D"]
 
 [node name="TrafficLight1" type="Node2D" parent="."]
 position = Vector2( -63.908, 78.2032 )
 script = ExtResource( 5 )
-
-[node name="VisualFSM" type="Node" parent="TrafficLight1"]
-script = ExtResource( 3 )
-finite_state_machine = SubResource( 1 )
 
 [node name="StateContainer" type="HBoxContainer" parent="TrafficLight1"]
 margin_left = 271.609
@@ -78,7 +62,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -89,7 +73,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -103,7 +87,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 4 )
+custom_styles/panel = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -114,7 +98,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="Red" type="Node2D" parent="TrafficLight1/TrafficLights"]
 position = Vector2( 0, 90.8166 )
@@ -125,7 +109,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 5 )
+custom_styles/panel = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -136,15 +120,11 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="TrafficLight2" type="Node2D" parent="."]
 position = Vector2( 244.7, 82.4076 )
 script = ExtResource( 5 )
-
-[node name="VisualFSM" type="Node" parent="TrafficLight2"]
-script = ExtResource( 3 )
-finite_state_machine = SubResource( 6 )
 
 [node name="StateContainer" type="HBoxContainer" parent="TrafficLight2"]
 margin_left = 271.609
@@ -188,7 +168,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -199,7 +179,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="Yellow" type="Node2D" parent="TrafficLight2/TrafficLights"]
 position = Vector2( 0, 46.2492 )
@@ -210,7 +190,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 4 )
+custom_styles/panel = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -221,7 +201,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="Red" type="Node2D" parent="TrafficLight2/TrafficLights"]
 position = Vector2( 0, 90.8166 )
@@ -232,7 +212,7 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 5 )
+custom_styles/panel = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -243,6 +223,6 @@ margin_top = 13.4543
 margin_right = 46.7272
 margin_bottom = 53.4543
 rect_scale = Vector2( 0.68, 0.68 )
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="Node" type="Node" parent="."]

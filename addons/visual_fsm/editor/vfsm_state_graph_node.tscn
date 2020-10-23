@@ -11,7 +11,7 @@ bg_color = Color( 0.0941176, 0.0941176, 0.0941176, 1 )
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.0156863, 0.113725, 0.235294, 1 )
 
-[node name="StateGraphNode" type="GraphNode"]
+[node name="VFSMStateGraphNode" type="GraphNode"]
 margin_right = 200.0
 margin_bottom = 91.0
 rect_min_size = Vector2( 200, 0 )
@@ -86,14 +86,14 @@ margin_bottom = 76.0
 size_flags_horizontal = 3
 custom_styles/panel = SubResource( 2 )
 
-[node name="AddEventDropdown" type="MenuButton" parent="BottomPanel"]
+[node name="AddTriggerDropdown" type="MenuButton" parent="BottomPanel"]
 margin_right = 168.0
 margin_bottom = 20.0
-text = "Add event"
+text = "Add trigger"
 flat = false
 expand_icon = true
 switch_on_hover = true
 [connection signal="close_request" from="." to="." method="_on_StateGraphNode_close_request"]
 [connection signal="resize_request" from="." to="." method="_on_StateGraphNode_resize_request"]
 [connection signal="pressed" from="TitlePanel/HBox/Script" to="." method="_on_Script_pressed"]
-[connection signal="about_to_show" from="BottomPanel/AddEventDropdown" to="." method="_on_AddEvent_about_to_show"]
+[connection signal="about_to_show" from="BottomPanel/AddTriggerDropdown" to="." method="_on_AddEvent_about_to_show"]

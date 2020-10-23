@@ -1,4 +1,4 @@
-class_name VisualFSMEventBase
+class_name VFSMTriggerBase
 extends Object
 
 var name: String

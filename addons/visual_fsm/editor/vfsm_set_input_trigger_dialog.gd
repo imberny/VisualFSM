@@ -8,7 +8,7 @@ onready var _action_list := []
 var _context: GDScriptFunctionState
 
 
-func open(event_actions: Array, context: GDScriptFunctionState) -> void:
+func open(trigger_actions: Array, context: GDScriptFunctionState) -> void:
 	if _context:
 		_context.resume(false)
 	_context = context
@@ -23,7 +23,7 @@ func open(event_actions: Array, context: GDScriptFunctionState) -> void:
 		var action := CheckBox.new()
 		action.connect("toggled", self, "_on_Action_toggled")
 		action.text = input_action
-		action.pressed = input_action in event_actions
+		action.pressed = input_action in trigger_actions
 		actions.add_child(action)
 
 	_validate()
@@ -40,10 +40,10 @@ func get_selected_actions() -> Array:
 	return self._action_list.duplicate()
 
 
-func _unhandled_input(event) -> void:
+func _unhandled_input(trigger) -> void:
 	if not visible:
 		return
-	if event is InputEventKey and event.scancode == KEY_ENTER:
+	if trigger is InputEventKey and trigger.scancode == KEY_ENTER:
 		if not get_ok().disabled:
 			emit_signal("confirmed")
 			hide()

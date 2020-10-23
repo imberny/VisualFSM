@@ -1,5 +1,5 @@
 # State: %s
-extends VisualFSMStateBase
+extends VFSMStateBase
 
 
 func enter() -> void:

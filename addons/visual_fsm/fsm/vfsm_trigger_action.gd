@@ -1,6 +1,6 @@
 tool
-class_name VisualFiniteStateMachineEventAction
-extends VisualFiniteStateMachineEvent
+class_name VFSMTriggerAction
+extends VFSMTrigger
 
 export(Array) var action_list: Array
 

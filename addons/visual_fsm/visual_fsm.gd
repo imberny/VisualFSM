@@ -2,8 +2,8 @@ tool
 extends Node
 
 onready var _parent_node = get_parent() 
-var fsm: VisualFiniteStateMachine
-var _current_state: VisualFiniteStateMachineState
+var fsm: VFSM
+var _current_state: VFSMState
 
 func _ready():
 	if Engine.editor_hint:
@@ -11,7 +11,7 @@ func _ready():
 		set_physics_process(false)
 		set_process_input(false)
 		if not self.fsm:
-			self.fsm = VisualFiniteStateMachine.new()
+			self.fsm = VFSM.new()
 	else:
 		_current_state = fsm.get_start_state()
 		assert(_current_state, "VisualFSM: %s's finite state machine doesn't point to a starting state." % _parent_node.name)
@@ -19,7 +19,7 @@ func _ready():
 			_current_state.enter()
 
 
-func _input(event):
+func _input(trigger):
 	# handle transitions based on input action
 	pass
 
@@ -27,17 +27,17 @@ func _input(event):
 func _process(delta) -> void:
 	_current_state.update(_parent_node, delta)
 
-	var next_state: VisualFiniteStateMachineState
-	for event_id in _current_state.event_ids:
-		var event := fsm.get_event(event_id)
-		var go_to_next_event := false
-		if event is VisualFiniteStateMachineEventTimer:
-			go_to_next_event = event.is_over(delta)
-		elif event is VisualFiniteStateMachineEventScript:
-			go_to_next_event = event.is_triggered(_parent_node, delta)
+	var next_state: VFSMState
+	for trigger_id in _current_state.trigger_ids:
+		var trigger := fsm.get_trigger(trigger_id)
+		var go_to_next_trigger := false
+		if trigger is VFSMTriggerTimer:
+			go_to_next_trigger = trigger.is_over(delta)
+		elif trigger is VFSMTriggerScript:
+			go_to_next_trigger = trigger.is_triggered(_parent_node, delta)
 
-		if go_to_next_event:
-			next_state = fsm.get_next_state(_current_state, event)
+		if go_to_next_trigger:
+			next_state = fsm.get_next_state(_current_state, trigger)
 			break
 
 	if next_state:
@@ -45,8 +45,8 @@ func _process(delta) -> void:
 
 		_current_state = next_state
 		_current_state.enter()
-		for event_id in _current_state.event_ids:
-			fsm.get_event(event_id).enter()
+		for trigger_id in _current_state.trigger_ids:
+			fsm.get_trigger(trigger_id).enter()
 
 
 func _set(property, value):
@@ -69,7 +69,7 @@ func _get_property_list() -> Array:
 			"name": "finite_state_machine",
 			"type": TYPE_OBJECT,
 			"hint": PROPERTY_HINT_RESOURCE_TYPE,
-			"hint_string": "VisualFiniteStateMachine",
+			"hint_string": "VFSM",
 			"usage": PROPERTY_USAGE_NOEDITOR
 		}
 	]

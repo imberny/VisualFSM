@@ -1,5 +1,5 @@
 tool
-class_name VisualFSMSingleton
+class_name VFSMSingleton
 extends Node
 
 

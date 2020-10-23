@@ -23,7 +23,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VisualFSMGraphEdit" type="GraphEdit" parent="."]
+[node name="VFSMGraphEdit" type="GraphEdit" parent="."]
 margin_right = 1024.0
 margin_bottom = 600.0
 custom_constants/port_grab_distance_vertical = 24
@@ -34,7 +34,7 @@ script = ExtResource( 2 )
 
 [node name="DialogLayer" type="CanvasLayer" parent="."]
 
-[node name="NewScriptEventDialog" type="ConfirmationDialog" parent="DialogLayer"]
+[node name="NewScriptTriggerDialog" type="ConfirmationDialog" parent="DialogLayer"]
 anchor_left = 0.000976562
 anchor_right = 0.000976562
 anchor_bottom = 0.00333333
@@ -50,7 +50,7 @@ __meta__ = {
 }
 script_icon = ExtResource( 5 )
 
-[node name="Margins" type="MarginContainer" parent="DialogLayer/NewScriptEventDialog"]
+[node name="Margins" type="MarginContainer" parent="DialogLayer/NewScriptTriggerDialog"]
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 356.0
@@ -63,7 +63,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Content" type="VBoxContainer" parent="DialogLayer/NewScriptEventDialog/Margins"]
+[node name="Content" type="VBoxContainer" parent="DialogLayer/NewScriptTriggerDialog/Margins"]
 margin_left = 16.0
 margin_top = 16.0
 margin_right = 332.0
@@ -75,20 +75,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EventName" type="LineEdit" parent="DialogLayer/NewScriptEventDialog/Margins/Content"]
+[node name="TriggerName" type="LineEdit" parent="DialogLayer/NewScriptTriggerDialog/Margins/Content"]
 margin_right = 316.0
 margin_bottom = 24.0
 placeholder_text = "Event name"
 caret_blink = true
 caret_blink_speed = 0.5
 
-[node name="Prompt" type="PanelContainer" parent="DialogLayer/NewScriptEventDialog/Margins/Content"]
+[node name="Prompt" type="PanelContainer" parent="DialogLayer/NewScriptTriggerDialog/Margins/Content"]
 margin_top = 34.0
 margin_right = 316.0
 margin_bottom = 68.0
 custom_styles/panel = SubResource( 1 )
 
-[node name="Margin" type="MarginContainer" parent="DialogLayer/NewScriptEventDialog/Margins/Content/Prompt"]
+[node name="Margin" type="MarginContainer" parent="DialogLayer/NewScriptTriggerDialog/Margins/Content/Prompt"]
 margin_right = 316.0
 margin_bottom = 34.0
 custom_constants/margin_right = 10
@@ -96,14 +96,14 @@ custom_constants/margin_top = 10
 custom_constants/margin_left = 10
 custom_constants/margin_bottom = 10
 
-[node name="VBox" type="VBoxContainer" parent="DialogLayer/NewScriptEventDialog/Margins/Content/Prompt/Margin"]
+[node name="VBox" type="VBoxContainer" parent="DialogLayer/NewScriptTriggerDialog/Margins/Content/Prompt/Margin"]
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 306.0
 margin_bottom = 24.0
 custom_constants/separation = 5
 
-[node name="Name" type="Label" parent="DialogLayer/NewScriptEventDialog/Margins/Content/Prompt/Margin/VBox"]
+[node name="Name" type="Label" parent="DialogLayer/NewScriptTriggerDialog/Margins/Content/Prompt/Margin/VBox"]
 margin_right = 296.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
@@ -327,16 +327,14 @@ margin_right = 248.0
 margin_bottom = 24.0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "Select at least one action"
-[connection signal="_end_node_move" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_end_node_move"]
-[connection signal="connection_request" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_connection_request"]
-[connection signal="connection_to_empty" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_connection_to_empty"]
-[connection signal="disconnection_request" from="VisualFSMGraphEdit" to="VisualFSMGraphEdit" method="_on_disconnection_request"]
-[connection signal="confirmed" from="DialogLayer/NewScriptEventDialog" to="DialogLayer/NewScriptEventDialog" method="_on_confirmed"]
-[connection signal="event_name_request" from="DialogLayer/NewScriptEventDialog" to="VisualFSMGraphEdit" method="_on_Dialog_event_name_request"]
-[connection signal="new_event_created" from="DialogLayer/NewScriptEventDialog" to="VisualFSMGraphEdit" method="_on_Dialog_new_event_created"]
-[connection signal="text_changed" from="DialogLayer/NewScriptEventDialog/Margins/Content/EventName" to="DialogLayer/NewScriptEventDialog" method="_on_EventName_text_changed"]
+[connection signal="_end_node_move" from="VFSMGraphEdit" to="VFSMGraphEdit" method="_on_end_node_move"]
+[connection signal="connection_request" from="VFSMGraphEdit" to="VFSMGraphEdit" method="_on_connection_request"]
+[connection signal="connection_to_empty" from="VFSMGraphEdit" to="VFSMGraphEdit" method="_on_connection_to_empty"]
+[connection signal="disconnection_request" from="VFSMGraphEdit" to="VFSMGraphEdit" method="_on_disconnection_request"]
+[connection signal="confirmed" from="DialogLayer/NewScriptTriggerDialog" to="DialogLayer/NewScriptTriggerDialog" method="_on_confirmed"]
+[connection signal="text_changed" from="DialogLayer/NewScriptTriggerDialog/Margins/Content/TriggerName" to="DialogLayer/NewScriptTriggerDialog" method="_on_TriggerName_text_changed"]
 [connection signal="confirmed" from="DialogLayer/NewStateDialog" to="DialogLayer/NewStateDialog" method="_on_confirmed"]
-[connection signal="state_name_request" from="DialogLayer/NewStateDialog" to="VisualFSMGraphEdit" method="_on_StateCreateDialog_state_name_request"]
+[connection signal="state_name_request" from="DialogLayer/NewStateDialog" to="VFSMGraphEdit" method="_on_StateCreateDialog_state_name_request"]
 [connection signal="text_changed" from="DialogLayer/NewStateDialog/Margins/Content/StateName" to="DialogLayer/NewStateDialog" method="_on_StateName_text_changed"]
 [connection signal="confirmed" from="DialogLayer/TimerDurationDialog" to="DialogLayer/TimerDurationDialog" method="_on_confirmed"]
 [connection signal="text_changed" from="DialogLayer/TimerDurationDialog/Margins/Content/Duration" to="DialogLayer/TimerDurationDialog" method="_on_Duration_text_changed"]

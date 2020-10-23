@@ -1,6 +1,6 @@
 tool
-class_name VisualFiniteStateMachineEventTimer
-extends VisualFiniteStateMachineEvent
+class_name VFSMTriggerTimer
+extends VFSMTrigger
 
 export(float) var duration
 

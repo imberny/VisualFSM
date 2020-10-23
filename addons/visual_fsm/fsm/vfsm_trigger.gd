@@ -1,8 +1,8 @@
 tool
-class_name VisualFiniteStateMachineEvent
+class_name VFSMTrigger
 extends Resource
 
-export(int) var fsm_id: int
+export(int) var vfsm_id: int
 export(String) var name: String
 
 
