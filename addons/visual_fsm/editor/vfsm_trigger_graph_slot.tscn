@@ -24,8 +24,16 @@ visible = false
 margin_right = 184.0
 margin_bottom = 32.0
 
-[node name="ActionLabel" type="Label" parent="Action"]
-margin_right = 120.0
+[node name="ActionMargins" type="MarginContainer" parent="Action"]
+margin_right = 28.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+custom_constants/margin_right = 10
+custom_constants/margin_left = 10
+
+[node name="ActionLabel" type="Label" parent="Action/ActionMargins"]
+margin_left = 10.0
+margin_right = 18.0
 margin_bottom = 32.0
 focus_mode = 2
 size_flags_horizontal = 3

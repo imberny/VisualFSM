@@ -96,4 +96,4 @@ switch_on_hover = true
 [connection signal="close_request" from="." to="." method="_on_StateGraphNode_close_request"]
 [connection signal="resize_request" from="." to="." method="_on_StateGraphNode_resize_request"]
 [connection signal="pressed" from="TitlePanel/HBox/Script" to="." method="_on_Script_pressed"]
-[connection signal="about_to_show" from="BottomPanel/AddTriggerDropdown" to="." method="_on_AddEvent_about_to_show"]
+[connection signal="about_to_show" from="BottomPanel/AddTriggerDropdown" to="." method="_on_AddTriggerDropdown_about_to_show"]

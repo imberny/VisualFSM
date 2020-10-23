@@ -1,13 +1,48 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://addons/visual_fsm/demos/simple_ai_character/simple_ai_jumpter.gd" type="Script" id=1]
+[ext_resource path="res://addons/visual_fsm/demos/simple_ai_character/vfsm_simple_ai_jumpter.gd" type="Script" id=1]
 [ext_resource path="res://addons/visual_fsm/demos/icon.png" type="Texture" id=2]
+[ext_resource path="res://addons/visual_fsm/fsm/vfsm_state.gd" type="Script" id=3]
+[ext_resource path="res://addons/visual_fsm/fsm/vfsm.gd" type="Script" id=4]
+[ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=5]
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="GDScript" id=1]
+script/source = "# State: WalkingRight
+extends VFSMStateBase
+
+
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+    pass
+
+
+func exit() -> void:
+	pass"
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 3 )
+vfsm_id = 1
+name = "WalkingRight"
+position = Vector2( 383, 92 )
+trigger_ids = [  ]
+custom_script = SubResource( 1 )
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 4 )
+start_state_vfsm_id = 1
+start_position = Vector2( 100, 100 )
+states = [ SubResource( 2 ) ]
+triggers = [  ]
+transitions = [  ]
+
+[sub_resource type="CapsuleShape2D" id=4]
 radius = 29.1352
 height = 3.62146
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 30.7244, 31.4757 )
 
 [node name="World" type="Node2D"]
@@ -20,11 +55,15 @@ speed = 50.0
 jump_speed = 80.0
 gravity = 98.0
 
+[node name="VisualFSM" type="Node" parent="SimpleAIJumper"]
+script = ExtResource( 5 )
+finite_state_machine = SubResource( 3 )
+
 [node name="Sprite" type="Sprite" parent="SimpleAIJumper"]
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SimpleAIJumper"]
-shape = SubResource( 1 )
+shape = SubResource( 4 )
 
 [node name="Camera2D" type="Camera2D" parent="SimpleAIJumper"]
 current = true
@@ -55,7 +94,7 @@ modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D"]
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="Platforms"]
 position = Vector2( 61.3316, 62.2965 )
@@ -66,7 +105,7 @@ modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D2"]
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="Platforms"]
 position = Vector2( 119.983, 62.2965 )
@@ -77,7 +116,7 @@ modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D3"]
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="Platforms"]
 position = Vector2( 247.039, 62.2965 )
@@ -88,7 +127,7 @@ modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D4"]
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="StaticBody2D5" type="StaticBody2D" parent="Platforms"]
 position = Vector2( 308.511, 62.2965 )
@@ -99,7 +138,7 @@ modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D5"]
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="StaticBody2D6" type="StaticBody2D" parent="Platforms"]
 position = Vector2( 365.529, 73.8782 )
@@ -110,7 +149,7 @@ modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D6"]
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="StaticBody2D7" type="StaticBody2D" parent="Platforms"]
 position = Vector2( 420.765, 89.9144 )
@@ -121,7 +160,7 @@ modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D7"]
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="StaticBody2D8" type="StaticBody2D" parent="Platforms"]
 position = Vector2( 471.546, 110.405 )
@@ -132,7 +171,7 @@ modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D8"]
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="StaticBody2D9" type="StaticBody2D" parent="Platforms"]
 position = Vector2( 590.98, 110.405 )
@@ -143,7 +182,7 @@ modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D9"]
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="StaticBody2D10" type="StaticBody2D" parent="Platforms"]
 position = Vector2( 652.398, 110.405 )
@@ -154,7 +193,7 @@ modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D10"]
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="StaticBody2D11" type="StaticBody2D" parent="Platforms"]
 position = Vector2( 776.233, 110.405 )
@@ -165,7 +204,7 @@ modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D11"]
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="StaticBody2D12" type="StaticBody2D" parent="Platforms"]
 position = Vector2( 933.032, 181.677 )
@@ -176,7 +215,7 @@ modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D12"]
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="StaticBody2D13" type="StaticBody2D" parent="Platforms"]
 position = Vector2( 993.613, 181.677 )
@@ -187,4 +226,4 @@ modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D13"]
-shape = SubResource( 2 )
+shape = SubResource( 5 )

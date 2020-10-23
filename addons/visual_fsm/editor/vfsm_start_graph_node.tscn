@@ -3,7 +3,7 @@
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.0941176, 0.0941176, 0.0941176, 1 )
 
-[node name="VFSMStateGraphNode" type="GraphNode"]
+[node name="VFSMStartGraphNode" type="GraphNode"]
 margin_right = 100.0
 margin_bottom = 44.0
 rect_min_size = Vector2( 100, 0 )

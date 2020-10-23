@@ -5,7 +5,7 @@ extends PanelContainer
 signal close_request(trigger_slot)
 
 onready var _timer_duration_field := $Timer/DurationMargins/Duration
-onready var _action_title_field := $Action/ActionLabel
+onready var _action_title_field := $Action/ActionMargins/ActionLabel
 onready var _script_title_field := $Script/TitleMargins/Title
 
 var timer_duration_dialog: AcceptDialog

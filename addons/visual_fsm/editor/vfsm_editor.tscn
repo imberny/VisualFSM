@@ -8,7 +8,6 @@
 [ext_resource path="res://addons/visual_fsm/editor/dialogs/vfsm_set_input_trigger_dialog.gd" type="Script" id=6]
 [ext_resource path="res://addons/visual_fsm/editor/vfsm_editor.gd" type="Script" id=7]
 
-
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.113725, 0.113725, 0.117647, 1 )
 
@@ -40,9 +39,9 @@ anchor_left = 0.000976562
 anchor_right = 0.000976562
 anchor_bottom = 0.00333333
 margin_left = 329.0
-margin_top = 228.0
+margin_top = 229.0
 margin_right = 693.0
-margin_bottom = 370.0
+margin_bottom = 369.0
 rect_min_size = Vector2( 350, 70 )
 window_title = "New event"
 script = ExtResource( 1 )
@@ -55,7 +54,7 @@ script_icon = ExtResource( 5 )
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 356.0
-margin_bottom = 108.0
+margin_bottom = 106.0
 custom_constants/margin_right = 16
 custom_constants/margin_top = 16
 custom_constants/margin_left = 16
@@ -68,7 +67,7 @@ __meta__ = {
 margin_left = 16.0
 margin_top = 16.0
 margin_right = 332.0
-margin_bottom = 84.0
+margin_bottom = 82.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 10
@@ -110,7 +109,7 @@ margin_bottom = 14.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/font_color = Color( 1, 0, 0, 1 )
-text = "Event must have a name."
+text = "Trigger must have a name."
 valign = 1
 
 [node name="NewStateDialog" type="ConfirmationDialog" parent="DialogLayer"]
@@ -333,6 +332,8 @@ text = "Select at least one action"
 [connection signal="connection_to_empty" from="VFSMGraphEdit" to="VFSMGraphEdit" method="_on_connection_to_empty"]
 [connection signal="disconnection_request" from="VFSMGraphEdit" to="VFSMGraphEdit" method="_on_disconnection_request"]
 [connection signal="confirmed" from="DialogLayer/NewScriptTriggerDialog" to="DialogLayer/NewScriptTriggerDialog" method="_on_confirmed"]
+[connection signal="new_trigger_created" from="DialogLayer/NewScriptTriggerDialog" to="VFSMGraphEdit" method="_on_Dialog_new_trigger_created"]
+[connection signal="trigger_name_request" from="DialogLayer/NewScriptTriggerDialog" to="VFSMGraphEdit" method="_on_Dialog_trigger_name_request"]
 [connection signal="text_changed" from="DialogLayer/NewScriptTriggerDialog/Margins/Content/TriggerName" to="DialogLayer/NewScriptTriggerDialog" method="_on_TriggerName_text_changed"]
 [connection signal="confirmed" from="DialogLayer/NewStateDialog" to="DialogLayer/NewStateDialog" method="_on_confirmed"]
 [connection signal="state_name_request" from="DialogLayer/NewStateDialog" to="VFSMGraphEdit" method="_on_StateCreateDialog_state_name_request"]

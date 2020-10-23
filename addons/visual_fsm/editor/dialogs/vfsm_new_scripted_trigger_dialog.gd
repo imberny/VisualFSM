@@ -20,21 +20,17 @@ func _ready() -> void:
 	_validate()
 
 
-func show() -> void:
-	self.trigger_name = ""
-	.show()
-	_trigger_name.grab_focus()
-
-
-func try_create(context: GDScriptFunctionState) -> void:
+func open(context: GDScriptFunctionState) -> void:
 	if _context:
 		_context.resume(false)
 	_context = context
+
 	show()
+	self.trigger_name = ""
+	_trigger_name.grab_focus()
 
 
 func close() -> void:
-	self.trigger_name = ""
 	_context = null
 	hide()
 

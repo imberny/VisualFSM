@@ -168,7 +168,7 @@ func _on_disconnection_request(from, from_slot, to, to_slot):
 		_vfsm.remove_transition(from_node.state, trigger)
 	else: # start node connection
 		# start_target may have been reconnected during yield
-		if _vfsm.get_start_state().fsm_id == to_node.state.fsm_id:
+		if _vfsm.get_start_state().vfsm_id == to_node.state.vfsm_id:
 			_vfsm.set_start_state(null)
 
 
@@ -201,7 +201,7 @@ func _on_StateNode_rename_request(
 func _on_end_node_move():
 	for child in get_children():
 		if child is VFSMStateNode:
-			var state := _vfsm.get_state(child.state.fsm_id)
+			var state := _vfsm.get_state(child.state.vfsm_id)
 			state.position = child.offset
 		elif child is GraphNode and child.name == "VFSMStartNode":
 			_vfsm.start_position = child.offset

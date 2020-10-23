@@ -70,7 +70,7 @@ func _has_timer_trigger(state: VFSMState) -> bool:
 	return false
 
 
-func _on_AddTrigger_about_to_show() -> void:
+func _on_AddTriggerDropdown_about_to_show() -> void:
 	var popup: PopupMenu = _add_trigger_dropdown.get_popup()
 	if not popup.is_inside_tree():
 		yield(popup, "tree_entered")
@@ -80,7 +80,7 @@ func _on_AddTrigger_about_to_show() -> void:
 	var options := []
 	# TODO: potential issue with ordering
 	for script_trigger in fsm.get_script_triggers():
-		if not self.state.has_trigger(script_trigger.fsm_id):
+		if not self.state.has_trigger(script_trigger.vfsm_id):
 			options.push_back(script_trigger)
 	for trigger in options:
 		popup.add_icon_item(script_icon, trigger.name)
@@ -104,7 +104,7 @@ func _on_AddTrigger_index_pressed(index: int) -> void:
 	else: # reuse existing script trigger
 		var options := []
 		for script_trigger in fsm.get_script_triggers():
-			if not self.state.has_trigger(script_trigger.fsm_id):
+			if not self.state.has_trigger(script_trigger.vfsm_id):
 				options.push_back(script_trigger)
 		var selected_trigger = options[index]
 		self.state.add_trigger(selected_trigger)
