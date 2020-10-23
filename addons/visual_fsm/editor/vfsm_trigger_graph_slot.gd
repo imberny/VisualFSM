@@ -35,7 +35,7 @@ func _on_CloseButton_pressed() -> void:
 func _on_Script_pressed() -> void:
 	assert(self.trigger is VFSMTriggerScript,
 		"VisualFSM: Trigger \"%s\" should be of type VFSMTriggerScript" % self.trigger.name)
-	$"/root/VisualFSMSingleton".emit_signal("edit_custom_script", self.trigger.custom_script)
+	$"/root/VFSMSingleton".emit_signal("edit_custom_script", self.trigger.custom_script)
 
 
 func try_set_timer_duration() -> void:

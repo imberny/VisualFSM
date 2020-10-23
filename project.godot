@@ -14,15 +14,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/visual_fsm/fsm/vfsm.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "VFSMDemoSimpleAIJumper",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/demos/simple_ai_character/vfsm_simple_ai_jumpter.gd"
+}, {
 "base": "Node2D",
 "class": "VFSMDemoTrafficLightsController",
 "language": "GDScript",
 "path": "res://addons/visual_fsm/demos/simple_traffic_lights/traffic_lights.gd"
-}, {
-"base": "KinematicBody2D",
-"class": "VFSMSimpleAIJumper",
-"language": "GDScript",
-"path": "res://addons/visual_fsm/demos/simple_ai_character/vfsm_simple_ai_jumpter.gd"
 }, {
 "base": "Node",
 "class": "VFSMSingleton",
@@ -76,8 +76,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "VFSM": "",
+"VFSMDemoSimpleAIJumper": "",
 "VFSMDemoTrafficLightsController": "",
-"VFSMSimpleAIJumper": "",
 "VFSMSingleton": "",
 "VFSMState": "",
 "VFSMStateBase": "",
