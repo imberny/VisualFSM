@@ -3,6 +3,8 @@
 .import/
 export.cfg
 export_presets.cfg
+project.godot
+default_env.tres
 
 # Mono-specific ignores
 .mono/
