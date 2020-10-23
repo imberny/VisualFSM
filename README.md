@@ -7,7 +7,7 @@ A visual finite state machine editor plugin for Godot.
 - Visualize and edit your finite state machines with this intuitive editor.
 - Trigger based transitions to simplify your states' logic.
 - Use prebuilt triggers, or script your own.
-- Minimal setup required. Just add a VisualFSM node below the node you want controlled!
+- Minimal setup required. Just add a VisualFSM node below the node you want controlled and start building your graph!
 
 ## Tutorial
 * Add a VisualFSM node as a child to the node you want to control.
