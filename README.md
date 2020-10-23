@@ -1,6 +1,7 @@
 # VisualFSM
 
 A visual finite state machine editor plugin for Godot.
+![](addons/visual_fsm/resources/screenshots/demo.gif)
 
 ## Features
 
