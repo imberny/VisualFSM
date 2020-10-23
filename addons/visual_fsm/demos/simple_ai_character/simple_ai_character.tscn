@@ -2,10 +2,13 @@
 
 [ext_resource path="res://addons/visual_fsm/demos/simple_ai_character/simple_ai_jumpter.gd" type="Script" id=1]
 [ext_resource path="res://addons/visual_fsm/demos/icon.png" type="Texture" id=2]
-[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_event_script.gd" type="Script" id=3]
-[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine_state.gd" type="Script" id=4]
-[ext_resource path="res://addons/visual_fsm/fsm/visual_finite_state_machine.gd" type="Script" id=5]
+[ext_resource path="res://addons/visual_fsm/fsm/vfsm_trigger_script.gd" type="Script" id=3]
+[ext_resource path="res://addons/visual_fsm/fsm/vfsm_state.gd" type="Script" id=4]
+[ext_resource path="res://addons/visual_fsm/fsm/vfsm.gd" type="Script" id=5]
 [ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=6]
+
+
+
 
 [sub_resource type="GDScript" id=1]
 script/source = "# Event: detect gap

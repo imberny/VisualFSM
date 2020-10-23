@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_state_node.gd" type="Script" id=1]
-[ext_resource path="res://addons/visual_fsm/resources/icons/icon_script.svg" type="Texture" id=2]
-[ext_resource path="res://addons/visual_fsm/resources/icons/icon_timer.svg" type="Texture" id=3]
-[ext_resource path="res://addons/visual_fsm/resources/icons/icon_joypad.svg" type="Texture" id=4]
+[ext_resource path="res://addons/visual_fsm/resources/icons/icon_timer.svg" type="Texture" id=1]
+[ext_resource path="res://addons/visual_fsm/resources/icons/icon_joypad.svg" type="Texture" id=2]
+[ext_resource path="res://addons/visual_fsm/resources/icons/icon_script.svg" type="Texture" id=3]
+[ext_resource path="res://addons/visual_fsm/editor/vfsm_state_graph_node.gd" type="Script" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.0941176, 0.0941176, 0.0941176, 1 )
@@ -33,13 +33,13 @@ slot/1/left_color = Color( 1, 1, 1, 1 )
 slot/1/right_enabled = false
 slot/1/right_type = 0
 slot/1/right_color = Color( 1, 1, 1, 1 )
-script = ExtResource( 1 )
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-timer_icon = ExtResource( 3 )
-action_icon = ExtResource( 4 )
-script_icon = ExtResource( 2 )
+timer_icon = ExtResource( 1 )
+action_icon = ExtResource( 2 )
+script_icon = ExtResource( 3 )
 
 [node name="TitlePanel" type="PanelContainer" parent="."]
 margin_left = 16.0
@@ -76,7 +76,7 @@ margin_left = 140.0
 margin_right = 168.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 24 )
-icon = ExtResource( 2 )
+icon = ExtResource( 3 )
 
 [node name="BottomPanel" type="PanelContainer" parent="."]
 margin_left = 16.0

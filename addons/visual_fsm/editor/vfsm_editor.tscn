@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_graph_edit.gd" type="Script" id=1]
-[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_editor.gd" type="Script" id=2]
-[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_new_event_dialog.gd" type="Script" id=3]
-[ext_resource path="res://addons/visual_fsm/resources/icons/icon_script.svg" type="Texture" id=4]
-[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_timer_dialog.gd" type="Script" id=5]
-[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_new_input_event_dialog.gd" type="Script" id=6]
-[ext_resource path="res://addons/visual_fsm/editor/visual_fsm_new_state_dialog.gd" type="Script" id=7]
+[ext_resource path="res://addons/visual_fsm/editor/vfsm_new_scripted_trigger_dialog.gd" type="Script" id=1]
+[ext_resource path="res://addons/visual_fsm/editor/vfsm_graph_edit.gd" type="Script" id=2]
+[ext_resource path="res://addons/visual_fsm/editor/vfsm_new_state_dialog.gd" type="Script" id=3]
+[ext_resource path="res://addons/visual_fsm/editor/vfsm_set_timer_dialog.gd" type="Script" id=4]
+[ext_resource path="res://addons/visual_fsm/resources/icons/icon_script.svg" type="Texture" id=5]
+[ext_resource path="res://addons/visual_fsm/editor/vfsm_set_input_trigger_dialog.gd" type="Script" id=6]
+[ext_resource path="res://addons/visual_fsm/editor/vfsm_editor.gd" type="Script" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.113725, 0.113725, 0.117647, 1 )
@@ -18,7 +18,7 @@ bg_color = Color( 0.113725, 0.113725, 0.117647, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_min_size = Vector2( 0, 384 )
-script = ExtResource( 2 )
+script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -30,7 +30,7 @@ custom_constants/port_grab_distance_vertical = 24
 custom_constants/port_grab_distance_horizontal = 32
 custom_constants/bezier_len_neg = 600
 right_disconnects = true
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 
 [node name="DialogLayer" type="CanvasLayer" parent="."]
 
@@ -44,11 +44,11 @@ margin_right = 693.0
 margin_bottom = 370.0
 rect_min_size = Vector2( 350, 70 )
 window_title = "New event"
-script = ExtResource( 3 )
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-script_icon = ExtResource( 4 )
+script_icon = ExtResource( 5 )
 
 [node name="Margins" type="MarginContainer" parent="DialogLayer/NewScriptEventDialog"]
 margin_left = 8.0
@@ -122,7 +122,7 @@ margin_right = 679.0
 margin_bottom = 371.0
 rect_min_size = Vector2( 350, 160 )
 window_title = "New state"
-script = ExtResource( 7 )
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
@@ -190,7 +190,7 @@ autowrap = true
 margin_right = 181.0
 margin_bottom = 100.0
 window_title = "Set timer duration"
-script = ExtResource( 5 )
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
