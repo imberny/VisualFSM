@@ -28,7 +28,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			go_to_next_trigger = trigger.is_trigger_action(event)
 
 		if go_to_next_trigger:
-			get_tree().set_input_as_handled()
 			next_state = fsm.get_next_state(_current_state, trigger)
 			break
 

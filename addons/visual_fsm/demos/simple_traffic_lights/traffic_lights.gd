@@ -6,19 +6,19 @@ var current_state_name: String setget _set_current_state_name
 var available_actions: Array setget _set_available_actions
 
 
-func green():
+func green() -> void:
 	$TrafficLights/Green/Cover.visible = false
 	$TrafficLights/Yellow/Cover.visible = true
 	$TrafficLights/Red/Cover.visible = true
 
 
-func yellow():
+func yellow() -> void:
 	$TrafficLights/Green/Cover.visible = true
 	$TrafficLights/Yellow/Cover.visible = false
 	$TrafficLights/Red/Cover.visible = true
 
 
-func red():
+func red() -> void:
 	$TrafficLights/Green/Cover.visible = true
 	$TrafficLights/Yellow/Cover.visible = true
 	$TrafficLights/Red/Cover.visible = false
