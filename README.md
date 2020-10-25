@@ -1,6 +1,7 @@
 # VisualFSM
 
 A visual finite state machine editor plugin for Godot.
+![](addons/visual_fsm/resources/screenshots/demo.gif)
 
 ## Features
 
@@ -17,6 +18,8 @@ A visual finite state machine editor plugin for Godot.
 * Click the script icon to edit this state's script. The "object" parameter corresponds to the parent node.
 * Click on the "Add trigger" dropdown and select the trigger type.
 * A new connection is added to the right of the trigger: drag it to connect to a new state.
+* If you added a timer trigger, click on the timer icon to adjust the duration.
+* If you added an input action trigger, click on the icon to select the actions to react to.
 * If you added a scripted trigger, click on the script icon to edit it. Return true in `is_triggered` when the transition should occur.
 
 ## Planned features
