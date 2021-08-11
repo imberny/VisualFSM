@@ -8,8 +8,26 @@ export(Vector2) var position: Vector2
 export(Array) var trigger_ids: Array
 export(GDScript) var custom_script: GDScript setget _set_custom_script
 
+const STATE_TEMPLATE_PATH := "res://addons/visual_fsm/resources/state_template.txt"
+const SCRIPT_FIRST_LINE_TEMPLATE = "# State: %s\n"
+
+var _state_custom_script_template: String
 var custom_script_instance: VFSMStateBase
 
+
+func _read_from_file(path: String) -> String:
+	var f = File.new()
+	var err = f.open(path, File.READ)
+	if err != OK:
+		push_warning("Could not open file \"%s\", error code: %s" % [path, err])
+		return ""
+	var content = f.get_as_text()
+	f.close()
+	return content
+
+
+func _init():
+	_state_custom_script_template = _read_from_file(STATE_TEMPLATE_PATH)
 
 func has_trigger(vfsm_id: int) -> bool:
 	return trigger_ids.find(vfsm_id) > -1
@@ -46,6 +64,18 @@ func update(object, delta: float) -> void:
 
 func exit() -> void:
 	custom_script_instance.exit()
+
+
+func rename(new_name: String) -> void:
+	var old_name = self.name
+	self.name = new_name
+
+
+func new_script() -> void:
+	assert(not self.name.empty())
+	var custom_script := GDScript.new()
+	custom_script.source_code = (SCRIPT_FIRST_LINE_TEMPLATE % self.name) + _state_custom_script_template
+	self.custom_script = custom_script
 
 
 func _set_custom_script(value: GDScript) -> void:

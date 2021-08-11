@@ -41,7 +41,6 @@ func _read_from_file(path: String) -> String:
 func _init():
 	if not start_position:
 		start_position = Vector2(100, 100)
-	_state_custom_script_template = _read_from_file(STATE_TEMPLATE_PATH)
 	_trigger_custom_script_template = _read_from_file(TRIGGER_TEMPLATE_PATH)
 
 
@@ -126,9 +125,7 @@ func create_state(name: String, position: Vector2,
 	_next_state_vfsm_id += 1
 	state.name = name
 	state.position = position
-	var custom_script := GDScript.new()
-	custom_script.source_code = _state_custom_script_template % state.name
-	state.custom_script = custom_script
+	state.new_script()
 	_states[state.vfsm_id] = state
 	_transitions[state.vfsm_id] = {}
 	if from_state and from_trigger:

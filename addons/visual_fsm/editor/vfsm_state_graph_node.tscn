@@ -61,7 +61,7 @@ size_flags_vertical = 3
 custom_constants/margin_right = 8
 custom_constants/margin_left = 10
 
-[node name="Name" type="Label" parent="TitlePanel/HBox/Margins"]
+[node name="Name" type="LineEdit" parent="TitlePanel/HBox/Margins"]
 margin_left = 10.0
 margin_right = 128.0
 margin_bottom = 24.0
@@ -69,7 +69,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 5.0
 text = "State name"
-valign = 1
+editable = false
 
 [node name="Script" type="Button" parent="TitlePanel/HBox"]
 margin_left = 140.0
@@ -93,7 +93,11 @@ text = "Add trigger"
 flat = false
 expand_icon = true
 switch_on_hover = true
+
 [connection signal="close_request" from="." to="." method="_on_StateGraphNode_close_request"]
 [connection signal="resize_request" from="." to="." method="_on_StateGraphNode_resize_request"]
+[connection signal="focus_exited" from="TitlePanel/HBox/Margins/Name" to="." method="_on_Name_focus_exited"]
+[connection signal="gui_input" from="TitlePanel/HBox/Margins/Name" to="." method="_on_Name_gui_input"]
+[connection signal="text_entered" from="TitlePanel/HBox/Margins/Name" to="." method="_on_Name_text_entered"]
 [connection signal="pressed" from="TitlePanel/HBox/Script" to="." method="_on_Script_pressed"]
 [connection signal="about_to_show" from="BottomPanel/AddTriggerDropdown" to="." method="_on_AddTriggerDropdown_about_to_show"]

@@ -128,3 +128,33 @@ func _on_Script_pressed() -> void:
 	$"/root/VFSMSingleton".emit_signal(
 		"edit_custom_script", self.state.custom_script
 	)
+
+
+func _on_Name_gui_input(event: InputEvent) -> void:
+	if not _state_label.editable and event is InputEventMouseButton:
+		var mouse_event = event as InputEventMouseButton
+		if mouse_event.button_index == BUTTON_LEFT and mouse_event.pressed:
+			_state_label.editable = true
+
+
+func _validate_name(new_name: String) -> bool:
+	if self.fsm.has_state(new_name):
+		push_error("VisualFSM: A state named \"%s\" already exists." % new_name)
+		return false
+	if new_name.empty():
+		push_error("VisualFSM: The state name cannot be empty.")
+		return false
+	return true
+
+func _on_Name_text_entered(new_text: String) -> void:
+	if _validate_name(new_text):
+		_state_label.editable = false
+
+
+func _on_Name_focus_exited():
+	var new_name = _state_label.text
+	if _validate_name(new_name):
+		self.state.rename(new_name)
+	else:
+		_state_label.text = self.state.name
+	_state_label.editable = false

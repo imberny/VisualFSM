@@ -1,4 +1,3 @@
-# State: %s
 extends VFSMStateBase
 
 
