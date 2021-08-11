@@ -34,6 +34,7 @@ func close() -> void:
 func deny_name_request(name: String) -> void:
 	_name_status.text = "A state with this name already exists." 
 	_name_status.add_color_override("font_color", Color.red)
+	get_ok().disabled = true
 
 
 func approve_name_request(name: String) -> void:
