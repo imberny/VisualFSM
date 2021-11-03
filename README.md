@@ -1,3 +1,9 @@
+# Warning - I'm not working on this anymore!
+
+I'm not using Godot anymore and further work on this plugin is pretty unlikely. Might get back on it if Godot 4.0 manages to pull me back, but don't count on it! Feel free to clone/fork/modify.
+
+---
+
 # VisualFSM
 
 A visual finite state machine editor plugin for Godot.
@@ -22,14 +28,6 @@ A visual finite state machine editor plugin for Godot.
 * If you added an input action trigger, click on the icon to select the actions to react to.
 * If you added a scripted trigger, click on the script icon to edit it. Return true in `is_triggered` when the transition should occur.
 
-## Planned features
-
-- [ ] In-editor tutorial
-- [ ] Hierarchical state machine. Turn a state into an FSM.
-- [ ] Unit tests.
-- [ ] Save scripts as files (all scripts are currently built into the fsm resource)
-- [ ] Allow duplication of finite state machine resource when copying VisualFSM node. ([see related issue](https://github.com/godotengine/godot/issues/33079))
-- [ ] More demos
 
 ## Why another FSM plugin for Godot?
 
