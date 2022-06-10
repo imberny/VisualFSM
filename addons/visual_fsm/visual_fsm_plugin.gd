@@ -8,7 +8,7 @@ var _fsm_editor: Control
 var _tool_button: ToolButton
 var _fsm_script := preload("visual_fsm.gd")
 var _fsm_singleton: VFSMSingleton = preload("vfsm_singleton.gd").new()
-var _current_fsm_node
+var _current_fsm_node : VFSM
 
 
 func _enter_tree() -> void:
@@ -50,12 +50,18 @@ func make_visible(visible) -> void:
 
 
 func handles(object) -> bool:
-	return object is _fsm_script
+	return object is _fsm_script or object is VFSM
 
 
 func edit(object) -> void:
-	_fsm_editor.edit(object)
-	_current_fsm_node = object
+	if object is _fsm_script:
+		_current_fsm_node = object.fsm
+	elif object is VFSM:
+		_current_fsm_node = object
+	else:
+		assert(false, "Cannot edit node of class " + object.get_class())
+	
+	_fsm_editor.edit(_current_fsm_node)
 
 
 func _on_edit_custom_script(custom_script: GDScript) -> void:
