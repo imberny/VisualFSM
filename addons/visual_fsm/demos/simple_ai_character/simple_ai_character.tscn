@@ -14,7 +14,7 @@ script/source = "# State: WalkingRight
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_object) -> void:
 	pass
 
 
@@ -24,7 +24,7 @@ func update(_object, _delta: float) -> void:
 	jumper.move_x(1) # simulates x axis input
 
 
-func exit() -> void:
+func exit(_object) -> void:
 	pass
 "
 
@@ -41,7 +41,7 @@ script/source = "# State: WalkingLeft
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_object) -> void:
 	pass
 
 
@@ -51,7 +51,7 @@ func update(_object, _delta: float) -> void:
 	jumper.move_x(-1) # simulates x axis input
 
 
-func exit() -> void:
+func exit(_object) -> void:
 	pass
 "
 
@@ -167,7 +167,7 @@ script/source = "# State: Grounded
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_object) -> void:
 	pass
 
 
@@ -176,7 +176,7 @@ func update(_object, _delta: float) -> void:
 	jumper.get_node(\"CurrentAirState\").text = name
 
 
-func exit() -> void:
+func exit(_object) -> void:
 	pass
 "
 
@@ -193,7 +193,7 @@ script/source = "# State: Jumping
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_object) -> void:
 	pass
 
 
@@ -203,7 +203,7 @@ func update(_object, _delta: float) -> void:
 	jumper.jump()
 
 
-func exit() -> void:
+func exit(_object) -> void:
 	pass
 "
 
@@ -220,7 +220,7 @@ script/source = "# State: Airborne
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_object) -> void:
 	pass
 
 
@@ -229,7 +229,7 @@ func update(_object, _delta: float) -> void:
 	jumper.get_node(\"CurrentAirState\").text = name
 
 
-func exit() -> void:
+func exit(_object) -> void:
 	pass
 "
 
@@ -246,7 +246,7 @@ script/source = "# State: Falling
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_object) -> void:
 	pass
 
 
@@ -255,7 +255,7 @@ func update(_object, _delta: float) -> void:
 	jumper.get_node(\"CurrentAirState\").text = name
 
 
-func exit() -> void:
+func exit(_object) -> void:
 	pass
 "
 

@@ -54,16 +54,16 @@ func get_trigger_index(trigger: VFSMTrigger) -> int:
 	return -1
 
 
-func enter() -> void:
-	custom_script_instance.enter()
+func enter(object) -> void:
+	custom_script_instance.enter(object)
 
 
 func update(object, delta: float) -> void:
 	custom_script_instance.update(object, delta)
 
 
-func exit() -> void:
-	custom_script_instance.exit()
+func exit(object) -> void:
+	custom_script_instance.exit(object)
 
 
 func rename(new_name: String) -> void:
