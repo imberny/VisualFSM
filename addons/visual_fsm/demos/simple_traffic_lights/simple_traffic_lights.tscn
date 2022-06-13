@@ -244,6 +244,7 @@ script = ExtResource( 5 )
 
 [node name="VisualFSM" type="Node" parent="TimedTrafficLights"]
 script = ExtResource( 3 )
+fsm = SubResource( 10 )
 finite_state_machine = SubResource( 10 )
 
 [node name="Label2" type="Label" parent="TimedTrafficLights"]
@@ -365,6 +366,7 @@ script = ExtResource( 5 )
 
 [node name="VisualFSM" type="Node" parent="ActionTrafficLights"]
 script = ExtResource( 3 )
+fsm = SubResource( 25 )
 finite_state_machine = SubResource( 25 )
 
 [node name="Label" type="Label" parent="ActionTrafficLights"]

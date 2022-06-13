@@ -2,7 +2,7 @@ tool
 extends Node
 
 onready var _parent_node = get_parent() 
-var fsm: VFSM
+export var fsm : Resource
 var _current_state: VFSMState
 
 func _ready():
@@ -22,7 +22,7 @@ func _ready():
 func _unhandled_input(event: InputEvent) -> void:
 	var next_state: VFSMState
 	for trigger_id in _current_state.trigger_ids:
-		var trigger := fsm.get_trigger(trigger_id)
+		var trigger = fsm.get_trigger(trigger_id)
 		var go_to_next_trigger := false
 		if trigger is VFSMTriggerAction:
 			go_to_next_trigger = trigger.is_trigger_action(event)
@@ -45,7 +45,7 @@ func _process(delta) -> void:
 
 	var next_state: VFSMState
 	for trigger_id in _current_state.trigger_ids:
-		var trigger := fsm.get_trigger(trigger_id)
+		var trigger = fsm.get_trigger(trigger_id)
 		var go_to_next_trigger := false
 		if trigger is VFSMTriggerTimer:
 			go_to_next_trigger = trigger.is_over(delta)

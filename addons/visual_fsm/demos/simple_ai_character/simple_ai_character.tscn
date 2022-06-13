@@ -392,10 +392,12 @@ gravity = 98.0
 
 [node name="MovementFSM" type="Node" parent="SimpleAIJumper"]
 script = ExtResource( 5 )
+fsm = SubResource( 11 )
 finite_state_machine = SubResource( 11 )
 
 [node name="JumpingFSM" type="Node" parent="SimpleAIJumper"]
 script = ExtResource( 5 )
+fsm = SubResource( 25 )
 finite_state_machine = SubResource( 25 )
 
 [node name="Sprite" type="Sprite" parent="SimpleAIJumper"]
