@@ -12,7 +12,7 @@ script/source = "# State: Green
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_object) -> void:
 	pass
 
 
@@ -22,7 +22,7 @@ func update(_object, _delta: float) -> void:
 	traffic_lights.current_state_name = name
 
 
-func exit() -> void:
+func exit(_object) -> void:
 	pass
 "
 
@@ -39,7 +39,7 @@ script/source = "# State: Yellow
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_object) -> void:
 	pass
 
 
@@ -49,7 +49,7 @@ func update(_object, _delta: float) -> void:
 	traffic_lights.current_state_name = name
 
 
-func exit() -> void:
+func exit(_object) -> void:
 	pass
 "
 
@@ -66,7 +66,7 @@ script/source = "# State: Red
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_object) -> void:
 	pass
 
 
@@ -76,7 +76,7 @@ func update(_object, _delta: float) -> void:
 	traffic_lights.current_state_name = name
 
 
-func exit() -> void:
+func exit(_object) -> void:
 	pass
 "
 
@@ -131,7 +131,7 @@ script/source = "# State: Green
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_object) -> void:
 	pass
 
 
@@ -140,7 +140,7 @@ func update(_object, _delta: float) -> void:
 	traffic_lights.green()
 
 
-func exit() -> void:
+func exit(_object) -> void:
 	pass
 "
 
@@ -157,7 +157,7 @@ script/source = "# State: Yellow
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_object) -> void:
 	pass
 
 
@@ -166,7 +166,7 @@ func update(_object, _delta: float) -> void:
 	traffic_lights.yellow()
 
 
-func exit() -> void:
+func exit(_object) -> void:
 	pass
 "
 
@@ -183,7 +183,7 @@ script/source = "# State: Red
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_object) -> void:
 	pass
 
 
@@ -192,7 +192,7 @@ func update(_object, _delta: float) -> void:
 	traffic_lights.red()
 
 
-func exit() -> void:
+func exit(_object) -> void:
 	pass
 "
 

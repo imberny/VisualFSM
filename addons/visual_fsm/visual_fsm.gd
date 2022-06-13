@@ -16,7 +16,7 @@ func _ready():
 		_current_state = fsm.get_start_state()
 		assert(_current_state, "VisualFSM: %s's finite state machine doesn't point to a starting state." % _parent_node.name)
 		if _current_state:
-			_current_state.enter()
+			_current_state.enter(_parent_node)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -32,10 +32,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			break
 
 	if next_state:
-		_current_state.exit()
+		_current_state.exit(_parent_node)
 
 		_current_state = next_state
-		_current_state.enter()
+		_current_state.enter(_parent_node)
 		for trigger_id in _current_state.trigger_ids:
 			fsm.get_trigger(trigger_id).enter()
 
@@ -57,10 +57,10 @@ func _process(delta) -> void:
 			break
 
 	if next_state:
-		_current_state.exit()
+		_current_state.exit(_parent_node)
 
 		_current_state = next_state
-		_current_state.enter()
+		_current_state.enter(_parent_node)
 		for trigger_id in _current_state.trigger_ids:
 			fsm.get_trigger(trigger_id).enter()
 
