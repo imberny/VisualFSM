@@ -7,7 +7,7 @@ export(float) var duration
 var _timer: float
 
 
-func enter() -> void:
+func enter(_fsm, _state) -> void:
 	_timer = 0
 
 

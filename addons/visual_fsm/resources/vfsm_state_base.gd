@@ -6,11 +6,11 @@ extends Object
 var name: String
 
 
-func enter() -> void:
+func enter(_fsm) -> void:
 	pass
 
-func update(_object, _delta: float) -> void:
+func update(_fsm, _delta: float) -> void:
 	pass
 
-func exit() -> void:
+func exit(_fsm) -> void:
 	pass

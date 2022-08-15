@@ -12,17 +12,18 @@ script/source = "# State: Green
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_object) -> void:
 	pass
 
 
-func update(_object, _delta: float) -> void:
+func update(_fsm, _delta: float) -> void:
+	var _object = _fsm.get_parent()
 	var traffic_lights := _object as VFSMDemoTrafficLightsController
 	traffic_lights.green()
 	traffic_lights.current_state_name = name
 
 
-func exit() -> void:
+func exit(_object) -> void:
 	pass
 "
 
@@ -39,17 +40,18 @@ script/source = "# State: Yellow
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_object) -> void:
 	pass
 
 
-func update(_object, _delta: float) -> void:
+func update(_fsm, _delta: float) -> void:
+	var _object = _fsm.get_parent()
 	var traffic_lights := _object as VFSMDemoTrafficLightsController
 	traffic_lights.yellow()
 	traffic_lights.current_state_name = name
 
 
-func exit() -> void:
+func exit(_object) -> void:
 	pass
 "
 
@@ -66,17 +68,18 @@ script/source = "# State: Red
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_object) -> void:
 	pass
 
 
-func update(_object, _delta: float) -> void:
+func update(_fsm, _delta: float) -> void:
+	var _object = _fsm.get_parent()
 	var traffic_lights := _object as VFSMDemoTrafficLightsController
 	traffic_lights.red()
 	traffic_lights.current_state_name = name
 
 
-func exit() -> void:
+func exit(_object) -> void:
 	pass
 "
 
@@ -131,16 +134,17 @@ script/source = "# State: Green
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_fsm) -> void:
 	pass
 
 
-func update(_object, _delta: float) -> void:
+func update(_fsm, _delta: float) -> void:
+	var _object = _fsm.get_parent()
 	var traffic_lights := _object as VFSMDemoTrafficLightsController
 	traffic_lights.green()
 
 
-func exit() -> void:
+func exit(_fsm) -> void:
 	pass
 "
 
@@ -157,16 +161,17 @@ script/source = "# State: Yellow
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_fsm) -> void:
 	pass
 
 
-func update(_object, _delta: float) -> void:
+func update(_fsm, _delta: float) -> void:
+	var _object = _fsm.get_parent()
 	var traffic_lights := _object as VFSMDemoTrafficLightsController
 	traffic_lights.yellow()
 
 
-func exit() -> void:
+func exit(_fsm) -> void:
 	pass
 "
 
@@ -183,16 +188,17 @@ script/source = "# State: Red
 extends VFSMStateBase
 
 
-func enter() -> void:
+func enter(_fsm) -> void:
 	pass
 
 
-func update(_object, _delta: float) -> void:
+func update(_fsm, _delta: float) -> void:
+	var _object = _fsm.get_parent()
 	var traffic_lights := _object as VFSMDemoTrafficLightsController
 	traffic_lights.red()
 
 
-func exit() -> void:
+func exit(_fsm) -> void:
 	pass
 "
 
