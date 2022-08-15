@@ -10,14 +10,14 @@ func _set_current_state(_state : VFSMState):
 	if _current_state:
 		_current_state.exit(self)
 		for trigger_id in _current_state.trigger_ids:
-			fsm.get_trigger(trigger_id).exit()
+			fsm.get_trigger(trigger_id).exit(self, _state)
 	
 	_current_state = _state
 	
 	if _current_state:
 		_current_state.enter(self)
 		for trigger_id in _current_state.trigger_ids:
-			fsm.get_trigger(trigger_id).enter()
+			fsm.get_trigger(trigger_id).enter(self, _state)
 
 func _ready():
 	if Engine.editor_hint:
@@ -57,7 +57,7 @@ func _process(delta) -> void:
 		if trigger is VFSMTriggerTimer:
 			go_to_next_trigger = trigger.is_over(delta)
 		elif trigger is VFSMTriggerScript:
-			go_to_next_trigger = trigger.is_triggered(self, delta)
+			go_to_next_trigger = trigger.is_triggered(self, _current_state, delta)
 
 		if go_to_next_trigger:
 			next_state = fsm.get_next_state(_current_state, trigger)

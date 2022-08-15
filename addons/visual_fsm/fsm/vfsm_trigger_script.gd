@@ -6,16 +6,16 @@ export(GDScript) var custom_script: GDScript setget _set_custom_script
 
 var custom_script_instance: VFSMTriggerBase
 
-func enter() -> void:
-	custom_script_instance.enter()
+func enter(_fsm, _state) -> void:
+	custom_script_instance.enter(_fsm, _state.custom_script_instance)
 
 
-func exit() -> void:
-	custom_script_instance.exit()
+func exit(_fsm, _state) -> void:
+	custom_script_instance.exit(_fsm, _state.custom_script_instance)
 
 
-func is_triggered(fsm: Node, delta: float) -> bool:
-	return custom_script_instance.is_triggered(fsm, delta)
+func is_triggered(fsm: Node, _state, delta: float) -> bool:
+	return custom_script_instance.is_triggered(fsm, _state.custom_script_instance, delta)
 
 
 func _set_custom_script(value: GDScript) -> void:

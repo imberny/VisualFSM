@@ -2,9 +2,13 @@
 extends VFSMTriggerBase
 
 
-func enter() -> void:
+func enter(_fsm, _state : VFSMStateBase) -> void:
 	pass
 
 
-func is_triggered(_object, _delta: float) -> bool:
+func exit(_fsm, _state : VFSMStateBase) -> void:
+	pass
+
+
+func is_triggered(_object, _state : VFSMStateBase, _delta: float) -> bool:
 	return false

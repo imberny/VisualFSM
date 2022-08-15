@@ -70,11 +70,15 @@ script/source = "# Trigger: Gap detected
 extends VFSMTriggerBase
 
 
-func enter() -> void:
+func enter(_fsm, _state : VFSMStateBase) -> void:
 	pass
 
 
-func is_triggered(_object, _delta: float) -> bool:
+func exit(_fsm, _state : VFSMStateBase) -> void:
+	pass
+
+
+func is_triggered(_object, _state : VFSMStateBase, _delta: float) -> bool:
 	return false
 "
 
@@ -101,11 +105,15 @@ script/source = "# Trigger: Right obstacle detected
 extends VFSMTriggerBase
 
 
-func enter() -> void:
+func enter(_fsm, _state : VFSMStateBase) -> void:
 	pass
 
 
-func is_triggered(_object, _delta: float) -> bool:
+func exit(_fsm, _state : VFSMStateBase) -> void:
+	pass
+
+
+func is_triggered(_object, _state : VFSMStateBase, _delta: float) -> bool:
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	return jumper.is_impassable_in_front()
 "
@@ -121,11 +129,15 @@ script/source = "# Trigger: Left obstacle detected
 extends VFSMTriggerBase
 
 
-func enter() -> void:
+func enter(_fsm, _state : VFSMStateBase) -> void:
 	pass
 
 
-func is_triggered(_object, _delta: float) -> bool:
+func exit(_fsm, _state : VFSMStateBase) -> void:
+	pass
+
+
+func is_triggered(_object, _state : VFSMStateBase, _delta: float) -> bool:
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	return jumper.left_step_detector.is_colliding()
 "
@@ -141,11 +153,15 @@ script/source = "# Trigger: Impassable detected
 extends VFSMTriggerBase
 
 
-func enter() -> void:
+func enter(_fsm, _state : VFSMStateBase) -> void:
 	pass
 
 
-func is_triggered(_fsm, _delta: float) -> bool:
+func exit(_fsm, _state : VFSMStateBase) -> void:
+	pass
+
+
+func is_triggered(_fsm, _state : VFSMStateBase, _delta: float) -> bool:
 	var _object = _fsm.get_parent()
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	return jumper.is_impassable_in_front()
@@ -285,11 +301,15 @@ script/source = "# Trigger: Gap detected
 extends VFSMTriggerBase
 
 
-func enter() -> void:
+func enter(_fsm, _state : VFSMStateBase) -> void:
 	pass
 
 
-func is_triggered(_fsm, _delta: float) -> bool:
+func exit(_fsm, _state : VFSMStateBase) -> void:
+	pass
+
+
+func is_triggered(_fsm, _state : VFSMStateBase, _delta: float) -> bool:
 	var _object = _fsm.get_parent()
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	return jumper.is_gap_in_front()
@@ -306,11 +326,15 @@ script/source = "# Trigger: Left ground
 extends VFSMTriggerBase
 
 
-func enter() -> void:
+func enter(_fsm, _state : VFSMStateBase) -> void:
 	pass
 
 
-func is_triggered(_fsm, _delta: float) -> bool:
+func exit(_fsm, _state : VFSMStateBase) -> void:
+	pass
+
+
+func is_triggered(_fsm, _state : VFSMStateBase, _delta: float) -> bool:
 	var _object = _fsm.get_parent()
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	return not jumper.is_on_floor()
@@ -327,11 +351,15 @@ script/source = "# Trigger: Landed
 extends VFSMTriggerBase
 
 
-func enter() -> void:
+func enter(_fsm, _state : VFSMStateBase) -> void:
 	pass
 
 
-func is_triggered(_fsm, _delta: float) -> bool:
+func exit(_fsm, _state : VFSMStateBase) -> void:
+	pass
+
+
+func is_triggered(_fsm, _state : VFSMStateBase, _delta: float) -> bool:
 	var _object = _fsm.get_parent()
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	return jumper.is_on_floor()
@@ -348,11 +376,15 @@ script/source = "# Trigger: Jumpable obstacle
 extends VFSMTriggerBase
 
 
-func enter() -> void:
+func enter(_fsm, _state : VFSMStateBase) -> void:
 	pass
 
 
-func is_triggered(_fsm, _delta: float) -> bool:
+func exit(_fsm, _state : VFSMStateBase) -> void:
+	pass
+
+
+func is_triggered(_fsm, _state : VFSMStateBase, _delta: float) -> bool:
 	var _object = _fsm.get_parent()
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	return jumper.is_jumpable_in_front()
