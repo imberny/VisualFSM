@@ -10,8 +10,8 @@ func enter() -> void:
 	custom_script_instance.enter()
 
 
-func is_triggered(object: Node, delta: float) -> bool:
-	return custom_script_instance.is_triggered(object, delta)
+func is_triggered(fsm: Node, delta: float) -> bool:
+	return custom_script_instance.is_triggered(fsm, delta)
 
 
 func _set_custom_script(value: GDScript) -> void:

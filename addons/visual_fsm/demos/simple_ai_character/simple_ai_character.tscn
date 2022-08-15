@@ -14,17 +14,18 @@ script/source = "# State: WalkingRight
 extends VFSMStateBase
 
 
-func enter(_object) -> void:
+func enter(_fsm) -> void:
 	pass
 
 
-func update(_object, _delta: float) -> void:
+func update(_fsm, _delta: float) -> void:
+	var _object = _fsm.get_parent()
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	jumper.get_node(\"CurrentMovingState\").text = name
 	jumper.move_x(1) # simulates x axis input
 
 
-func exit(_object) -> void:
+func exit(_fsm) -> void:
 	pass
 "
 
@@ -41,17 +42,18 @@ script/source = "# State: WalkingLeft
 extends VFSMStateBase
 
 
-func enter(_object) -> void:
+func enter(_fsm) -> void:
 	pass
 
 
-func update(_object, _delta: float) -> void:
+func update(_fsm, _delta: float) -> void:
+	var _object = _fsm.get_parent()
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	jumper.get_node(\"CurrentMovingState\").text = name
 	jumper.move_x(-1) # simulates x axis input
 
 
-func exit(_object) -> void:
+func exit(_fsm) -> void:
 	pass
 "
 
@@ -143,7 +145,8 @@ func enter() -> void:
 	pass
 
 
-func is_triggered(_object, _delta: float) -> bool:
+func is_triggered(_fsm, _delta: float) -> bool:
+	var _object = _fsm.get_parent()
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	return jumper.is_impassable_in_front()
 "
@@ -167,16 +170,17 @@ script/source = "# State: Grounded
 extends VFSMStateBase
 
 
-func enter(_object) -> void:
+func enter(_fsm) -> void:
 	pass
 
 
-func update(_object, _delta: float) -> void:
+func update(_fsm, _delta: float) -> void:
+	var _object = _fsm.get_parent()
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	jumper.get_node(\"CurrentAirState\").text = name
 
 
-func exit(_object) -> void:
+func exit(_fsm) -> void:
 	pass
 "
 
@@ -193,17 +197,18 @@ script/source = "# State: Jumping
 extends VFSMStateBase
 
 
-func enter(_object) -> void:
+func enter(_fsm) -> void:
 	pass
 
 
-func update(_object, _delta: float) -> void:
+func update(_fsm, _delta: float) -> void:
+	var _object = _fsm.get_parent()
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	jumper.get_node(\"CurrentAirState\").text = name
 	jumper.jump()
 
 
-func exit(_object) -> void:
+func exit(_fsm) -> void:
 	pass
 "
 
@@ -220,16 +225,17 @@ script/source = "# State: Airborne
 extends VFSMStateBase
 
 
-func enter(_object) -> void:
+func enter(_fsm) -> void:
 	pass
 
 
-func update(_object, _delta: float) -> void:
+func update(_fsm, _delta: float) -> void:
+	var _object = _fsm.get_parent()
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	jumper.get_node(\"CurrentAirState\").text = name
 
 
-func exit(_object) -> void:
+func exit(_fsm) -> void:
 	pass
 "
 
@@ -246,16 +252,17 @@ script/source = "# State: Falling
 extends VFSMStateBase
 
 
-func enter(_object) -> void:
+func enter(_fsm) -> void:
 	pass
 
 
-func update(_object, _delta: float) -> void:
+func update(_fsm, _delta: float) -> void:
+	var _object = _fsm.get_parent()
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	jumper.get_node(\"CurrentAirState\").text = name
 
 
-func exit(_object) -> void:
+func exit(_fsm) -> void:
 	pass
 "
 
@@ -282,7 +289,8 @@ func enter() -> void:
 	pass
 
 
-func is_triggered(_object, _delta: float) -> bool:
+func is_triggered(_fsm, _delta: float) -> bool:
+	var _object = _fsm.get_parent()
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	return jumper.is_gap_in_front()
 "
@@ -302,7 +310,8 @@ func enter() -> void:
 	pass
 
 
-func is_triggered(_object, _delta: float) -> bool:
+func is_triggered(_fsm, _delta: float) -> bool:
+	var _object = _fsm.get_parent()
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	return not jumper.is_on_floor()
 "
@@ -322,7 +331,8 @@ func enter() -> void:
 	pass
 
 
-func is_triggered(_object, _delta: float) -> bool:
+func is_triggered(_fsm, _delta: float) -> bool:
+	var _object = _fsm.get_parent()
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	return jumper.is_on_floor()
 "
@@ -342,7 +352,8 @@ func enter() -> void:
 	pass
 
 
-func is_triggered(_object, _delta: float) -> bool:
+func is_triggered(_fsm, _delta: float) -> bool:
+	var _object = _fsm.get_parent()
 	var jumper := _object as VFSMDemoSimpleAIJumper
 	return jumper.is_jumpable_in_front()
 "
