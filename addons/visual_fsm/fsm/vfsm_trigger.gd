@@ -8,3 +8,7 @@ export(String) var name: String
 
 func enter() -> void:
 	pass
+
+
+func exit() -> void:
+	pass

@@ -10,6 +10,10 @@ func enter() -> void:
 	custom_script_instance.enter()
 
 
+func exit() -> void:
+	custom_script_instance.exit()
+
+
 func is_triggered(fsm: Node, delta: float) -> bool:
 	return custom_script_instance.is_triggered(fsm, delta)
 

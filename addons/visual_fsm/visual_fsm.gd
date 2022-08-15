@@ -5,6 +5,20 @@ onready var _parent_node = get_parent()
 var fsm: VFSM
 var _current_state: VFSMState
 
+
+func _set_current_state(_state : VFSMState):
+	if _current_state:
+		_current_state.exit(self)
+		for trigger_id in _current_state.trigger_ids:
+			fsm.get_trigger(trigger_id).exit()
+	
+	_current_state = _state
+	
+	if _current_state:
+		_current_state.enter(self)
+		for trigger_id in _current_state.trigger_ids:
+			fsm.get_trigger(trigger_id).enter()
+
 func _ready():
 	if Engine.editor_hint:
 		set_process(false)
@@ -13,10 +27,8 @@ func _ready():
 		if not self.fsm:
 			self.fsm = VFSM.new()
 	else:
-		_current_state = fsm.get_start_state()
+		_set_current_state(fsm.get_start_state())
 		assert(_current_state, "VisualFSM: %s's finite state machine doesn't point to a starting state." % _parent_node.name)
-		if _current_state:
-			_current_state.enter(self)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -32,12 +44,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			break
 
 	if next_state:
-		_current_state.exit(self)
-
-		_current_state = next_state
-		_current_state.enter(self)
-		for trigger_id in _current_state.trigger_ids:
-			fsm.get_trigger(trigger_id).enter()
+		_set_current_state(next_state)
 
 
 func _process(delta) -> void:
@@ -57,12 +64,7 @@ func _process(delta) -> void:
 			break
 
 	if next_state:
-		_current_state.exit(self)
-
-		_current_state = next_state
-		_current_state.enter(self)
-		for trigger_id in _current_state.trigger_ids:
-			fsm.get_trigger(trigger_id).enter()
+		_set_current_state(next_state)
 
 
 func _set(property, value):
